@@ -9,9 +9,9 @@ export default function Problems() {
             <span className="underline decoration-blue-500">Problems</span>
           </h1>
           <p className="mt-4 w-3/5 text-black xl:mt-6 ">
-            Within the 'Problem' section, explore a diverse range of problem
-            categories. By selecting the right category, you can dive into
-            engaging challenges and refine your skills
+            Within the &rsquo;Problem&rsquo; section, explore a diverse range of
+            problem categories. By selecting the right category, you can dive
+            into engaging challenges and refine your skills
           </p>
 
           <form className="my-4 w-1/3 xl:my-6">
