@@ -1,21 +1,23 @@
 "use client";
 
 import {
-  Cloud,
-  CreditCard,
-  Github,
-  Keyboard,
-  LifeBuoy,
-  LogOut,
-  Mail,
-  MessageSquare,
-  Plus,
-  PlusCircle,
-  Settings,
-  User,
-  UserPlus,
-  Users,
-} from "lucide-react";
+    Cloud,
+    CreditCard,
+    Github,
+    Keyboard,
+    LifeBuoy,
+    LogOut,
+    Mail,
+    MessageSquare,
+    Plus,
+    PlusCircle,
+    Settings,
+    User,
+    UserPlus,
+    Users,
+  } from 'lucide-react';
+
+import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -37,6 +39,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase-config";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { iconsImgs, webImgs } from "@/Utils/Image";
 
 export default function Navbar() {
   const router = useRouter();
@@ -54,51 +57,38 @@ export default function Navbar() {
       .then(() => {
         router.push("/");
         console.log("Signed out successfully");
-        // Sign-out successful.
       })
       .catch((error) => {
-        // An error happened.
       });
   };
 
 
   return (
-    // <header className="bg-white border-b-2 border-black sticky top-0">
-      <nav className="bg-white border-b-2 border-black sticky top-0 backdrop-blur-md dark:bg-gray-900">
+      <nav className="sticky  top-0 w-full border-b border-black from-zinc-200 backdrop-blur dark:border-neutral-800 dark:from-inherit lg:w-auto lg:border-b-2">
         <div className="flex flex-wrap items-center justify-between p-4 mx-4">
           <div className="flex items-center space-x-4">
-            <a
-              href="/"
-              className="flex items-center rtl:space-x-reverse"
-            >
-              {/* <img
-                src="https://flowbite.com/docs/images/logo.svg"
-                className="h-8"
-                alt="Flowbite Logo"
-                /> */}
-              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-                TCC
-              </span>
-            </a>
+          <div>
+            <Link href="/">
+              <Image
+                className="w-10 cursor-pointer"
+                src={webImgs.logo}
+                alt="..."/>      
+            </Link>
+          
+            </div>
             <div
               className="hidden w-full md:block md:w-auto"
               id="navbar-default"
             >
-              <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+              <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                 <li>
-                  <a className="hover:text-gray-500" href="#">
-                    Problem
-                  </a>
+                  <Link href="/problems" className='hover:text-gray-500'>Problems</Link>
                 </li>
                 <li>
-                  <a className="hover:text-gray-500" href="#">
-                    Contest
-                  </a>
+                  <Link href="/contests" className='hover:text-gray-500'>Contests</Link>
                 </li>
                 <li>
-                  <a className="hover:text-gray-500" href="#">
-                    Rangking
-                  </a>
+                  <Link href='/ranking' className='hover:text-gray-500'>Ranking</Link>
                 </li>
               </ul>
             </div>
@@ -185,9 +175,9 @@ export default function Navbar() {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M1 1h15M1 7h15M1 13h15"
                 />
               </svg>

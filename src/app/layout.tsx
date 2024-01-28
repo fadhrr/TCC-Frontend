@@ -1,8 +1,10 @@
-import { Inter } from "next/font/google";
+import { Sometype_Mono } from "next/font/google";
 import Header from "@/components/Header";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const SometypeMono = Sometype_Mono({
+  subsets: ['latin']
+})
 
 export const metadata = {
   title: "TCC",
@@ -12,7 +14,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={SometypeMono.className}>
         <Header/>
         {children}
       </body>
