@@ -63,8 +63,7 @@ export default function Navbar() {
 
 
   return (
-    // <header className="bg-white border-b-2 border-black sticky top-0">
-      <nav className="bg-white border-b-2 border-black sticky top-0 backdrop-blur-md dark:bg-gray-900">
+      <nav className="sticky  top-0 w-full border-b border-black from-zinc-200 backdrop-blur dark:border-neutral-800 dark:from-inherit lg:w-auto lg:border-b-2">
         <div className="flex flex-wrap items-center justify-between p-4 mx-4">
           <div className="flex items-center space-x-4">
             <a
@@ -84,7 +83,7 @@ export default function Navbar() {
               className="hidden w-full md:block md:w-auto"
               id="navbar-default"
             >
-              <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+              <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                 <li>
                   <a className="hover:text-gray-500" href="#">
                     Problem
@@ -185,9 +184,9 @@ export default function Navbar() {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M1 1h15M1 7h15M1 13h15"
                 />
               </svg>
