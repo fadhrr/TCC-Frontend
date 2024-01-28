@@ -73,7 +73,7 @@ export default function SignUp() {
           <p className="text-4xl font-bold w-full mb-8">Sign up</p>
           <form className="">
             <div className="mb-[22px]">
-              <input
+              <Input
                 type="email"
                 placeholder="Email"
                 name="email"
@@ -81,11 +81,11 @@ export default function SignUp() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full rounded-md border border-stroke bg-transparent px-5 py-3 text-base text-dark outline-none transition placeholder:text-dark-6 focus:border-primary focus-visible:shadow-none dark:border-dark-3 dark:text-white dark:focus:border-primary"
+                className="w-full rounded-md border border-stroke bg-transparent px-5 py-5  text-base text-dark outline-none transition placeholder:text-dark-6 focus:border-primary focus-visible:shadow-none dark:border-dark-3 dark:text-white dark:focus:border-primary"
               />
             </div>
             <div className="mb-[22px]">
-              <input
+              <Input
                 type="text"
                 placeholder="Username"
                 name="username"
@@ -93,11 +93,11 @@ export default function SignUp() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
-                className="w-full rounded-md border border-stroke bg-transparent px-5 py-3 text-base text-dark outline-none transition placeholder:text-dark-6 focus:border-primary focus-visible:shadow-none dark:border-dark-3 dark:text-white dark:focus:border-primary"
+                className="w-full rounded-md border border-stroke bg-transparent px-5 py-5 text-base text-dark outline-none transition placeholder:text-dark-6 focus:border-primary focus-visible:shadow-none dark:border-dark-3 dark:text-white dark:focus:border-primary"
               />
             </div>
             <div className="mb-[22px]">
-              <input
+              <Input
                 type="password"
                 placeholder="Password"
                 name="password"
@@ -137,12 +137,12 @@ export default function SignUp() {
             Google
           </Button>
           <p className="text-body-secondary text-base">
-            Not a member yet?{" "}
+            Already join member?{" "}
             <Link
-              href="/auth/signup"
+              href="/auth/signin"
               className="text-slate-800 hover:underline"
             >
-              Sign Up
+              Log in
             </Link>
           </p>
         </div>

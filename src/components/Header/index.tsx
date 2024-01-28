@@ -42,17 +42,10 @@ export default function Navbar() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
 
-  const onToggleMenu = (e) => {
-    e.target.name = e.target.name === "menu" ? "close" : "menu";
-    const navLinks = document.querySelector(".nav-links");
-    navLinks.classList.toggle("top-[9%]");
-  };
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user: any) => {
       setUser(user);
     });
-
     return () => unsubscribe();
   }, []);
 
@@ -67,8 +60,21 @@ export default function Navbar() {
         // An error happened.
       });
   };
+
+  const [sticky, setSticky] = useState(false);
+  const handleStickyNavbar = () => {
+    if (window.scrollY >= 80) {
+      setSticky(true);
+    } else {
+      setSticky(false);
+    }
+  };
+  useEffect(() => {
+    window.addEventListener('scroll', handleStickyNavbar);
+  });
+  
   return (
-    <header className="bg-white border-b-2 border-black">
+    <header className="bg-white border-b-2 border-black sticky top-0">
       <nav className="flex justify-between py-2 items-center w-[92%] mx-auto">
         <div>
           <a href="/">
@@ -145,7 +151,6 @@ export default function Navbar() {
           ) : (
             <>
               <Link
-                //  href={route('login')}
                 href={"/auth/signin"}
                 className="relative infline-flex items-center justify-start inline-block px-4 py-2 overflow-hidden font-bold rounded-full group"
               >

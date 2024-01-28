@@ -63,7 +63,7 @@ export default function SignUp() {
           <p className="text-4xl font-bold w-full mb-8">Log In</p>
           <form className="">
             <div className="mb-[22px]">
-              <input
+              <Input
                 type="email"
                 placeholder="Email"
                 name="email"
@@ -71,25 +71,25 @@ export default function SignUp() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full rounded-md border border-stroke bg-transparent px-5 py-3 text-base text-dark outline-none transition placeholder:text-dark-6 focus:border-primary focus-visible:shadow-none dark:border-dark-3 dark:text-white dark:focus:border-primary"
+                className="w-full rounded-md border border-stroke bg-transparent px-5 py-5  text-base text-dark outline-none transition placeholder:text-dark-6 focus:border-primary focus-visible:shadow-none dark:border-dark-3 dark:text-white dark:focus:border-primary"
               />
             </div>
             <div className="mb-[22px]">
-              <input
+              <Input
                 type="password"
                 placeholder="Password"
                 name="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-md border border-stroke bg-transparent px-5 py-3 text-base text-dark outline-none transition placeholder:text-dark-6 focus:border-primary focus-visible:shadow-none dark:border-dark-3 dark:text-white dark:focus:border-primary"
+                className="w-full rounded-md border border-stroke bg-transparent px-5 py-5  text-base text-dark outline-none transition placeholder:text-dark-6 focus:border-primary focus-visible:shadow-none dark:border-dark-3 dark:text-white dark:focus:border-primary"
               />
             </div>
             <div className="space-y-2">
               <button
                 type="submit"
                 onClick={onSubmit}
-                className="w-full cursor-pointer rounded-md border border-primary bg-primary px-5 py-3 text-base text-white transition duration-300 ease-in-out hover:bg-blue-dark"
+                className="w-full cursor-pointer rounded-md border border-primary bg-primary py-3  text-base text-white transition duration-300 ease-in-out hover:bg-slate-800"
               >
                 Sign in
               </button>
@@ -98,7 +98,7 @@ export default function SignUp() {
           <span className="relative my-4 block text-center">Connect With</span>
           <button
             onClick={signInWithGoogle}
-            className="flex h-11 w-full mb-8 gap-2 items-center justify-center rounded-md bg-[#D64937] text-white transition hover:bg-opacity-90"
+            className="flex w-full mb-8 gap-2 items-center justify-center rounded-md bg-[#D64937] py-3 text-white transition hover:bg-opacity-90"
           >
             <svg
               width="18"
