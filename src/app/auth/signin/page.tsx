@@ -59,7 +59,7 @@ export default function SignUp() {
   return (
     <div className="bg-[#F4F7FF] h-screen py-12">
       <div className="container mx-auto">
-        <div className="mx-auto max-w-[525px] rounded-xl bg-white px-12 py-16 shadow-sm">
+        <nav className="mx-auto max-w-[525px] rounded-xl bg-white px-8 py-16 shadow-sm">
           <p className="text-4xl font-bold w-full mb-8">Log In</p>
           <form className="">
             <div className="mb-[22px]">
@@ -123,7 +123,7 @@ export default function SignUp() {
               Sign Up
             </Link>
           </p>
-        </div>
+        </nav>
       </div>
     </div>
   );
