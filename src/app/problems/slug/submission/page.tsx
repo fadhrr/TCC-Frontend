@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 // import { problemLinks } from '@/Data/data.js';
 
-export default function ProblemSubmission({ auth }) {
+export default function ProblemSubmission() {
   const [currentTab, setCurrentTab] = useState(1);
 
   const toogleTab = (index) => {
