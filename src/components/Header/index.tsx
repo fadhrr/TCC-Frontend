@@ -38,7 +38,7 @@ import { auth } from "@/lib/firebase-config";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
-export default function Navbar() {
+export default function Header() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
 
@@ -63,18 +63,13 @@ export default function Navbar() {
 
 
   return (
-      <nav className="sticky  top-0 w-full border-b border-black from-zinc-200 backdrop-blur dark:border-neutral-800 dark:from-inherit lg:w-auto lg:border-b-2">
+      <nav className="sticky top-0 w-full border-b border-black bg-white/80 from-zinc-200 backdrop-blur-md dark:border-neutral-800 dark:from-inherit lg:w-auto lg:border-b-2">
         <div className="flex flex-wrap items-center justify-between p-4 mx-4">
           <div className="flex items-center space-x-4">
             <a
               href="/"
               className="flex items-center rtl:space-x-reverse"
             >
-              {/* <img
-                src="https://flowbite.com/docs/images/logo.svg"
-                className="h-8"
-                alt="Flowbite Logo"
-                /> */}
               <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
                 TCC
               </span>
@@ -85,19 +80,19 @@ export default function Navbar() {
             >
               <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                 <li>
-                  <a className="hover:text-gray-500" href="#">
+                  <Link className="hover:text-gray-500" href={"/problem"}>
                     Problem
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="hover:text-gray-500" href="#">
+                  <Link className="hover:text-gray-500" href="#">
                     Contest
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="hover:text-gray-500" href="#">
+                  <Link className="hover:text-gray-500" href="#">
                     Rangking
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -194,6 +189,5 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
-    // </header>
   );
 }
