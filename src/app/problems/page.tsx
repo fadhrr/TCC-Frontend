@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function ProblemTop() {
+export default function Problems() {
   return (
     <>
       <section className="bg-white mx-24 my-12">
@@ -55,7 +55,7 @@ export default function ProblemTop() {
               database programming
             </p>
             <Link
-              href="/problem/slug/detail"
+              href="/problems/slug/detail"
               className="inline-flex items-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Read more
