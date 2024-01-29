@@ -1,62 +1,193 @@
-'use client';
+"use client";
 
-import React from 'react';
+import {
+  Cloud,
+  CreditCard,
+  Github,
+  Keyboard,
+  LifeBuoy,
+  LogOut,
+  Mail,
+  MessageSquare,
+  Plus,
+  PlusCircle,
+  Settings,
+  User,
+  UserPlus,
+  Users,
+} from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "@/lib/firebase-config";
+import Link from "next/link";
+import { useState, useEffect } from "react";
 
 export default function Header() {
-  const onToggleMenu = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.currentTarget.name = e.currentTarget.name === 'menu' ? 'close' : 'menu';
-    const navLinks = document.querySelector('.nav-links');
-    if (navLinks) {
-      navLinks.classList.toggle('top-[9%]');
-    }
+  const router = useRouter();
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user: any) => {
+      setUser(user);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        router.push("/");
+        console.log("Signed out successfully");
+        // Sign-out successful.
+      })
+      .catch((error) => {
+        // An error happened.
+      });
   };
 
+
   return (
-    // <div className="font-[Poppins] bg-gradient-to-t from-[#fbc2eb] to-[#a6c1ee] h-screen">
-    <header className="bg-white border-b-2 border-black">
-      <nav className="flex justify-between py-4 items-center w-[92%] mx-auto">
-        <div>
-          <img className="w-10 cursor-pointer" src="/images/logo.png" alt="..." />
-        </div>
-        <div className="nav-links duration-500 md:static absolute bg-white md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto w-full flex items-center px-5">
-          <ul className="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
-            <li>
-              <a className="hover:text-gray-500" href="/problem">
-                Problem
-              </a>
-            </li>
-            <li>
-              <a className="hover:text-gray-500" href="#">
-                Contest
-              </a>
-            </li>
-            <li>
-              <a className="hover:text-gray-500" href="#">
-                Rangking
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div className="flex items-center gap-6">
-          <a href="#_" className="relative infline-flex items-center justify-start inline-block px-4 py-2 overflow-hidden font-bold rounded-full group">
-            <span className="w-32 h-32 rotate-45 translate-x-12 -translate-y-2 absolute left-0 top-0 bg-black opacity-[3%]"></span>
-            <span className="absolute top-0 left-0 w-48 h-48 -mt-1 transition-all duration-500 ease-in-out rotate-45 -translate-x-56 -translate-y-24 bg-black opacity-100 group-hover:-translate-x-8"></span>
-            <span className="relative w-full text-left text-black transition-colors duration-200 ease-in-out group-hover:text-white">Log in</span>
-            <span className="absolute inset-0 border-2 border-black rounded-full"></span>
-          </a>
-          {/* <button
-                        href="#_"
-                        class="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-gray-600 whitespace-no-wrap bg-white border border-gray-200 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:shadow-none"
-                    >
-                        Sing In
-                    </button> */}
-          {/* <ion-icon onClick={onToggleMenu} name="menu" className="text-3xl cursor-pointer md:hidden"></ion-icon> */}
-          <button type="button" className=" md:hidden" onClick={onToggleMenu}>
-            <img src="/icons/menu.svg" className=" w-[20px]" alt="" />
-          </button>
+      <nav className="sticky top-0 w-full border-b border-black bg-white/80 from-zinc-200 backdrop-blur-md dark:border-neutral-800 dark:from-inherit lg:w-auto lg:border-b-2">
+        <div className="flex flex-wrap items-center justify-between p-4 mx-4">
+          <div className="flex items-center space-x-4">
+            <a
+              href="/"
+              className="flex items-center rtl:space-x-reverse"
+            >
+              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+                TCC
+              </span>
+            </a>
+            <div
+              className="hidden w-full md:block md:w-auto"
+              id="navbar-default"
+            >
+              <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                <li>
+                  <Link className="hover:text-gray-500" href={"/problems"}>
+                    Problem
+                  </Link>
+                </li>
+                <li>
+                  <Link className="hover:text-gray-500" href="#">
+                    Contest
+                  </Link>
+                </li>
+                <li>
+                  <Link className="hover:text-gray-500" href="#">
+                    Rangking
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="flex items-center space-x-2">
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    type="button"
+                    className="relative infline-flex items-center justify-start inline-block px-4 py-2 overflow-hidden font-bold rounded-full group bg-white"
+                  >
+                    <span className="w-32 h-32 rotate-45 translate-x-12 -translate-y-2 absolute left-0 top-0 bg-black opacity-[3%]"></span>
+                    <span className="absolute top-0 left-0 w-48 h-48 -mt-1 transition-all duration-500 ease-in-out rotate-45 -translate-x-56 -translate-y-24 bg-black opacity-100 group-hover:-translate-x-8"></span>
+                    <span className="relative w-full text-left text-black transition-colors duration-200 ease-in-out group-hover:text-white">
+                      {user.displayName}
+                    </span>
+                    <span className="absolute inset-0 border-2 border-black rounded-full"></span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56">
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem>
+                      <User className="mr-2 h-4 w-4" />
+                      <span>Profile</span>
+                      <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span>Settings</span>
+                      <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <LifeBuoy className="mr-2 h-4 w-4" />
+                    <span>Support</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleLogout}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Log out</span>
+                    <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <>
+                <Link
+                  href={"/auth/signin"}
+                  className="relative infline-flex items-center justify-start inline-block px-4 py-2 overflow-hidden font-bold rounded-full group"
+                >
+                  <span className="w-32 h-32 rotate-45 translate-x-12 -translate-y-2 absolute left-0 top-0 bg-black opacity-[3%]"></span>
+                  <span className="absolute top-0 left-0 w-48 h-48 -mt-1 transition-all duration-500 ease-in-out rotate-45 -translate-x-56 -translate-y-24 bg-black opacity-100 group-hover:-translate-x-8"></span>
+                  <span className="relative w-full text-left text-black transition-colors duration-200 ease-in-out group-hover:text-white">
+                    Log in
+                  </span>
+                  <span className="absolute inset-0 border-2 border-black rounded-full"></span>
+                </Link>
+                <Link
+                  href={"/auth/signup"}
+                  className="text-black transition-colors duration-200 ease-in-out hover:text-slate-500"
+                >
+                  Sign up
+                </Link>
+              </>
+            )}
+            <button
+              data-collapse-toggle="navbar-default"
+              type="button"
+              className="inline-flex items-start p-2.5 w-10 h-10 justify-center text-sm text-gray-500 rounded-full md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+              aria-controls="navbar-default"
+              aria-expanded="false"
+            >
+              <span className="sr-only">Open main menu</span>
+              <svg
+                className="w-5 h-5"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 17 14"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M1 1h15M1 7h15M1 13h15"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
       </nav>
-    </header>
-    // </div>
   );
 }
