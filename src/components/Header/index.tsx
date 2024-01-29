@@ -1,6 +1,23 @@
 'use client';
 
-import { Cloud, CreditCard, Github, Keyboard, LifeBuoy, LogOut, Mail, MessageSquare, Plus, PlusCircle, Settings, User, UserPlus, Users } from 'lucide-react';
+import {
+    Cloud,
+    CreditCard,
+    Github,
+    Keyboard,
+    LifeBuoy,
+    LogOut,
+    Mail,
+    MessageSquare,
+    Plus,
+    PlusCircle,
+    Settings,
+    User,
+    UserPlus,
+    Users,
+  } from 'lucide-react';
+
+import Image from "next/image";
 
 import { Button } from '@/components/ui/button';
 import {
@@ -39,12 +56,10 @@ export default function Header() {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        router.push('/');
-        console.log('Signed out successfully');
-        // Sign-out successful.
+        router.push("/");
+        console.log("Signed out successfully");
       })
       .catch((error) => {
-        // An error happened.
       });
   };
 
