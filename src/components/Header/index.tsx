@@ -41,7 +41,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { iconsImgs, webImgs } from "@/Utils/Image";
 
-export default function Navbar() {
+export default function Header() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
 
@@ -66,20 +66,14 @@ export default function Navbar() {
   return (
       <nav className="sticky  top-0 w-full border-b border-black from-zinc-200 backdrop-blur dark:border-neutral-800 dark:from-inherit lg:w-auto lg:border-b-2">
         <div className="flex flex-wrap items-center justify-between p-4 mx-4">
-          <div className="flex items-center space-x-4">
-          <div>
-            <Link href="/">
-              <Image
-                className="w-10 cursor-pointer"
-                src={webImgs.logo}
-                alt="..."/>      
-            </Link>
-          
-            </div>
-            <div
-              className="hidden w-full md:block md:w-auto"
-              id="navbar-default"
-            >
+          <Link href="/">
+            <Image
+              className="w-10 cursor-pointer"
+              src={webImgs.logo}
+              alt="..."/>      
+          </Link>
+          <div className="flex items-center space-x-4 mx-auto">
+            <div className="hidden w-full md:block md:w-auto" id="navbar-default">
               <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                 <li>
                   <Link href="/problems" className='hover:text-gray-500'>Problems</Link>
@@ -185,6 +179,5 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
-    // </header>
   );
 }
