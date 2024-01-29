@@ -7,9 +7,9 @@ export const metadata = {
 
 export default function ProblemLayout({ children }) {
   return (
-    <div className="flex mx-32 space-x-12">
+    <div className="flex px-2 space-x-4">
       <Sidebar />
-      <span className="border-l border-gray-500"></span>
+      <span className="md:block hidden border-l border-gray-500"></span>
       {children}
     </div>
   );
