@@ -8,7 +8,7 @@ export default function ContestTop() {
                     </span>
                 </h1>
                 <p className="mt-4 w-full lg:w-3/5 text-black xl:mt-6 ">
-                    Welcome to the 'Contests' section , here you'll find a
+                    Welcome to the Contests section, here you will find a
                     variety of exciting contests and challenges that cater to
                     diverse interests and skills. Each contest is designed to
                     test your abilities and knowledge in a specific area.
