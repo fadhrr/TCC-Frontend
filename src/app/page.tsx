@@ -28,3 +28,4 @@ const Home: React.FC<HomeProps> = ({ auth }) => {
 };
 
 export default Home;
+

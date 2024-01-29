@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 export default function Hero() {
@@ -7,6 +8,7 @@ export default function Hero() {
         {/* image */}
         <div className="flex items-center justify-center lg:w-1/2 p-6 mt-8 lg:mt-0 h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128">
           <img src="/images/Hand.png" alt="Hand Image" className="object-contain h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128" />
+
         </div>
 
         {/* Tulisan */}

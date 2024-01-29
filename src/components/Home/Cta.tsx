@@ -1,3 +1,5 @@
+
+'use client'
 import React from 'react';
 
 export default function Cta() {
@@ -19,4 +21,5 @@ export default function Cta() {
       </div>
     </section>
   );
+
 }

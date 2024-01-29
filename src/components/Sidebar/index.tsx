@@ -27,7 +27,7 @@ export default function Sidebar() {
           <span className={`relative bg-black my-1.5 block h-0.5 w-[20px] transition-all duration-300  `} />
           <span className={`relative bg-black my-1.5 block h-0.5 w-[20px] transition-all duration-300  `} />
         </button>
-        <p className='text-xs md:hidden'>Problem Menu </p>
+        <p className="text-xs md:hidden">Problem Menu </p>
       </div>
 
       {/* Menu Items */}
