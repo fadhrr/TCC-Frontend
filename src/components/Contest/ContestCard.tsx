@@ -17,7 +17,7 @@ const contestCardData = [
 
 export default function ContesCard() {
   return (
-    <div>
+    <div className="px-8">
       {contestCardData.map((article, index) => (
         <article key={index} className="group relative w-full my-4 cursor-pointe inline-block">
           <div className="relative bg-gray-50 z-10 flex flex-col overflow-hidden p-4 border-2 border-black sm:gap-4">
