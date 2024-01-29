@@ -22,7 +22,7 @@ export default function ProblemDetail() {
   const [language] = useState([{ value: "C++" }]);
 
   return (
-    <div className="w-full my-8">
+    <div className="w-full my-8 pt-[80px]">
       <h1 className="text-4xl font-bold w-full mb-4">Problem name</h1>
 
       {limits.map((limit, index) => (

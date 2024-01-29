@@ -1,7 +1,9 @@
+import React from "react";
+
 export default function ContestTop() {
     return (
         <section className="bg-white">
-            <div className="container px-6 py-10 mx-auto">
+            <div className="container px-8 py-10 mx-auto">
                 <h1 className="text-3xl font-semibold text-black capitalize lg:text-4xl ">
                     <span className="underline decoration-blue-500">
                         Contest
@@ -14,7 +16,7 @@ export default function ContestTop() {
                     test your abilities and knowledge in a specific area.
                 </p>
                 <div className="flex justify-between">
-                    <form className="mt-4 md:w-1/3 xl:mt-6">
+                    <form className="mt-4 md:w-1/3 w-full xl:mt-6">
                         <label
                             htmlFor="default-search"
                             className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"

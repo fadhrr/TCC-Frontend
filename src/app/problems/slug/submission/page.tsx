@@ -128,7 +128,7 @@ export default function ProblemSubmission() {
   ];
 
   return (
-    <div className="w-full my-8">
+    <div className="w-full pt-[80px] my-8">
       <div className="flex justify-center">
         <button
           className={`${
