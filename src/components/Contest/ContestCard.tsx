@@ -1,3 +1,4 @@
+
 const contestCardData = [
   {
     title: 'Hello world',
@@ -44,4 +45,5 @@ export default function ContesCard() {
       ))}
     </div>
   );
+
 }

@@ -1,6 +1,24 @@
 'use client';
 
-import { Cloud, CreditCard, Github, Keyboard, LifeBuoy, LogOut, Mail, MessageSquare, Plus, PlusCircle, Settings, User, UserPlus, Users } from 'lucide-react';
+import {
+    Cloud,
+    CreditCard,
+    Github,
+    Keyboard,
+    LifeBuoy,
+    LogOut,
+    Mail,
+    MessageSquare,
+    Plus,
+    PlusCircle,
+    Settings,
+    User,
+    UserPlus,
+    Users,
+  } from 'lucide-react';
+
+import Image from "next/image";
+
 
 import { Button } from '@/components/ui/button';
 import {
@@ -16,6 +34,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
+
 } from '@/components/ui/dropdown-menu';
 import { useRouter, usePathname } from 'next/navigation';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
@@ -39,12 +58,12 @@ export default function Header() {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        router.push('/');
-        console.log('Signed out successfully');
-        // Sign-out successful.
+
+        router.push("/");
+        console.log("Signed out successfully");
+
       })
       .catch((error) => {
-        // An error happened.
       });
   };
 
@@ -69,6 +88,7 @@ export default function Header() {
   });
 
   return (
+
     <header
       className={`ud-header left-0 border-b-2 border-black top-0 z-40 flex w-full bg-white items-center ${
         sticky ? 'shadow-nav fixed z-[9999] border-b border-stroke bg-white/80 backdrop-blur-[5px] transition dark:border-dark-3/20 dark:bg-dark/10' : 'absolute bg-white'
@@ -125,6 +145,7 @@ export default function Header() {
                   )}
                 </ul>
               </nav>
+
             </div>
           </div>
           {/* 3 */}

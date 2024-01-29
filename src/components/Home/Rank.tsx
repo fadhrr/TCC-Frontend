@@ -1,4 +1,6 @@
-import React from "react";
+
+'use client'
+
 
 export default function Rank() {
     return (
@@ -23,7 +25,9 @@ export default function Rank() {
                         <td className="p-3  text-right">120.000</td>
                     </tr>
 
-                    <tr className=" cursor-pointer border-2 border-black flex flex-row justify-between duration-300 hover:scale-105">
+
+                    <tr className="cursor-pointer border-2 border-black flex flex-row justify-between duration-300 hover:scale-105">
+
                         <td className="bg-black text-white flex items-center px-4">
                             1.
                         </td>
