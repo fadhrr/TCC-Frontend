@@ -1,22 +1,40 @@
-import React, { useState } from "react";
+"use client";
+import React from "react";
 import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
 
-export default function Sidebar() {
+export default function Sidebar({ slug }) {
+  // const router = useRouter();
+  const pathname = usePathname();
+
+  // Function to determine if a link is active
+  const isLinkActive = (href: string) => {
+    return pathname === href;
+  };
+
   return (
     <div className="w-1/5 my-8">
       <h1 className="text-3xl font-bold w-full mb-4">Problem</h1>
-
-      <Link href={"/problems/slug/detail"} className="hover:text-[#FFC900]">
-        <p className="text-md ml-2 mt-2">Detail</p>
-      </Link>
-      <Link href={"/problems/slug/submission"} className="hover:text-[#FFC900]">
-        <p className="text-md ml-2 mt-2">Submission</p>
-      </Link>
-      {/* {problemLinks.map((problemLink) => (
-            <Link href={problemLink.link} className="hover:text-[#FFC900]">
-              <p className="text-l ml-2 mt-2">{problemLink.title}</p>
-            </Link> 
-          ))} */}
+      <div className="flex flex-col">
+        <Link
+          href={`/problems/detail/${slug}`}
+          className={`text-md ml-2 mt-2 ${
+            isLinkActive(`/problems/detail/${slug}`) ? "text-[#FFC900]" : ""
+          }`}
+        >
+          Detail
+        </Link>
+        <Link
+          href={`/problems/detail/${slug}/submission`}
+          className={`text-md ml-2 mt-2 ${
+            isLinkActive(`/problems/detail/${slug}/submission`)
+              ? "text-[#FFC900]"
+              : ""
+          }`}
+        >
+          Submission
+        </Link>
+      </div>
     </div>
   );
 }
