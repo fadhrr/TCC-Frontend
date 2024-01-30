@@ -1,4 +1,12 @@
-import {home, budget, plane, wallet, bills, report, wealth, user, gears} from '../../public/assets/icons'
+import home from '../../public/assets/icons/home.svg'
+import budget from '../../public/assets/icons/budget.svg'
+import plane from '../../public/assets/icons/plane.svg'
+import wallet from '../../public/assets/icons/wallet.svg'
+import bills from '../../public/assets/icons/bills.svg'
+import report from '../../public/assets/icons/report.svg'
+import wealth from '../../public/assets/icons/wealth.svg'
+import user from '../../public/assets/icons/user.svg'
+import gears from '../../public/assets/icons/gears.svg'
 
 export const navigationLinks = [
     { id: 1, title: "Home", image: home, link: "/Home" },
