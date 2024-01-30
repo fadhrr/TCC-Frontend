@@ -218,7 +218,7 @@ export default function ProblemSubmission() {
       </div>
 
       {/* All Subs Page */}
-      <div className={`${currentTab === 2 ? "" : "hidden"}`}>
+      <div className={`${currentTab === 2 ? "block" : "hidden"}`}>
         <div>
           <p className="text-4xl font-bold w-full my-4">Problem name</p>
         </div>
@@ -226,18 +226,18 @@ export default function ProblemSubmission() {
         <div className="py-2">
           <h1 className="text-xl font-bold">All Submissions</h1>
 
-          <div className="table-wrapper">
-            <table className="w-full border-separate border-spacing-y-3">
+          <div className="table-wrapper block w-full overflow-x-scroll">
+            <table className="items-center bg-transparent w-full border-separate border-spacing-y-3">
               <thead>
                 <tr className="text-left">
-                  <th className="pl-3">Id</th>
-                  <th>User</th>
-                  <th>Archive</th>
-                  <th>Problems</th>
-                  <th>Lang</th>
-                  <th>Verdict</th>
-                  <th>Pts</th>
-                  <th>Time</th>
+                  <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">Id</th>
+                  <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">User</th>
+                  <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">Archive</th>
+                  <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">Problems</th>
+                  <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">Lang</th>
+                  <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">Verdict</th>
+                  <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">Pts</th>
+                  <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">Time</th>
                 </tr>
               </thead>
               <tbody>
@@ -247,23 +247,23 @@ export default function ProblemSubmission() {
                     className={index % 2 === 0 ? "bg-white" : "bg-[#EDEDED]"}
                   >
                     <td
-                      className={`border-y-2 border-s-2 border-black h-10 pl-3`}
+                      className={` border-y-2 px-6 align-middle border-s-2 border-black h-10 pl-3`}
                     >
                       {item.id}
                     </td>
-                    <td className={`border-y-2 border-black`}>{item.user}</td>
-                    <td className={`border-y-2 border-black`}>
+                    <td className={`border-y-2 px-6 align-middle border-black`}>{item.user}</td>
+                    <td className={`border-y-2 px-6 align-middle border-black`}>
                       {item.archive}
                     </td>
-                    <td className={`border-y-2 border-black`}>
+                    <td className={`border-y-2 px-6 align-middle border-black`}>
                       {item.problems}
                     </td>
-                    <td className={`border-y-2 border-black`}>{item.lang}</td>
-                    <td className={`border-y-2 border-black`}>
+                    <td className={`border-y-2 px-6 align-middle border-black`}>{item.lang}</td>
+                    <td className={`border-y-2 px-6 align-middle border-black`}>
                       {item.verdict}
                     </td>
-                    <td className={`border-y-2 border-black`}>{item.pts}</td>
-                    <td className={`border-y-2 border-e-2 border-black`}>
+                    <td className={`border-y-2 px-6 align-middle border-black`}>{item.pts}</td>
+                    <td className={`border-y-2 px-6 align-middle border-e-2 border-black`}>
                       {item.time}
                     </td>
                   </tr>
