@@ -247,7 +247,7 @@ export default function ProblemSubmission() {
                     className={index % 2 === 0 ? "bg-white" : "bg-[#EDEDED]"}
                   >
                     <td
-                      className={`px-6 align-middle border-y-2 px-6 align-middle border-s-2 border-black h-10 pl-3`}
+                      className={` border-y-2 px-6 align-middle border-s-2 border-black h-10 pl-3`}
                     >
                       {item.id}
                     </td>
