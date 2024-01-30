@@ -20,7 +20,9 @@ const ScorersLayout = () => {
 
   return (
     <div>
-        <h1 className="text-[64px] font-bold font-lato">Rankings</h1>
+        <h1 className="text-3xl font-bold pt-[70px] md:pt-[80px] lg:text-4xl">
+            <span className="underline decoration-blue-500">Top Scorers</span>
+        </h1>
         <div className="table-wrapper">
             <table className="w-full border-separate border-spacing-y-3 table-auto">
                 <thead>
