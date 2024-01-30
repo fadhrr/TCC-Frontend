@@ -1,27 +1,19 @@
-"use client";
-import React, { useState } from "react";
+import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-// import { problemLinks } from '@/Data/data.js';
-
-export default function ProblemSubmission({
+export default async function ProblemSubmission({
   params,
 }: {
   params: { slug: string };
 }) {
-  //   const res = await fetch(
-  //     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/problem/${params.slug}`
-  //   );
-  //   const problem = await res.json();
-  //   if (!res.ok) {
-  //     // This will activate the closest `error.js` Error Boundary
-  //     throw new Error("Failed to fetch data");
-  //   }
-  const [currentTab, setCurrentTab] = useState(1);
-
-  const toogleTab = (index) => {
-    setCurrentTab(index);
-  };
+  
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/problem/${params.slug}`
+  );
+  const problem = await res.json();
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
 
   const data = [
     {
@@ -142,149 +134,117 @@ export default function ProblemSubmission({
   ];
 
   return (
+    <div className="w-full my-8 border rounded-lg">
+      <div className="text-2xl font-bold border-b p-2">
+        <h1>{problem.title}</h1>
+      </div>
 
-      <Tabs defaultValue="mySubmission" className="my-8 w-full">
-        <TabsList>
+      <Tabs defaultValue="mySubmission" className="p-8">
+        <TabsList className="flex w-max mx-auto">
           <TabsTrigger value="mySubmission">My Submision</TabsTrigger>
           <TabsTrigger value="allSubmissions">All Submissions</TabsTrigger>
         </TabsList>
-        <TabsContent value="mySubmission">
-          <div className="">
-            <div>
-              <p className="text-4xl font-bold w-full my-4">Problem name</p>
-            </div>
 
-            <div className="">
-              {desc.map((item, index) => (
-                <p key={index} className="text-sm text-slate-800 w-full my-4">
-                  Name : {item.name} <br />
-                  Language: {item.lang} <br />
-                  Time : {item.time} <br />
-                  Status : {item.status}
-                </p>
-              ))}
-            </div>
+        <TabsContent value="mySubmission" className="space-y-4">
+          <div>
+            <p className="text-sm text-slate-800 w-full">
+              Name : NULL
+              <br />
+              Language: NULL
+              <br />
+              Time : NULL
+              <br />
+              Status : NULL
+            </p>
+          </div>
 
-            <div className="py-4">
-              <h1 className="text-xl font-bold">Test Result</h1>
-              <div className="table-wrapper">
-                <table className="w-full border-separate border-spacing-y-3">
-                  <thead>
-                    <tr className="text-left">
-                      <th className="pl-3">Id</th>
-                      <th>Status</th>
-                      <th>Time</th>
-                      <th>Memory</th>
-                      <th>Score</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {result.map((item, index) => (
-                      <tr
-                        key={index}
-                        className={
-                          index % 2 === 0 ? "bg-white" : "bg-[#EDEDED]"
-                        }
-                      >
-                        <td
-                          className={`border-y-2 border-s-2 border-black h-10 pl-3`}
-                        >
-                          {item.id}
-                        </td>
-                        <td className={`border-y-2 border-black`}>
-                          {item.status}
-                        </td>
-                        <td className={`border-y-2 border-black`}>
-                          {item.time}
-                        </td>
-                        <td className={`border-y-2 border-black`}>
-                          {item.memory}
-                        </td>
-                        <td className={`border-y-2 border-r-2 border-black`}>
-                          {item.score}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <div className="table-wrapper">
+            <h1 className="font-bold">Test Result</h1>
+            <table className="w-full border-separate border-spacing-y-3">
+              <thead>
+                <tr className="font-normal text-left">
+                  <th className="pl-3">Id</th>
+                  <th>Status</th>
+                  <th>Time</th>
+                  <th>Memory</th>
+                  <th>Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                {result.map((item, index) => (
+                  <tr
+                    key={index}
+                    className={`text-sm ${
+                      index % 2 === 0 ? "bg-white" : "bg-[#EDEDED]"
+                    }`}
+                  >
+                    <td
+                      className={`py-1 border-y-2 border-s-2 border-black pl-3`}
+                    >
+                      {item.id}
+                    </td>
+                    <td className={`border-y-2 border-black`}>{item.status}</td>
+                    <td className={`border-y-2 border-black`}>{item.time}</td>
+                    <td className={`border-y-2 border-black`}>{item.memory}</td>
+                    <td className={`border-y-2 border-r-2 border-black`}>
+                      {item.score}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-            <div>
-              <h1 className="text-xl font-bold">Solution</h1>
-              <object
-                className="mt-4 border-2 border-black w-full"
-                data="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20210101201653/PDF.pdf"
-                height="720"
-              ></object>
-            </div>
+          <div className="px-8 space-y-2">
+            <h1 className="font-bold">Solution</h1>
+            <object
+              className="border-2 border-black w-full"
+              data="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20210101201653/PDF.pdf"
+              height="720"
+            ></object>
           </div>
         </TabsContent>
-        <TabsContent value="allSubmissions">
-          <div className={""}>
-            <div>
-              <p className="text-4xl font-bold w-full my-4">Problem name</p>
-            </div>
 
-            <div className="py-2">
-              <h1 className="text-xl font-bold">All Submissions</h1>
+        <TabsContent value="allSubmissions" className="space-y-4">
+          <h1 className="font-bold">All Submissions</h1>
+          <div className="table-wrapper">
+            <table className="w-full border-separate border-spacing-y-3">
+              <thead>
+                <tr className="text-left">
+                  <th className="pl-3">Id</th>
+                  <th>User</th>
+                  <th>Archive</th>
+                  <th>Problems</th>
+                  <th>Lang</th>
+                  <th>Verdict</th>
+                  <th>Pts</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
 
-              <div className="table-wrapper">
-                <table className="w-full border-separate border-spacing-y-3">
-                  <thead>
-                    <tr className="text-left">
-                      <th className="pl-3">Id</th>
-                      <th>User</th>
-                      <th>Archive</th>
-                      <th>Problems</th>
-                      <th>Lang</th>
-                      <th>Verdict</th>
-                      <th>Pts</th>
-                      <th>Time</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data.map((item, index) => (
-                      <tr
-                        key={index}
-                        className={
-                          index % 2 === 0 ? "bg-white" : "bg-[#EDEDED]"
-                        }
-                      >
-                        <td
-                          className={`border-y-2 border-s-2 border-black h-10 pl-3`}
-                        >
-                          {item.id}
-                        </td>
-                        <td className={`border-y-2 border-black`}>
-                          {item.user}
-                        </td>
-                        <td className={`border-y-2 border-black`}>
-                          {item.archive}
-                        </td>
-                        <td className={`border-y-2 border-black`}>
-                          {item.problems}
-                        </td>
-                        <td className={`border-y-2 border-black`}>
-                          {item.lang}
-                        </td>
-                        <td className={`border-y-2 border-black`}>
-                          {item.verdict}
-                        </td>
-                        <td className={`border-y-2 border-black`}>
-                          {item.pts}
-                        </td>
-                        <td className={`border-y-2 border-e-2 border-black`}>
-                          {item.time}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <tbody>
+                {data.map((item, index) => (
+                  <tr
+                    key={index}
+                    className={`text-sm ${
+                      index % 2 === 0 ? "bg-white" : "bg-[#EDEDED]"
+                    }`}
+                  >
+                    <td className={`py-1 border-y-2 border-s-2 border-black pl-3`}>{item.id}</td>
+                    <td className={`border-y-2 border-black`}>{item.user}</td>
+                    <td className={`border-y-2 border-black`}>{item.archive}</td>
+                    <td className={`border-y-2 border-black`}>{item.problems}</td>
+                    <td className={`border-y-2 border-black`}>{item.lang}</td>
+                    <td className={`border-y-2 border-black`}>{item.verdict}</td>
+                    <td className={`border-y-2 border-black`}>{item.pts}</td>
+                    <td className={`border-y-2 border-e-2 border-black`}>{item.time}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </TabsContent>
       </Tabs>
+    </div>
   );
 }

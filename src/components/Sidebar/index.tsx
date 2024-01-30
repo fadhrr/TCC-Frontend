@@ -13,22 +13,24 @@ export default function Sidebar({ slug }) {
   };
 
   return (
-    <div className="w-1/5 my-8">
-      <h1 className="text-3xl font-bold w-full mb-4">Problem</h1>
+    <div className="min-w-64 my-8 h-max border rounded-lg">
+      <h1 className="text-2xl p-2 font-bold w-full border-b">Problem</h1>
       <div className="flex flex-col">
         <Link
           href={`/problems/detail/${slug}`}
-          className={`text-md ml-2 mt-2 ${
-            isLinkActive(`/problems/detail/${slug}`) ? "text-[#FFC900]" : ""
+          className={`text-md border-b p-2 hover:bg-slate-50 ${
+            isLinkActive(`/problems/detail/${slug}`)
+              ? "bg-slate-50 font-bold"
+              : ""
           }`}
         >
           Detail
         </Link>
         <Link
           href={`/problems/detail/${slug}/submission`}
-          className={`text-md ml-2 mt-2 ${
+          className={`text-md p-2 hover:bg-slate-50 ${
             isLinkActive(`/problems/detail/${slug}/submission`)
-              ? "text-[#FFC900]"
+              ? "bg-slate-50 font-bold"
               : ""
           }`}
         >
