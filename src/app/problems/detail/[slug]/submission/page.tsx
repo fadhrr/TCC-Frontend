@@ -134,8 +134,8 @@ export default async function ProblemSubmission({
   ];
 
   return (
-    <div className="w-full my-8 border rounded-lg">
-      <div className="text-2xl font-bold border-b p-2">
+    <div className="w-full my-8 border rounded-lg bg-white">
+      <div className="text-2xl font-bold border-b p-3">
         <h1>{problem.title}</h1>
       </div>
 
