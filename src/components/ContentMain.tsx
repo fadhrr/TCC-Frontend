@@ -1,7 +1,7 @@
 import Hero from '@/components/Home/Hero';
 import Step from '@/components/Home/Step';
 import Rank from '@/components/Home/Rank';
-import Cta from '@/components/Home/CTA';
+import Cta from '@/components/Home/Cta';
 import Footer from '@/components/Home/Footer';
 
 export default function ContentMain() {
