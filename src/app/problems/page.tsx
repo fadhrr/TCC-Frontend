@@ -6,7 +6,6 @@ export default async function Problems() {
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/problems`
   );
   const problems = await res.json();
-  console.log(problems.content);
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
     throw new Error("Failed to fetch data");
