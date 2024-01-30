@@ -1,4 +1,6 @@
 import React from "react";
+import { Badge } from "@/components/ui/badge";
+import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default async function ProblemSubmission({
@@ -6,7 +8,6 @@ export default async function ProblemSubmission({
 }: {
   params: { slug: string };
 }) {
-  
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/problem/${params.slug}`
   );
@@ -131,12 +132,16 @@ export default async function ProblemSubmission({
   const result = [
     { id: 1, status: "Acc", time: "2ms", memory: "100 KB", score: "50.0" },
     { id: 2, status: "Acc", time: "2ms", memory: "100 KB", score: "50.0" },
+    { id: 3, status: "Acc", time: "2ms", memory: "100 KB", score: "50.0" },
+    { id: 4, status: "Acc", time: "2ms", memory: "100 KB", score: "50.0" },
+    { id: 5, status: "Acc", time: "2ms", memory: "100 KB", score: "50.0" },
+    { id: 6, status: "Acc", time: "2ms", memory: "100 KB", score: "50.0" },
   ];
 
   return (
     <div className="w-full my-8 border rounded-lg bg-white">
       <div className="text-2xl font-bold border-b p-3">
-        <h1>{problem.title}</h1>
+        <Label>{problem.title}</Label>
       </div>
 
       <Tabs defaultValue="mySubmission" className="p-8">
@@ -159,7 +164,7 @@ export default async function ProblemSubmission({
           </div>
 
           <div className="table-wrapper">
-            <h1 className="font-bold">Test Result</h1>
+            <Label className="text-lg font-bold">Test Result</Label>
             <table className="w-full border-separate border-spacing-y-3">
               <thead>
                 <tr className="font-normal text-left">
@@ -183,7 +188,9 @@ export default async function ProblemSubmission({
                     >
                       {item.id}
                     </td>
-                    <td className={`border-y-2 border-black`}>{item.status}</td>
+                    <td className={`border-y-2 border-black`}>
+                      <Badge variant="default">{item.status}</Badge>
+                    </td>
                     <td className={`border-y-2 border-black`}>{item.time}</td>
                     <td className={`border-y-2 border-black`}>{item.memory}</td>
                     <td className={`border-y-2 border-r-2 border-black`}>
@@ -195,18 +202,18 @@ export default async function ProblemSubmission({
             </table>
           </div>
 
-          <div className="px-8 space-y-2">
+          {/* <div className="px-8 space-y-2">
             <h1 className="font-bold">Solution</h1>
             <object
               className="border-2 border-black w-full"
               data="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20210101201653/PDF.pdf"
               height="720"
             ></object>
-          </div>
+          </div> */}
         </TabsContent>
 
         <TabsContent value="allSubmissions" className="space-y-4">
-          <h1 className="font-bold">All Submissions</h1>
+          <Label className="text-lg font-bold">All Submissions</Label>
           <div className="table-wrapper">
             <table className="w-full border-separate border-spacing-y-3">
               <thead>
@@ -230,14 +237,26 @@ export default async function ProblemSubmission({
                       index % 2 === 0 ? "bg-white" : "bg-[#EDEDED]"
                     }`}
                   >
-                    <td className={`py-1 border-y-2 border-s-2 border-black pl-3`}>{item.id}</td>
+                    <td
+                      className={`py-1 border-y-2 border-s-2 border-black pl-3`}
+                    >
+                      {item.id}
+                    </td>
                     <td className={`border-y-2 border-black`}>{item.user}</td>
-                    <td className={`border-y-2 border-black`}>{item.archive}</td>
-                    <td className={`border-y-2 border-black`}>{item.problems}</td>
+                    <td className={`border-y-2 border-black`}>
+                      {item.archive}
+                    </td>
+                    <td className={`border-y-2 border-black`}>
+                      {item.problems}
+                    </td>
                     <td className={`border-y-2 border-black`}>{item.lang}</td>
-                    <td className={`border-y-2 border-black`}>{item.verdict}</td>
+                    <td className={`border-y-2 border-black`}>
+                      <Badge variant="destructive">{item.verdict}</Badge>
+                    </td>
                     <td className={`border-y-2 border-black`}>{item.pts}</td>
-                    <td className={`border-y-2 border-e-2 border-black`}>{item.time}</td>
+                    <td className={`border-y-2 border-e-2 border-black`}>
+                      {item.time}
+                    </td>
                   </tr>
                 ))}
               </tbody>

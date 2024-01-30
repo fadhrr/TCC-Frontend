@@ -99,7 +99,7 @@ export default async function Problems() {
           <h1 className="px-1 text-xl font-bold underline">Browse problems</h1>
           {problems.map((problem) => (
             <Link href={`/problems/detail/${problem.id}`}>
-              <Card key={problem.id} className="h-full">
+              <Card key={problem.id} className="transition h-full hover:bg-slate-100">
                 <CardHeader>
                   <CardTitle className="text-md">{problem.title} </CardTitle>
                   <CardDescription>
