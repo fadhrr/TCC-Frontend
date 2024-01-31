@@ -2,7 +2,7 @@
 const contestCardData = [
   {
     title: 'Hello world',
-    link: '/detailcontest', // Replace with the actual link
+    link: '/contests/slug/overview', // Replace with the actual link
     content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque aut corrupti iure tempora',
     duration: '2 hours 30 minutes',
     time: 'October 21, 21:05',
