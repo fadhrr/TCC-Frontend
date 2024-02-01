@@ -4,12 +4,21 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 
 export default function Sidebar({ slug }) {
-  // const router = useRouter();
   const pathname = usePathname();
 
-  // Function to determine if a link is active
-  const isLinkActive = (href: string) => {
-    return pathname === href;
+  // Function to tokenize the URL until the "submission" part
+  const tokenizeUntilSubmission = (url) => {
+    const tokens = url.split('/');
+    const submissionIndex = tokens.indexOf('submission');
+    if (submissionIndex !== -1) {
+      return tokens.slice(0, submissionIndex + 1).join('/');
+    }
+    return url;
+  };
+
+  // Function to determine if a link is active based on tokenization until "submission"
+  const isLinkActive = (href) => {
+    return tokenizeUntilSubmission(pathname) === tokenizeUntilSubmission(href);
   };
 
   return (
@@ -17,24 +26,24 @@ export default function Sidebar({ slug }) {
       <h1 className="text-xl p-3 font-bold w-full border-b">Problem</h1>
       <div className="flex flex-col">
         <Link
-          href={`/problems/detail/${slug}`}
+          href={`/problems/${slug}`}
           className={`text-sm border-b p-3 hover:bg-slate-100 ${
-            isLinkActive(`/problems/detail/${slug}`)
-              ? "bg-slate-100 font-bold"
+            isLinkActive(`/problems/${slug}`)
+              ? "bg-slate-100 font-medium"
               : ""
           }`}
         >
           Detail
         </Link>
         <Link
-          href={`/problems/detail/${slug}/submission`}
+          href={`/problems/${slug}/submission`}
           className={`text-sm p-3 rounded-b-lg hover:bg-slate-100 ${
-            isLinkActive(`/problems/detail/${slug}/submission`)
-              ? "bg-slate-100 font-bold"
+            isLinkActive(`/problems/${slug}/submission`)
+              ? "bg-slate-100 font-medium"
               : ""
           }`}
         >
-          Submission
+          Submissions
         </Link>
       </div>
     </div>

@@ -6,13 +6,12 @@ import React from "react";
 export default async function ProblemDetail({
   params,
 }: {
-  params: { slug: string };
+  params: { productId: string };
 }) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/problem/${params.slug}`
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/problem/${params.productId}`
   );
   const problem = await res.json();
-  console.log(problem);
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }

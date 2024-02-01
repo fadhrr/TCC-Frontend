@@ -22,43 +22,6 @@ export default async function Problems() {
 
   return (
     <div className="container mx-auto my-12">
-      <h1 className="text-3xl font-semibold text-black capitalize lg:text-4xl ">
-        <span className="underline decoration-blue-500">Problems</span>
-      </h1>
-      <p className="mt-4 w-3/5 text-black xl:mt-6 ">
-        Within the &rsquo;Problem&rsquo; section, explore a diverse range of
-        problem categories. By selecting the right category, you can dive into
-        engaging challenges and refine your skills
-      </p>
-
-      <form className="my-4 w-1/3 xl:my-6">
-        <div className="relative">
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <svg
-              className="w-4 h-4 text-gray-500 dark:text-gray-400"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 20 20"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-              />
-            </svg>
-          </div>
-          <input
-            type="search"
-            id="default-search"
-            className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500  dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Search Here..."
-            required
-          />
-        </div>
-      </form>
 
       <div className="flex gap-4">
         <div className="bg-white min-w-64 h-max border rounded-lg">
@@ -97,14 +60,12 @@ export default async function Problems() {
         </div>
         <div className="grid gap-3">
           <h1 className="px-1 text-xl font-bold underline">Browse problems</h1>
-          {problems.map((problem) => (
-            <Link href={`/problems/detail/${problem.id}`}>
-              <Card key={problem.id} className="transition h-full hover:bg-slate-100">
+          {problems.map((problem, index) => (
+            <Link key={index} href={`/problems/${problem.id}`}>
+              <Card className="transition h-full hover:bg-slate-100">
                 <CardHeader>
                   <CardTitle className="text-md">{problem.title} </CardTitle>
-                  <CardDescription>
-                    <p className="">{problem.description}</p>
-                  </CardDescription>
+                  <CardDescription>{problem.description}</CardDescription>
                 </CardHeader>
                 <CardFooter className="space-x-1">
                   <Badge variant="default">Badge</Badge>
