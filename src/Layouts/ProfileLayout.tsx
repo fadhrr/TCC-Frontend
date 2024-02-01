@@ -11,8 +11,12 @@ const ProfileLayout = () => {
         ]
     );
   return (
-    <div className="ml-2">
-        <h1 className="text-[64px] font-bold font-lato">Settings</h1>
+    <div className="ml-2 pb-10">
+        <h1 className="text-3xl font-bold pt-[70px] md:pt-[80px] lg:text-4xl">
+            <span className="underline decoration-blue-500">
+            Settings
+            </span>
+        </h1>
         {data.map((profile, index) => (
             <div key={index} className="border border-black mt-8">
             <div className="bg-black text-white full-width flex justify-between">

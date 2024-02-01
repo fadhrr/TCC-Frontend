@@ -6,7 +6,7 @@ export default function Rank() {
     return (
         <section className="bg-[#f0efeb] relative flex flex-col min-h-[60vh] justify-center items-center p-8">
             <div className="mb-10 flex flex-col gap-2 items-center w-3/4">
-                <h1 className="font-mono  text-4xl  ">
+                <h1 className="font-mono text-4xl">
                     Our Best Player
                 </h1>
                 <p className="text-md text-center">
