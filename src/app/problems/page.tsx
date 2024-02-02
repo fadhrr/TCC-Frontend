@@ -9,6 +9,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
+import { Label } from "@/components/ui/label";
 
 export default async function Problems() {
   const res = await fetch(
@@ -22,12 +23,11 @@ export default async function Problems() {
 
   return (
     <div className="container mx-auto my-12">
-
       <div className="flex gap-4">
-        <div className="bg-white min-w-64 h-max border rounded-lg">
-          <h1 className="text-xl p-3 font-bold w-ful border-b">
-            Problem filter
-          </h1>
+        <Card className=" min-w-64 h-max">
+          <div className="p-3 border-b">
+            <Label className="text-md font-bold">Filter</Label>
+          </div>
           <div className="flex flex-col">
             <div className="flex items-center p-3 space-x-2">
               <Checkbox id="terms" />
@@ -57,7 +57,7 @@ export default async function Problems() {
               </label>
             </div>
           </div>
-        </div>
+        </Card>
         <div className="grid gap-3">
           <h1 className="px-1 text-xl font-bold underline">Browse problems</h1>
           {problems.map((problem, index) => (
