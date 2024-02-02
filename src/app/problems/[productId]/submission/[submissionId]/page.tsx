@@ -1,7 +1,7 @@
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import React from "react";
+import { Label } from "@/components/ui/label";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 export default async function submissionDetail({
   params,
@@ -17,10 +17,31 @@ export default async function submissionDetail({
   }
 
   return (
-    <div className="w-full my-8 border rounded-lg bg-white">
-      <div className="text-2xl font-bold border-b p-3">
-        <h1>{submission.status}</h1>
+    <Card className="w-full">
+      <div className="p-3 border-b">
+        <Label className="text-xl font-bold">Submission #{submission.id}</Label>
       </div>
-    </div>
+      <div className="p-8 space-y-4">
+        <div className="space-x-2">
+          <Badge>{submission.status}</Badge>
+          <span>-</span>
+          <Label>{submission.user_id}</Label>
+          <span>-</span>
+          <Label>{submission.created_at}</Label>
+        </div>
+        <div className="space-y-1">
+          <Label className="text-md font-bold">Sample Test Data Results</Label>
+          <div className="p-4 bg-slate-100 border rounded-md space-y-4"></div>
+        </div>
+        <div className="space-y-1">
+          <Label className="text-md font-bold">Test Data Results</Label>
+          <div className="p-4 bg-slate-100 border rounded-md space-y-4"></div>
+        </div>
+        <div className="space-y-1">
+          <Label className="text-md font-bold">Code:</Label>
+          <div className="p-4 bg-slate-100 border rounded-md space-y-4"></div>
+        </div>
+      </div>
+    </Card>
   );
 }

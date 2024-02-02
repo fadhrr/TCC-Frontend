@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
+import { Card } from "@/components/ui/card";
 
 export default async function ProblemSubmission({
   params,
@@ -17,11 +18,10 @@ export default async function ProblemSubmission({
     throw new Error("Failed to fetch data");
   }
 
-
   return (
-    <div className="w-full my-8 border rounded-lg bg-white">
-      <div className="text-2xl font-bold border-b p-3">
-        <h1>Submission</h1>
+    <Card className="w-full">
+      <div className="p-3 border-b">
+        <Label className="text-xl font-bold">Submissions</Label>
       </div>
 
       <Tabs defaultValue="allSubmissions" className="p-8">
@@ -33,10 +33,10 @@ export default async function ProblemSubmission({
         <TabsContent value="allSubmissions" className="space-y-4">
           <Label className="text-lg font-bold">All Submissions</Label>
           <div className="table-wrapper">
-            <table className="w-full border-separate border-spacing-y-3">
+            <table className="w-full border-separate border-spacing-y-2 text-sm">
               <thead>
                 <tr className="text-left">
-                  <th className="pl-3">Id</th>
+                  <th className="pl-2">Id</th>
                   <th>User</th>
                   <th>Lang</th>
                   <th>Verdict</th>
@@ -49,28 +49,39 @@ export default async function ProblemSubmission({
                 {submissions.map((submission, index) => (
                   <tr
                     key={index}
-                    className={`text-sm ${
+                    className={`text-left ${
                       index % 2 === 0 ? "bg-white" : "bg-[#EDEDED]"
                     }`}
                   >
-                    <td
-                      className={`py-1 border-y-2 border-s-2 border-black pl-3`}
-                    >
+                    <td className={`pl-2 py-1 border-y border-s border-black`}>
                       {submission.id}
                     </td>
-                    <td className={`border-y-2 border-black`}>
+                    <td className={`border-y border-black`}>
                       {submission.user_id}
                     </td>
-                    <td className={`border-y-2 border-black`}>
+                    <td className={`border-y border-black`}>
                       {submission.language_id}
                     </td>
-                    <td className={`border-y-2 border-black`}>
-                      <Badge variant="destructive">{submission.status}</Badge>
+                    <td className={`border-y border-black`}>
+                      <Badge
+                        variant="customTailwind"
+                        className={`${
+                          submission.status === "Accepted"
+                            ? "bg-green-500"
+                            : submission.status === "Wrong Answer"
+                            ? "bg-red-500"
+                            : submission.status === "Compile Error"
+                            ? "bg-yellow-500"
+                            : ""
+                        }`}
+                      >
+                        {submission.status}
+                      </Badge>
                     </td>
-                    <td className={`border-y-2 border-black`}>
+                    <td className={`border-y border-black`}>
                       {submission.time}
                     </td>
-                    <td className={`border-y-2 border-e-2 border-black`}>
+                    <td className={`border-y border-e border-black`}>
                       <Link
                         href={`/problems/${params.productId}/submission/${submission.id}`}
                         className="text-blue-500"
@@ -88,10 +99,10 @@ export default async function ProblemSubmission({
         <TabsContent value="mySubmissions" className="space-y-4">
           <Label className="text-lg font-bold">My Submissions</Label>
           <div className="table-wrapper">
-            <table className="w-full border-separate border-spacing-y-3">
+            <table className="w-full border-separate border-spacing-y-2 text-sm">
               <thead>
                 <tr className="text-left">
-                  <th className="pl-3">Id</th>
+                  <th className="pl-2">Id</th>
                   <th>User</th>
                   <th>Lang</th>
                   <th>Verdict</th>
@@ -104,28 +115,39 @@ export default async function ProblemSubmission({
                 {submissions.map((submission, index) => (
                   <tr
                     key={index}
-                    className={`text-sm ${
+                    className={`text-left ${
                       index % 2 === 0 ? "bg-white" : "bg-[#EDEDED]"
                     }`}
                   >
-                    <td
-                      className={`py-1 border-y-2 border-s-2 border-black pl-3`}
-                    >
+                    <td className={`pl-2 py-1 border-y border-s border-black`}>
                       {submission.id}
                     </td>
-                    <td className={`border-y-2 border-black`}>
+                    <td className={`border-y border-black`}>
                       {submission.user_id}
                     </td>
-                    <td className={`border-y-2 border-black`}>
+                    <td className={`border-y border-black`}>
                       {submission.language_id}
                     </td>
-                    <td className={`border-y-2 border-black`}>
-                      <Badge variant="destructive">{submission.status}</Badge>
+                    <td className={`border-y border-black`}>
+                      <Badge
+                        variant="customTailwind"
+                        className={`${
+                          submission.status === "Accepted"
+                            ? "bg-green-500"
+                            : submission.status === "Wrong Answer"
+                            ? "bg-red-500"
+                            : submission.status === "Compile Error"
+                            ? "bg-yellow-500"
+                            : ""
+                        }`}
+                      >
+                        {submission.status}
+                      </Badge>
                     </td>
-                    <td className={`border-y-2 border-black`}>
+                    <td className={`border-y border-black`}>
                       {submission.time}
                     </td>
-                    <td className={`border-y-2 border-e-2 border-black`}>
+                    <td className={`border-y border-e border-black`}>
                       <Link
                         href={`/problems/${params.productId}/submission/${submission.id}`}
                         className="text-blue-500"
@@ -140,6 +162,6 @@ export default async function ProblemSubmission({
           </div>
         </TabsContent>
       </Tabs>
-    </div>
+    </Card>
   );
 }
