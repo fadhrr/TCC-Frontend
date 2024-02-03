@@ -1,11 +1,6 @@
 import Sidebar from "@/components/Sidebar";
 import {
   Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 
@@ -16,14 +11,17 @@ export const metadata = {
 
 export default function ProblemLayout({ children, params }) {
   return (
-    <div className="flex w-3/4 mx-auto my-8 space-x-4">
+    <div className="container flex mx-auto my-8 space-x-4">
       <div className="h-max min-w-64 space-y-4">
-        <Sidebar slug={params.productId} />
+        <Sidebar slug={params.problemId} />
+      </div>
+      {children}
+      <div className="h-max min-w-64 space-y-4">
         <Card>
           <div className="p-3 border-b">
             <Label className="text-md font-bold">Top User by Time</Label>
           </div>
-          <div className="table-wrapper p-3">
+          <div className="table-wrapper p-3 text-muted-foreground">
             <table className="w-full border-separate border-spacing-y-2 text-sm">
               <thead>
                 <tr className="text-center">
@@ -47,7 +45,7 @@ export default function ProblemLayout({ children, params }) {
           <div className="p-3 border-b">
             <Label className="text-md font-bold">Top User by Memory</Label>
           </div>
-          <div className="table-wrapper p-3">
+          <div className="table-wrapper p-3 text-muted-foreground">
             <table className="w-full border-separate border-spacing-y-2 text-sm">
               <thead>
                 <tr className="text-center">
@@ -68,7 +66,6 @@ export default function ProblemLayout({ children, params }) {
           </div>
         </Card>
       </div>
-      {children}
     </div>
   );
 }

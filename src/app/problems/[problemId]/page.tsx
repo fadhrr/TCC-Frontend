@@ -1,21 +1,25 @@
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import React from "react";
 import { Card } from "@/components/ui/card";
+import React, { useEffect, useState, CSSProperties } from "react";
+
+async function getProblem(problemId: any) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/problem/${problemId}`
+  );
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return res.json();
+}
 
 export default async function ProblemDetail({
   params,
 }: {
-  params: { productId: string };
+  params: { problemId: string };
 }) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/problem/${params.productId}`
-  );
-  const problem = await res.json();
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
+  const problem = await getProblem(params.problemId);
 
   return (
     <Card className="w-full">

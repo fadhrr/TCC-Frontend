@@ -1,28 +1,68 @@
+"use client";
+
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
-import Link from "next/link";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Link from "next/link";
+import React, { useEffect, useState, CSSProperties } from "react";
+import { FadeLoader } from "react-spinners";
 
-export default async function Problems() {
+async function getProblems() {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/problems`
   );
-  const problems = await res.json();
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
     throw new Error("Failed to fetch data");
   }
+  return res.json();
+}
+
+export default function Problems() {
+  const [problems, setProblems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getProblems();
+        setProblems(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
+  if (error) {
+    return <div>Error: {error}</div>; // Display a meaningful error message
+  }
 
   return (
     <div className="container mx-auto my-12">
+      <form className="my-4 md:w-1/3 w-full xl:my-6">
+          <Input
+            type="search"
+            id="default-search"
+            className="w-full py-2 md:py-4 text-sm text-gray-900 border bg-white border-gray-300 rounded-lg  dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Search here"
+            // required
+            style={{ fontSize: "16px" }}
+          />
+      </form>
       <div className="flex gap-4">
         <Card className=" min-w-64 h-max">
           <div className="p-3 border-b">
@@ -58,8 +98,13 @@ export default async function Problems() {
             </div>
           </div>
         </Card>
-        <div className="grid gap-3">
+        <div className="flex flex-col w-full gap-3">
           <h1 className="px-1 text-xl font-bold underline">Browse problems</h1>
+          {loading && (
+            <Card className="flex justify-center h-full items-center">
+              <FadeLoader color="#bfbfbf" />
+            </Card>
+          )}
           {problems.map((problem, index) => (
             <Link key={index} href={`/problems/${problem.id}`}>
               <Card className="transition h-full hover:bg-slate-100">
