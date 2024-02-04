@@ -13,7 +13,7 @@ const articlesData = [
       { label: 'Difficulty', value: 'Hard' },
       { label: 'Author', value: 'Mas Ben' },
       { label: 'Question', value: '50' },
-      { label: 'Max Score', value: '100' },
+      { label: 'Duration', value: '100' },
     ],
   },
 ];
