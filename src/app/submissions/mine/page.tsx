@@ -1,7 +1,6 @@
 'use client'
 
 import React, {useState} from "react";
-import SidebarSubmissions from "@/Fragments/SidebarSubmissions";
 import SubmissionsLayout from "@/Layouts/SubmissionsLayout";
 import { mySubmissionsData } from "@/Data/mySubmissionsData";
 
@@ -12,14 +11,9 @@ const MySubmissions = () => {
   };
 
   return (
-    <div className="overflow-hidden font-mono md:min-w-fit xl:min-w-full">
-        <div className="flex">
-            <div>
-                <SidebarSubmissions/>
-            </div>
-            <div className="w-2/3 mt-8">
-               <SubmissionsLayout data={submissionsData}/>
-            </div>
+    <div className="w-full">
+        <div className="my-10">
+            <SubmissionsLayout data={submissionsData} title="My Submissions"/>
         </div>
     </div>
   );

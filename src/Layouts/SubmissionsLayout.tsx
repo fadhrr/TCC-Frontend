@@ -1,9 +1,13 @@
 import React from "react";
 
-const SubmissionsLayout = ({data}) => {
+const SubmissionsLayout = ({data, title}) => {
   return (
-    <div>
-        <h1 className="text-[64px] font-bold font-lato">Submissions</h1>
+    <div className="pb-8">
+        <h1 className="text-3xl font-bold pt-[70px] md:pt-[80px] lg:text-4xl">
+            <span className="underline decoration-blue-500">
+                {title}
+            </span>
+        </h1>
         <div className="table-wrapper">
             <table className="w-full border-separate border-spacing-y-3">
                 <thead>
