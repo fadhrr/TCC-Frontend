@@ -1,13 +1,13 @@
 'use client';
-import React from 'react';
-import { Button } from "@/components/ui/button";
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { ModalSucces } from '@/components/ui/modal';
 
 const articlesData = [
   {
     title: 'Bracket Competion',
     imageUrl: '/images/compete.png',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae dolores, possimus pariatur animi temporibus nesciunt praesentium dolore sed nulla ipsum eveniet corporis quidem, ?',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae dolores, possimus pariatur animi temporibus nesciunt praesentium dolore sed nulla ipsum eveniet corporis quidem, ?',
     details: [
       { label: 'Time', value: 'Saturday, 20 Jan 2024' },
       { label: 'Difficulty', value: 'Hard' },
@@ -18,6 +18,7 @@ const articlesData = [
   },
 ];
 export default function ContestDetail() {
+  const [showModal, setShowModal] = useState(false);
   return (
     <div className="w-full my-8 space-x-8 pt-[80px]">
       <h1 className="text-4xl font-bold text-center w-full mb-8">Contest Information</h1>
@@ -41,7 +42,15 @@ export default function ContestDetail() {
           </ul>
         </article>
       ))}
-      <Button className="w-40">Join</Button>
+      <Button
+        className="w-40"
+        onClick={() => {
+          setShowModal(true);
+        }}
+      >
+        Join
+      </Button>
+      {showModal && <ModalSucces setOpenModal={setShowModal} />}
     </div>
   );
 }

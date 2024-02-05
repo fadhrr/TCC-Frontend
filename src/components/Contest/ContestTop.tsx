@@ -1,15 +1,9 @@
 'use client';
 import React, { useState } from 'react';
-import Modal from '../ui/modal';
+import { ModalInput } from '../ui/modal';
 
 export default function ContestTop() {
   const [showModal, setShowModal] = useState(false);
-
-  //   const [isModalVisible, setIsModalVisible] = useState(false);
-
-  //   const toggleModal = () => {
-  //     setIsModalVisible(!isModalVisible);
-  //   };
 
   return (
     <section className="bg-white">
@@ -43,7 +37,7 @@ export default function ContestTop() {
             >
               #id
             </button>
-            {showModal && <Modal setOpenModal={setShowModal} />}
+            {showModal && <ModalInput setOpenModal={setShowModal} />}
             {/* {isModalVisible && <Modal />} */}
           </div>
         </div>
