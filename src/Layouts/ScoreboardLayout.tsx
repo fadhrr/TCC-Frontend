@@ -66,7 +66,6 @@ const ScoreboardLayout = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold font-lato">The final round of who will be the Sepuh</h1>
       <div className="table-wrapper">
         <h1 className=" mt-5 text-2xl">Scoreboard</h1>
         <table className="w-full border-separate border-spacing-y-3 table-auto">

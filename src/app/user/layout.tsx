@@ -11,7 +11,7 @@ const menuItems = [
   { label: 'Submission', href: '/user/submission' },
 ];
 
-export default function ProblemLayout({ children }) {
+export default function UserLayout({ children }) {
   return (
     <div className="flex px-2 space-x-4">
       <Sidebar menuItems={menuItems} title="Profile" title_menu="Profile Menu"/>

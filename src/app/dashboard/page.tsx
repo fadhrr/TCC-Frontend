@@ -12,7 +12,7 @@ const Dashboard: React.FC<DashboardProps> = ({auth})=>{
         <ContentLayout
             user={auth?.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
-        >
+            >
             <Head>
                 <title>Dashboard</title>
             </Head>

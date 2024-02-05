@@ -11,7 +11,7 @@ const menuItems = [
   { label: 'Top Scorers', href: '/ranking/scores' },
 ];
 
-export default function ProblemLayout({ children }) {
+export default function RankingLayout({ children }) {
   return (
     <div className="flex px-2 space-x-4">
       <Sidebar menuItems={menuItems} title="Ranking" title_menu="Ranking Menu"/>

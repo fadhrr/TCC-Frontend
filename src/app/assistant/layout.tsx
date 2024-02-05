@@ -7,14 +7,15 @@ export const metadata = {
 
 
 const menuItems = [
-  { label: 'All Submissions', href: '/submissions' },
-  { label: 'My Submissions', href: '/submissions/mine' },
+  { label: 'Dashboard', href: '/assistant' },
+  { label: 'Problems', href: '/assistant/problems' },
+  { label: 'Users', href: '/assistant/users' },
 ];
 
-export default function SubmissionsLayout({ children }) {
+export default function AsisstantLayout({ children }) {
   return (
     <div className="flex px-2 space-x-4">
-      <Sidebar menuItems={menuItems} title="Submissions" title_menu="Submissions Menu"/>
+      <Sidebar menuItems={menuItems} title="Assistant" title_menu="Admin Menu"/>
       <span className="md:block hidden border-l border-gray-500"></span>
       {children}
     </div>
