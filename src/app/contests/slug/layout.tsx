@@ -1,8 +1,6 @@
 import Sidebar from '@/components/Sidebar';
 
-
 export default function ContestLayout({ children }) {
- 
   const menuItems = [
     {label: 'Overview', href: '/contests/slug/overview' },
     {label: 'Problem', href: '/contests/slug/problem' },

@@ -1,4 +1,3 @@
-
 const contestCardData = [
   {
     title: 'Hello world',
@@ -21,7 +20,7 @@ export default function ContesCard() {
     <div className="px-8">
       {contestCardData.map((article, index) => (
         <article key={index} className="group relative w-full my-4 cursor-pointe inline-block">
-          <div className="relative bg-gray-50 z-10 flex flex-col overflow-hidden p-4 border-2 border-black sm:gap-4">
+          <div className="relative bg-gray-50 z-10 flex flex-col overflow-hidden p-4 border-2 rounded-lg border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] sm:gap-4">
             <div className="flex justify-start">
               <h3 className="mt-4 text-lg font-medium sm:text-xl">
                 <a href={article.link} className="hover:underline">
@@ -40,10 +39,9 @@ export default function ContesCard() {
               </div>
             </div>
           </div>
-          <div className="absolute -z-1 bottom-0 right-0 -mb-1 -mr-1 h-36 w-full bg-black transition-all duration-200 ease-linear group-hover:mb-0 group-hover:mr-0" data-rounded="rounded-lg"></div>
+          {/* <div className="absolute -z-1 bottom-0 right-0 -mb-1 -mr-1 h-36 w-full bg-black transition-all duration-200 ease-linear group-hover:mb-0 group-hover:mr-0" data-rounded="rounded-lg"></div> */}
         </article>
       ))}
     </div>
   );
-
 }
