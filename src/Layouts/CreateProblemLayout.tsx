@@ -1,6 +1,7 @@
 'use client'
 import React, {useState} from "react";
 
+
 const AdminCreateProblem = () => {
 const [testCaseInputs, setTestCaseInputs] = useState([""]);
     const [testCaseOutputs, setTestCaseOutputs] = useState([""]);
@@ -93,16 +94,20 @@ const [testCaseInputs, setTestCaseInputs] = useState([""]);
                     <button
                     type="button"
                     onClick={handleAddTestCase}
-                    className="bg-black px-4 h-fit hover:opacity-70">
+                    className="bg-black px-4 h-fit hover:opacity-70 rounded-sm">
                     +
                     </button>
                     <button
                     type="button"
                     onClick={handleRemoveTestCase}
-                    className="bg-black px-4 h-fit hover:opacity-70">
+                    className="bg-black px-4 h-fit hover:opacity-70 rounded-sm">
                     -
                     </button>
-                </div>
+           
+                </div>   
+            </div>
+            <div className="flex justify-end ">
+                <button type="submit" className=" bg-black text-white px-3 py-2 mt-6 hover:opacity-60 mr-8 rounded-md">Submit</button>
             </div>
         </form>
         </div>
