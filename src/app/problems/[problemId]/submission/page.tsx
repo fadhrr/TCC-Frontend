@@ -6,10 +6,29 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { BarLoader } from "react-spinners";
+import { auth } from "@/lib/firebase-config";
+import { onAuthStateChanged } from "firebase/auth";
+import moment from "moment";
+import { FadeLoader } from "react-spinners";
+
+interface CurrentUser {
+  uid: string;
+  // Add other properties if needed
+}
 
 async function getSubmissions(problemId: any) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/submissions/problem/${problemId}`
+  );
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return res.json();
+}
+
+async function getMySubmissions(userId: any, problemId: any) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/submissions/user/${userId}/problem/${problemId}`
   );
   if (!res.ok) {
     throw new Error("Failed to fetch data");
@@ -23,14 +42,33 @@ export default function ProblemSubmission({
   params: { problemId: string };
 }) {
   const [submissions, setSubmissions] = useState([]);
+  const [mySubmissions, setMySubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingUser, setLoadingUser] = useState(true);
   const [error, setError] = useState(null);
+  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
+
+  useEffect(() => {
+    try {
+      const unsub = onAuthStateChanged(auth, (user) => {
+        setCurrentUser(user);
+        console.log(user.uid);
+        setLoadingUser(false);
+      });
+      return () => {
+        unsub();
+      };
+    } catch (error) {
+      setError(error.message);
+    } finally {
+    }
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getSubmissions(params.problemId);
-        setSubmissions(data);
+        const dataAll = await getSubmissions(params.problemId);
+        setSubmissions(dataAll);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -41,8 +79,29 @@ export default function ProblemSubmission({
     fetchData();
   }, [params.problemId]);
 
+  useEffect(() => {
+    if (!loadingUser) {
+      const fetchData = async () => {
+        const dataMy = await getMySubmissions(
+          currentUser.uid,
+          params.problemId
+        );
+        setMySubmissions(dataMy);
+      };
+      fetchData();
+    }
+  }, [loadingUser]);
+
   if (error) {
     return <div>Error: {error}</div>; // Display a meaningful error message
+  }
+
+  if (loadingUser) {
+    return (
+      <Card className="flex justify-center py-56 w-full items-center">
+        <FadeLoader color="#bfbfbf" />
+      </Card>
+    );
   }
 
   return (
@@ -90,23 +149,32 @@ export default function ProblemSubmission({
                       {submission.language_id}
                     </td>
                     <td className={`border-y border-black`}>
-                      <Badge
-                        variant="customTailwind"
-                        className={`${
-                          submission.status === "Accepted"
-                            ? "bg-green-500"
-                            : submission.status === "Wrong Answer"
-                            ? "bg-red-500"
-                            : submission.status === "Compile Error"
-                            ? "bg-yellow-500"
-                            : ""
-                        }`}
-                      >
-                        {submission.status}
-                      </Badge>
+                      {submission.status ? (
+                        <Badge
+                          variant="customTailwind"
+                          className={`${
+                            submission.status === "Accepted"
+                              ? "bg-green-500"
+                              : submission.status === "Wrong Answer"
+                              ? "bg-red-500"
+                              : submission.status === "Compile Error"
+                              ? "bg-yellow-500"
+                              : ""
+                          }`}
+                        >
+                          {submission.status}
+                        </Badge>
+                      ) : (
+                        <Badge
+                          variant="customTailwind"
+                          className={"bg-purple-500"}
+                        >
+                          Pending
+                        </Badge>
+                      )}
                     </td>
                     <td className={`border-y border-black`}>
-                      {submission.time}
+                      {moment(submission.created_at).fromNow()}
                     </td>
                     <td className={`border-y border-e border-black`}>
                       <Link
@@ -158,7 +226,7 @@ export default function ProblemSubmission({
               </thead>
 
               <tbody>
-                {submissions.map((submission, index) => (
+                {mySubmissions.map((submission, index) => (
                   <tr
                     key={index}
                     className={`text-left ${
@@ -175,23 +243,32 @@ export default function ProblemSubmission({
                       {submission.language_id}
                     </td>
                     <td className={`border-y border-black`}>
-                      <Badge
-                        variant="customTailwind"
-                        className={`${
-                          submission.status === "Accepted"
-                            ? "bg-green-500"
-                            : submission.status === "Wrong Answer"
-                            ? "bg-red-500"
-                            : submission.status === "Compile Error"
-                            ? "bg-yellow-500"
-                            : ""
-                        }`}
-                      >
-                        {submission.status}
-                      </Badge>
+                      {submission.status ? (
+                        <Badge
+                          variant="customTailwind"
+                          className={`${
+                            submission.status === "Accepted"
+                              ? "bg-green-500"
+                              : submission.status === "Wrong Answer"
+                              ? "bg-red-500"
+                              : submission.status === "Compile Error"
+                              ? "bg-yellow-500"
+                              : ""
+                          }`}
+                        >
+                          {submission.status}
+                        </Badge>
+                      ) : (
+                        <Badge
+                          variant="customTailwind"
+                          className={"bg-purple-500"}
+                        >
+                          Pending
+                        </Badge>
+                      )}
                     </td>
                     <td className={`border-y border-black`}>
-                      {submission.time}
+                      {moment(submission.created_at).fromNow()}
                     </td>
                     <td className={`border-y border-e border-black`}>
                       <Link

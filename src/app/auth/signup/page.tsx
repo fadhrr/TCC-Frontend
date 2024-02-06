@@ -44,7 +44,6 @@ export default function SignUp() {
             }
           );
           const data = (await res).json();
-          console.log(data);
         }
         router.push("/auth/signin");
         console.log("Sign Up successfully");
