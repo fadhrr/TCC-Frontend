@@ -1,5 +1,6 @@
 'use client';
 import Headline from '../ui/headline';
+import { Button } from '@/components/ui/button';
 
 export default function ContestForm() {
   return (
@@ -68,6 +69,11 @@ export default function ContestForm() {
                   <input className="block w-full p-4 text-lg border border-black rounded-md" type="text" id="title" required />
                 </div>
               </div>
+              <div className="md:col-span-5 text-left md:text-right">
+                <div className="inline-flex  md:items-end">
+                  <Button className="w-40">Post</Button>
+                </div>
+              </div>
             </form>
           </div>
         </div>
@@ -75,15 +81,3 @@ export default function ContestForm() {
     </section>
   );
 }
-
-/*
-
-<form>
-            <div className="flex flex-col gap-2 justify-start items-start">
-              <label htmlFor="image">Image</label>
-              <div>
-                <input type="file" id="image" className="mb-2" required />
-              </div>
-            </div>
-          </form>
-*/
