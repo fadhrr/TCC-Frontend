@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { ModalInput } from '../ui/modal';
+import Headline from '../ui/headline';
 
 export default function ContestTop() {
   const [showModal, setShowModal] = useState(false);
@@ -8,12 +9,11 @@ export default function ContestTop() {
   return (
     <section className="bg-white">
       <div className="container px-8 py-10 mx-auto">
-        <h1 className="text-3xl font-semibold text-black capitalize lg:text-4xl ">
-          <span className="underline decoration-blue-500">Contests</span>
-        </h1>
-        <p className="mt-4 w-full lg:w-3/5 text-black xl:mt-6 ">
-          Welcome to the Contests section, here you will find a variety of exciting contests and challenges that cater to diverse interests and skills. Each contest is designed to test your abilities and knowledge in a specific area.
-        </p>
+        <Headline
+          title="Contests"
+          desc=" Welcome to the Contests section, here you will find a variety of exciting contests and challenges that cater to diverse interests and skills. Each contest is designed to test your abilities and knowledge in a specific area."
+        />
+
         <div className="flex justify-start gap-4 items-center">
           <form className="mt-4 md:w-1/3 w-full xl:mt-6">
             <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">

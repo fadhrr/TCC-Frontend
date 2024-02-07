@@ -27,7 +27,7 @@ const menuData: Menu[] = [
       {
         id: 32,
         title: 'Create Contest',
-        path: '/contests',
+        path: '/contests/createContest',
         newTab: false,
       },
     ],
