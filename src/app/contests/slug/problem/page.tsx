@@ -16,7 +16,7 @@ const menuItems = [
         name: 'tesssss',
         description: ' quae, asperiores tenetur nulla ut magni fuga?',
       },
-      // Tambahkan item lain jika diperlukan
+      
     ],
   },
   {
@@ -32,7 +32,7 @@ const menuItems = [
         name: 'tesssss',
         description: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maiores, velit! Dolorum dolore rem odio dicta, error voluptatum quaerat sint eius architecto eveniet nemo quae, asperiores tenetur nulla ut magni fuga?',
       },
-      // Tambahkan item lain jika diperlukan
+      
     ],
   },
   {
@@ -48,7 +48,7 @@ const menuItems = [
         name: 'tesssss',
         description: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maiores, velit! Dolorum dolore rem odio dicta, error voluptatum quaerat sint eius architecto eveniet nemo quae, asperiores tenetur nulla ut magni fuga?',
       },
-      // Tambahkan item lain jika diperlukan
+      
     ],
   },
   // Tambahkan package lain jika diperlukan
