@@ -73,8 +73,18 @@
                             <td className={`border-y-2 border-black`}>
                                 {item.nama}
                             </td>
-                            <td className={`border-y-2 border-r-2 border-black`}>
+                            <td className={`border-y-2   border-black`}>
                                 {item.role}
+                            </td>
+                            <td className="border-y-2 border-r-2 border-black">
+                                <div className="flex space-x-3">
+                                    <a href="" className="">
+                                        <Image alt="edit" src="/assets/icons/edit.svg" width={20} height={20} className="hover:opacity-65"/>
+                                    </a>
+                                    <button type="submit">
+                                        <Image alt="remove" src="/assets/icons/trash.svg" width={20} height={20} className="hover:opacity-65"/>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     ))}
