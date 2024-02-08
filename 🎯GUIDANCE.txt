@@ -1,0 +1,13 @@
+kayaknya ada beebrapa perubah
+- Design ngikutin moodboard behance
+- section 2 bukan step tpi keunggulan
+
+HERO : 
+    - 
+
+SECTION : 
+    - start explorng => arah ke problem
+    - contest => come and join hundret of thousan challenge in our contest 
+    - create your own contest => create your own contest 
+    - Developer => right now we support 4 popular coding languaeg
+src : leetcode

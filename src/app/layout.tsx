@@ -1,6 +1,6 @@
-import { Inter } from "next/font/google";
-import Header from "@/components/Header";
-import "./globals.css";
+import { Inter } from 'next/font/google';
+import Header from '@/components/Header';
+import './globals.css';
 import Footer from '@/components/Home/Footer';
 
 // const inter = Inter({ subsets: ['latin'] });
@@ -14,9 +14,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body suppressHydrationWarning={true}>
-        <Header/>
+        <Header />
         {children}
-        <Footer/>
+        <Footer />
       </body>
     </html>
   );
