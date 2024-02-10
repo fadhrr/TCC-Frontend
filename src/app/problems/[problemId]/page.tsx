@@ -1,10 +1,8 @@
 "use client";
+import React, { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card } from "@/components/ui/card";
-import { auth } from "@/lib/firebase-config";
-import React, { useEffect, useState} from "react";
 import {
   Select,
   SelectContent,
@@ -12,8 +10,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { onAuthStateChanged } from "firebase/auth";
-import { FadeLoader } from "react-spinners";
+import { Card } from "@/components/Problems/Card";
+import Loading from "@/components/Problems/Loading/Problem/Loading";
+import { auth } from "@/lib/firebase-config";
 
 interface Problem {
   title: string;
@@ -25,12 +24,6 @@ interface Problem {
   output_format: string;
   sample_input: string;
   sample_output: string;
-  // Add other properties as needed
-}
-
-interface CurrentUser {
-  uid: string;
-  // Add other properties if needed
 }
 
 async function getProblem(problemId: string) {
@@ -43,34 +36,48 @@ async function getProblem(problemId: string) {
   return res.json();
 }
 
+async function getTopByTime(problemId: string) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/${problemId}/submissions/topbytime`
+  );
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return res.json();
+}
+
+async function getTopByMemory(problemId: string) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/problem/${problemId}/submissions/topbymemory`
+  );
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return res.json();
+}
+
 export default function ProblemDetail({
   params,
 }: {
   params: { problemId: string };
 }) {
-  // const problem = await getProblem(params.problemId);
   const [problem, setProblem] = useState<Problem | null>(null);
-  const [lang, setLang] = useState<number | null>(null);
+  const [topTime, setTopTime] = useState(null);
+  const [topMemory, setTopMemory] = useState(null);
+  const [selectedLang, setSelectedLang] = useState("");
   const [fileContent, setFileContent] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
-
-  useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
-    });
-
-    return () => {
-      unsub();
-    };
-  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getProblem(params.problemId);
-        setProblem(data);
+        const problemData = await getProblem(params.problemId);
+        const topTimeData = await getTopByTime(params.problemId);
+        const topMemoryData = await getTopByMemory(params.problemId);
+        setProblem(problemData);
+        setTopTime(topTimeData);
+        setTopMemory(topMemoryData);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -80,18 +87,6 @@ export default function ProblemDetail({
 
     fetchData();
   }, []);
-
-  if (error) {
-    return <div>Error: {error}</div>; // Display a meaningful error message
-  }
-
-  if (loading || problem === null) {
-    return (
-      <Card className="flex justify-center py-56 w-full items-center">
-        <FadeLoader color="#bfbfbf" />
-      </Card>
-    );
-  }
 
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -110,16 +105,17 @@ export default function ProblemDetail({
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
     if (!fileContent) {
-      return
+      return;
     }
     await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/submission`, {
       method: "POST",
       body: JSON.stringify({
-        user_id: currentUser.uid,
+        user_id: auth.currentUser.uid,
         problem_id: params.problemId,
-        language_id: 1,
+        language_id: selectedLang,
         time: 0,
         memory: 0,
         code: fileContent,
@@ -129,6 +125,14 @@ export default function ProblemDetail({
       },
     });
   };
+
+  if (error) {
+    console.log(error);
+  }
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <Card className="w-full">
@@ -206,7 +210,7 @@ export default function ProblemDetail({
         <div className="space-y-1">
           <Label className="text-md font-bold">Submmit Solution</Label>
           <form className="flex space-x-2" onSubmit={handleSubmit}>
-            <Select>
+            <Select onValueChange={setSelectedLang}>
               <SelectTrigger className="w-24">
                 <SelectValue placeholder="Lang" />
               </SelectTrigger>
@@ -219,6 +223,58 @@ export default function ProblemDetail({
             <Input type="file" onChange={handleFileChange} />
             <Button type="submit">Submit</Button>
           </form>
+        </div>
+        <div>
+          <div className="space-y-1">
+            <div className="p-2 border-b">
+              <Label className="text-md font-bold">Top User by Time</Label>
+            </div>
+            <div className="table-wrapper p-2 text-muted-foreground">
+              <table className="w-full border-separate border-spacing-y-2 text-sm">
+                <thead>
+                  <tr className="text-left">
+                    <th>#</th>
+                    <th>User</th>
+                    <th>Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {topTime.map((user, index) => (
+                    <tr key={index} className="text-left">
+                      <td>{index + 1}</td>
+                      <td>{user.name}</td>
+                      <td>{user.time}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div className="space-y-1">
+            <div className="p-2 border-b">
+              <Label className="text-md font-bold">Top User by Memory</Label>
+            </div>
+            <div className="table-wrapper p-2 text-muted-foreground">
+              <table className="w-full border-separate border-spacing-y-2 text-sm">
+                <thead>
+                  <tr className="text-left">
+                    <th>#</th>
+                    <th>User</th>
+                    <th>Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {topMemory.map((user, index) => (
+                    <tr key={index} className="text-left">
+                      <td>{index + 1}</td>
+                      <td>{user.name}</td>
+                      <td>{user.memory}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </Card>
