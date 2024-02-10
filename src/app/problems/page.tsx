@@ -56,27 +56,27 @@ export default function Problems() {
   return (
     <div className="container flex mx-auto my-8 space-x-4">
       <Card className="h-full min-w-80">
-        <CardContent>
-          <Label className="border-b text-md font-bold">Filter</Label>
-          <div className="flex flex-col space-y-2">
-            <div className="flex items-center space-x-2">
-              <Checkbox id="terms" />
-              <Label
-                htmlFor="terms"
-                className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Filter 1
-              </Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox id="terms" />
-              <Label
-                htmlFor="terms"
-                className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Filter 2
-              </Label>
-            </div>
+        <div className="p-2 border-b">
+          <Label className="text-lg font-bold">Filter</Label>
+        </div>
+        <CardContent className="flex flex-col space-y-2">
+          <div className="flex items-center space-x-2">
+            <Checkbox id="terms" />
+            <Label
+              htmlFor="terms"
+              className="leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Filter 1
+            </Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox id="terms" />
+            <Label
+              htmlFor="terms"
+              className="leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Filter 2
+            </Label>
           </div>
         </CardContent>
       </Card>

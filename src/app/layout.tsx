@@ -1,5 +1,5 @@
-import { Inter } from "next/font/google";
 import Header from "@/components/Header";
+import { Inter } from "next/font/google";
 import { AuthContextProvider } from "@/context/AuthContext";
 import "./globals.css";
 

@@ -31,6 +31,15 @@ export default function () {
           <Skeleton className="h-4 w-[600px]" />
           <Skeleton className="h-4 w-[400px]" />
         </div>
+        <div className="flex space-x-2">
+          <Skeleton className="h-4 w-1/2" />
+          <Skeleton className="h-4 w-1/2" />
+        </div>
+        <div className="flex space-x-2">
+          <Skeleton className="h-4 w-1/2" />
+          <Skeleton className="h-4 w-[300px]" />
+          <Skeleton className="h-4 w-full" />
+        </div>
       </div>
     </Card>
   );

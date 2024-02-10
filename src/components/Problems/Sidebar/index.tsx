@@ -11,7 +11,7 @@ export default function Sidebar({ slug }) {
   // Function to tokenize the URL until the "submission" part
   const tokenizeUntilSubmission = (url) => {
     const tokens = url.split("/");
-    const submissionIndex = tokens.indexOf("submission");
+    const submissionIndex = tokens.indexOf("submissions");
     if (submissionIndex !== -1) {
       return tokens.slice(0, submissionIndex + 1).join("/");
     }
@@ -25,30 +25,30 @@ export default function Sidebar({ slug }) {
 
   return (
     <Card>
-      <CardContent>
-        <Label className="text-xl font-bold border-b">Problem</Label>
-        <div className="flex flex-col space-y-2">
-          <Link
-            href={`/problems/${slug}`}
-            className={`text-sm font-medium hover:text-black ${
-              isLinkActive(`/problems/${slug}`)
-                ? "font-medium"
-                : "text-muted-foreground"
-            }`}
-          >
-            Detail
-          </Link>
-          <Link
-            href={`/problems/${slug}/submission`}
-            className={`text-sm font-medium hover:text-black ${
-              isLinkActive(`/problems/${slug}/submission`)
-                ? "font-medium"
-                : "text-muted-foreground"
-            }`}
-          >
-            Submissions
-          </Link>
-        </div>
+      <div className="p-2 border-b">
+        <Label className="text-lg font-bold">Problem</Label>
+      </div>
+      <CardContent className="flex flex-col space-y-2">
+        <Link
+          href={`/problems/${slug}`}
+          className={`hover:text-black ${
+            isLinkActive(`/problems/${slug}`)
+              ? "font-medium"
+              : "text-muted-foreground"
+          }`}
+        >
+          Detail
+        </Link>
+        <Link
+          href={`/problems/${slug}/submissions`}
+          className={`hover:text-black ${
+            isLinkActive(`/problems/${slug}/submissions`)
+              ? "font-medium"
+              : "text-muted-foreground"
+          }`}
+        >
+          Submissions
+        </Link>
       </CardContent>
     </Card>
   );

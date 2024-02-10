@@ -1,13 +1,10 @@
 "use client";
-import { Input } from "@/components/ui/input";
-import { auth } from "@/lib/firebase-config";
 import React, { useState } from "react";
-import {
-  createUserWithEmailAndPassword,
-  updateProfile,
-} from "firebase/auth";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { auth } from "@/lib/firebase-config";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 export default function SignUp() {
@@ -27,7 +24,8 @@ export default function SignUp() {
           await updateProfile(user, {
             displayName: username,
           });
-          const res = fetch(
+        
+          const res = await fetch(
             `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user`,
             {
               method: "POST",
@@ -43,16 +41,17 @@ export default function SignUp() {
               },
             }
           );
-          const data = (await res).json();
-        }
+          // Check if the request was successful (status code 2xx)
+          if (res.ok) {
+            const data = await res.json();
+            console.log(data.status)
+          }
+        }        
         router.push("/auth/signin");
-        console.log("Sign Up successfully");
         // ...
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
+        throw new Error(`${error.code}${error.message}`);
       });
   };
 

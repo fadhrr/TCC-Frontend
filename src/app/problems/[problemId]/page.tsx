@@ -1,5 +1,7 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { AuthContext } from "@/context/AuthContext";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,7 +14,6 @@ import {
 } from "@/components/ui/select";
 import { Card } from "@/components/Problems/Card";
 import Loading from "@/components/Problems/Loading/Problem/Loading";
-import { auth } from "@/lib/firebase-config";
 
 interface Problem {
   title: string;
@@ -31,7 +32,7 @@ async function getProblem(problemId: string) {
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/problem/${problemId}`
   );
   if (!res.ok) {
-    throw new Error("Failed to fetch data");
+    throw new Error("Failed to fetch problem data");
   }
   return res.json();
 }
@@ -40,8 +41,11 @@ async function getTopByTime(problemId: string) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/${problemId}/submissions/topbytime`
   );
+  if (res.status == 404) {
+    return res.status;
+  }
   if (!res.ok) {
-    throw new Error("Failed to fetch data");
+    throw new Error("Failed to score time fetch data");
   }
   return res.json();
 }
@@ -50,8 +54,11 @@ async function getTopByMemory(problemId: string) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/problem/${problemId}/submissions/topbymemory`
   );
+  if (res.status == 404) {
+    return res.status;
+  }
   if (!res.ok) {
-    throw new Error("Failed to fetch data");
+    throw new Error("Failed to fetch score memory data");
   }
   return res.json();
 }
@@ -61,6 +68,8 @@ export default function ProblemDetail({
 }: {
   params: { problemId: string };
 }) {
+  const router = useRouter();
+  const { currentUser } = useContext(AuthContext);
   const [problem, setProblem] = useState<Problem | null>(null);
   const [topTime, setTopTime] = useState(null);
   const [topMemory, setTopMemory] = useState(null);
@@ -105,15 +114,14 @@ export default function ProblemDetail({
     }
   };
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     if (!fileContent) {
       return;
     }
     await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/submission`, {
       method: "POST",
       body: JSON.stringify({
-        user_id: auth.currentUser.uid,
+        user_id: currentUser.uid,
         problem_id: params.problemId,
         language_id: selectedLang,
         time: 0,
@@ -124,13 +132,14 @@ export default function ProblemDetail({
         "Content-Type": "application/json",
       },
     });
+    router.push(`/problems/${params.problemId}/submissions`);
   };
 
   if (error) {
     console.log(error);
   }
 
-  if (loading) {
+  if (loading || problem == null) {
     return <Loading />;
   }
 
@@ -139,7 +148,6 @@ export default function ProblemDetail({
       <div className="p-3 border-b">
         <Label className="text-xl font-bold">{problem.title}</Label>
       </div>
-
       <div className="p-8 space-y-4">
         <div className="flex justify-center">
           <table className="border-separate border border-slate-500 ...">
@@ -224,8 +232,8 @@ export default function ProblemDetail({
             <Button type="submit">Submit</Button>
           </form>
         </div>
-        <div>
-          <div className="space-y-1">
+        <div className="flex">
+          <div className="w-full">
             <div className="p-2 border-b">
               <Label className="text-md font-bold">Top User by Time</Label>
             </div>
@@ -250,7 +258,7 @@ export default function ProblemDetail({
               </table>
             </div>
           </div>
-          <div className="space-y-1">
+          <div className="w-full">
             <div className="p-2 border-b">
               <Label className="text-md font-bold">Top User by Memory</Label>
             </div>
@@ -268,7 +276,7 @@ export default function ProblemDetail({
                     <tr key={index} className="text-left">
                       <td>{index + 1}</td>
                       <td>{user.name}</td>
-                      <td>{user.memory}</td>
+                      <td>{user.time}</td>
                     </tr>
                   ))}
                 </tbody>
