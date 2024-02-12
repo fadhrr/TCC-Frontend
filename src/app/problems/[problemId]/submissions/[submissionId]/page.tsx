@@ -74,7 +74,7 @@ export default function SubmissionDetail({
     };
 
     fetchData();
-  }, []);
+  }, [params.submissionId]);
 
   if (error) {
     console.log(error);

@@ -1,8 +1,8 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { Label } from "@radix-ui/react-dropdown-menu";
+import { Label } from "@/components/ui/label";
 import { Card } from "../../../Card";
 
-export default function () {
+export default function ProblemSubmisionsLoader() {
   return (
     <Card className="h-max w-full">
       <div className="p-3 border-b">
