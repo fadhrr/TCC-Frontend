@@ -79,7 +79,7 @@ export default function Header() {
     <header
       className={` ud-header left-0 border-b-2 border-black top-0 z-40 flex w-full bg-white items-center ${
         sticky ? 'shadow-nav fixed z-[9999] border-b border-stroke bg-white/80 backdrop-blur-[5px] transition dark:border-dark-3/20 dark:bg-dark/10' : 'absolute bg-white'
-      }`}
+      } ${pathUrl !== '/' && 'bg-[#f5f5f5]'} `}
     >
       <div className="container ">
         <div className="flex flex-wrap items-center justify-between lg:py-0  py-2 mx-4">
@@ -121,7 +121,7 @@ export default function Header() {
                         <Link
                           scroll={false}
                           href={menuItem.path}
-                          className={`ud-menu-scroll flex py-2 text-base lg:inline-flex lg:px-0 lg:py-6 text-dark dark:text-white group-hover:text-primary dark:group-hover:text-primary ${
+                          className={`ud-menu-scroll  flex py-2 text-base lg:inline-flex lg:px-0 lg:py-6 text-dark dark:text-white group-hover:text-primary dark:group-hover:text-primary ${
                             (pathUrl === menuItem?.path && !sticky) || (pathUrl === menuItem?.path && sticky) ? 'text-primary' : ''
                           }`}
                         >
@@ -132,7 +132,7 @@ export default function Header() {
                       <li className="submenu-item group relative" key={menuItem.id}>
                         <button
                           onClick={() => handleSubmenu(index)}
-                          className={`ud-menu-scroll flex items-center justify-between py-2 text-base text-dark group-hover:text-primary  dark:group-hover:text-primary lg:inline-flex lg:px-0 lg:py-6`}
+                          className={`ud-menu-scroll flex items-center   justify-between py-2 text-base text-dark group-hover:text-primary  dark:group-hover:text-primary lg:inline-flex lg:px-0 lg:py-6`}
                         >
                           {menuItem.title}
 
@@ -154,7 +154,7 @@ export default function Header() {
                             <Link
                               href={submenuItem.path}
                               key={submenuItem.id}
-                              className={`block rounded px-4 py-[10px] text-sm ${pathUrl === submenuItem.path ? 'text-primary' : 'text-body-color hover:text-primary dark:text-dark-6 dark:hover:text-primary'}`}
+                              className={`block rounded px-4 py-[10px] hover:bg-[#fae74d] text-sm ${pathUrl === submenuItem.path ? 'text-primary' : 'text-body-color hover:text-primary dark:text-dark-6 dark:hover:text-primary'}`}
                             >
                               {submenuItem.title}
                             </Link>

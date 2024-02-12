@@ -2,13 +2,12 @@
 
 import React from 'react';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
 export default function Footer() {
   const pathUrl = usePathname();
   return (
-    <footer className={` p-4   bg-[#212121]  border-t border-black  ${pathUrl !== '/' && 'bg-white md:px-20 px-6 py-6 md:py-0'}`}>
-      <div className={`container bg-white flex rounded-md flex-col items-center justify-between gap-4 md:h-16 md:flex-row ${pathUrl !== '/' && 'bg-transparent'}`}>
+    <footer className={` p-4   bg-[#212121]  border-t border-black  ${pathUrl !== '/' && 'bg-[#F5F5F5] md:px-20 px-6 py-6 md:py-0'}`}>
+      <div className={`container bg-[#F5F5F5] flex rounded-md flex-col items-center justify-between gap-4 md:h-16 md:flex-row ${pathUrl !== '/' && 'bg-transparent'}`}>
         <div>
           <p className="text-balance text-center text-sm leading-loose text-muted-foreground md:text-left">
             Built by{' '}

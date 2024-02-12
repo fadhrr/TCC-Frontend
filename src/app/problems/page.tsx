@@ -1,6 +1,15 @@
-import Link from 'next/link';
+'use client';
+
+import React, { useState } from 'react';
+import { ProblemCard } from '@/components/ui/card';
 
 export default function Problems() {
+  const [searchTerm, setSearchTerm] = useState<string>('');
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
   const data = [
     {
       title: 'Database',
@@ -8,7 +17,7 @@ export default function Problems() {
       link: '/problems/slug/detail',
     },
     {
-      title: 'Database',
+      title: 'Algorithm',
       description: 'Enhance your knowledge of data management, database modeling, and database programming',
       link: '/problems/slug/detail',
     },
@@ -22,11 +31,14 @@ export default function Problems() {
       description: 'Enhance your knowledge of data management, database modeling, and database programming',
       link: '/problems/slug/detail',
     },
-    // Tambahkan data lainnya sesuai kebutuhan
   ];
+
+  // Lakukan filter berdasarkan nilai pencarian
+  const filteredData = data.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
+
   return (
     <>
-      <section className="bg-white lg:px-4  lg:my-12  pb-[60px] pt-[70px] md:pt-[80px]">
+      <section className="bg-[#F5F5F5] lg:px-4  py-20 md:pt-24">
         <div className="container w-full flex flex-col items-start">
           <h1 className="text-3xl font-semibold text-black capitalize lg:text-4xl ">
             <span className="underline decoration-blue-500">Problems</span>
@@ -45,34 +57,18 @@ export default function Problems() {
               <input
                 type="search"
                 id="default-search"
-                className="block w-full  px-10 py-2 md:py-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-transparent focus:ring-blue-500 focus:border-blue-500  dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Search Categorize..."
+                className="block w-full p-4 pl-10 text-sm text-gray-900 border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] rounded-lg bg-white  "
+                placeholder="Search problem..."
+                onChange={handleChange}
+                value={searchTerm}
                 required
-                style={{ fontSize: '16px' }}
               />
             </div>
           </form>
 
           {/* Card 1 */}
           <div className="grid md:grid-cols-3 grid-cols-2 gap-4 items-stretch md:mx-0 mt-4 flex-wrap">
-            {/* <div className='flex sm:gap-6 gap-4  xl:justify-start justify-center flex-wrap'> */}
-            {data.map((item, index) => (
-              <div key={index} className="lg:w-80 sm:w-60 w-full md:p-6 p-4 flex flex-col justify-center bg-white border border-gray-200 rounded-lg shadow dark:border-gray-700">
-                <Link href="#">
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">{item.title}</h5>
-                </Link>
-                <p className="mb-3 lg:text-base sm:text-xs text-[10px]  text-gray-700 ">{item.description}</p>
-                <Link
-                  href={item.link}
-                  className="flex lg:justify-between justify-center items-center md:w-1/2 w-full px-1 lg:px-3 py-2 lg:text-sm text-[10px]  font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
-                  Read more
-                  <svg className="w-3.5 h-3.5 ml-2 md:block hidden" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                  </svg>
-                </Link>
-              </div>
-            ))}
+            <ProblemCard data={filteredData} />
           </div>
         </div>
       </section>
