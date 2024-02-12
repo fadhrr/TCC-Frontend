@@ -12,9 +12,6 @@ import {
   DropdownMenuPortal,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useRouter, usePathname } from 'next/navigation';
@@ -77,7 +74,7 @@ export default function Header() {
 
   return (
     <header
-      className={` ud-header left-0 border-b-2 border-black top-0 z-40 flex w-full bg-white items-center ${
+      className={`ud-header left-0 border-b-2 border-black top-0 z-40 flex w-full bg-white items-center ${
         sticky ? 'shadow-nav fixed z-[9999] border-b border-stroke bg-white/80 backdrop-blur-[5px] transition dark:border-dark-3/20 dark:bg-dark/10' : 'absolute bg-white'
       } ${pathUrl !== '/' && 'bg-[#f5f5f5]'} `}
     >
