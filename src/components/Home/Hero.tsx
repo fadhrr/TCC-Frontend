@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Hero() {
   return (
-    <section className="relative  bg-[#212121] overflow-hidden  border-b-2 pt-[80px] text-black  border-black">
+    <section className="relative bg-[#212121] overflow-hidden border-b-2 pt-[80px] text-black border-black">
       <div className=" container bg-white flex rounded-md flex-col justify-center p-2 mx-auto sm:py-12 lg:flex-row ">
         {/* Tulisan */}
         <div className="flex flex-col justify-center lg:w-1/2 text-black p-6 text-center rounded-sm lg:max-w-md xl:max-w-lg lg:text-left order-2 md:order-1">

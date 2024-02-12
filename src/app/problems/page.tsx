@@ -2,8 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import {
   Card,
   CardContent,
@@ -54,32 +52,7 @@ export default function Problems() {
 
   return (
     <div className="container flex mx-auto my-8 space-x-4">
-      <Card className="h-full min-w-80">
-        <div className="p-2 border-b">
-          <Label className="text-lg font-bold">Filter</Label>
-        </div>
-        <CardContent className="flex flex-col space-y-2">
-          <div className="flex items-center space-x-2">
-            <Checkbox id="terms" />
-            <Label
-              htmlFor="terms"
-              className="leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              Filter 1
-            </Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Checkbox id="terms" />
-            <Label
-              htmlFor="terms"
-              className="leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              Filter 2
-            </Label>
-          </div>
-        </CardContent>
-      </Card>
-      <div className="flex flex-col w-full gap-3">
+      <div className="flex flex-col w-full space-y-4">
         {problems.map((problem, index) => (
           <Link key={index} href={`/problems/${problem.id}`}>
             <Card>
@@ -87,9 +60,9 @@ export default function Problems() {
                 <CardTitle>{problem.title}</CardTitle>
                 <CardDescription>{problem.description}</CardDescription>
                 <CardFooter>
-                  <Badge variant="default">Badge</Badge>
-                  <Badge variant="outline">Badge</Badge>
-                  <Badge variant="destructive">Badge</Badge>
+                  {problem.categories.map((category, index) => (
+                    <Badge key={index} variant={category.id}>{category.name}</Badge>
+                  ) )}
                 </CardFooter>
               </CardContent>
             </Card>

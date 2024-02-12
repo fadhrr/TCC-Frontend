@@ -37,9 +37,19 @@ async function getProblem(problemId: string) {
   return res.json();
 }
 
+async function getLang() {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/languages`
+  );
+  if (!res.ok) {
+    throw new Error("Failed to fetch problem data");
+  }
+  return res.json();
+}
+
 async function getTopByTime(problemId: string) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/${problemId}/submissions/topbytime`
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/problem/${problemId}/submissions/topbytime`
   );
   if (res.status == 404) {
     return res.status;
@@ -71,8 +81,9 @@ export default function ProblemDetail({
   const router = useRouter();
   const { currentUser } = useContext(AuthContext);
   const [problem, setProblem] = useState<Problem | null>(null);
-  const [topTime, setTopTime] = useState(null);
-  const [topMemory, setTopMemory] = useState(null);
+  const [lang, setLang] = useState(null);
+  const [topTime, setTopTime] = useState([]);
+  const [topMemory, setTopMemory] = useState([]);
   const [selectedLang, setSelectedLang] = useState("");
   const [fileContent, setFileContent] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -82,9 +93,11 @@ export default function ProblemDetail({
     const fetchData = async () => {
       try {
         const problemData = await getProblem(params.problemId);
+        const langData = await getLang();
         const topTimeData = await getTopByTime(params.problemId);
         const topMemoryData = await getTopByMemory(params.problemId);
         setProblem(problemData);
+        setLang(langData);
         setTopTime(topTimeData);
         setTopMemory(topMemoryData);
       } catch (error) {
@@ -223,9 +236,9 @@ export default function ProblemDetail({
                 <SelectValue placeholder="Lang" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="1">C/C++</SelectItem>
-                <SelectItem value="2">Python</SelectItem>
-                <SelectItem value="3">Java</SelectItem>
+                {lang.map((lang, index) => (
+                    <SelectItem key={index} value={`${lang.id}`}>{lang.name}</SelectItem>
+                ))}
               </SelectContent>
             </Select>
             <Input type="file" onChange={handleFileChange} />

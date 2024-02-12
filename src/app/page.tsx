@@ -5,7 +5,7 @@ import Cta from "@/components/Home/Cta";
 
 export default function Home() {
   return (
-    <div>
+    <div className="">
       <Hero />
       <Step />
       <Rank />

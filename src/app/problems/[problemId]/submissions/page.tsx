@@ -41,35 +41,28 @@ export default function ProblemSubmission({
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchSubs = async () => {
-      try {
-        const allSubs = await getSubmissions(params.problemId);
-        setSubmissions(allSubs);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
+    try {
+      if (currentUser.uid) {
+        const fetchSubs = async () => {
+          const allSubs = await getSubmissions(params.problemId);
+          setSubmissions(allSubs);
+        };
+        const fetchCurrentSubs = async () => {
+          const mySubs = await getMySubmissions(
+            currentUser.uid,
+            params.problemId
+          );
+          setMySubmissions(mySubs);
+        };
+        fetchCurrentSubs();
+        fetchSubs();
       }
-    };
-    fetchSubs();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const mySubs = await getMySubmissions(
-          currentUser.uid,
-          params.problemId
-        );
-        setMySubmissions(mySubs);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [params.problemId, currentUser]);
 
   if (error) {
     console.log(error);
@@ -123,29 +116,20 @@ export default function ProblemSubmission({
                       {submission.language_id}
                     </td>
                     <td className={`border-y border-black`}>
-                      {submission.status ? (
                         <Badge
-                          variant="customTailwind"
-                          className={`${
-                            submission.status === "Accepted"
-                              ? "bg-green-500"
-                              : submission.status === "Wrong Answer"
-                              ? "bg-red-500"
-                              : submission.status === "Compile Time Error"
-                              ? "bg-yellow-500"
-                              : ""
-                          }`}
+                          variant={submission.status}
+                          // className={`${
+                          //   submission.status === "Accepted"
+                          //     ? "bg-green-500"
+                          //     : submission.status === "Wrong Answer"
+                          //     ? "bg-red-500"
+                          //     : submission.status === "Compile Time Error"
+                          //     ? "bg-yellow-500"
+                          //     : ""
+                          // }`}
                         >
                           {submission.status}
                         </Badge>
-                      ) : (
-                        <Badge
-                          variant="customTailwind"
-                          className={"bg-purple-500"}
-                        >
-                          Pending
-                        </Badge>
-                      )}
                     </td>
                     <td className={`border-y border-black`}>
                       {moment(submission.created_at).fromNow()}
@@ -211,29 +195,21 @@ export default function ProblemSubmission({
                       {submission.language_id}
                     </td>
                     <td className={`border-y border-black`}>
-                      {submission.status ? (
                         <Badge
-                          variant="customTailwind"
-                          className={`${
-                            submission.status === "Accepted"
-                              ? "bg-green-500"
-                              : submission.status === "Wrong Answer"
-                              ? "bg-red-500"
-                              : submission.status === "Compile Time Error"
-                              ? "bg-yellow-500"
-                              : ""
-                          }`}
+                          variant={submission.status}
+                          // className={`${
+                          //   submission.status === "Accepted"
+                          //     ? "bg-green-500"
+                          //     : submission.status === "Wrong Answer"
+                          //     ? "bg-red-500"
+                          //     : submission.status === "Compile Time Error"
+                          //     ? "bg-yellow-500"
+                          //     : ""
+                          // }`}
                         >
                           {submission.status}
                         </Badge>
-                      ) : (
-                        <Badge
-                          variant="customTailwind"
-                          className={"bg-purple-500"}
-                        >
-                          Pending
-                        </Badge>
-                      )}
+        
                     </td>
                     <td className={`border-y border-black`}>
                       {moment(submission.created_at).fromNow()}

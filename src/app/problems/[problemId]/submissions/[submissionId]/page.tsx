@@ -8,7 +8,7 @@ import Loading from "@/components/Problems/Loading/Problem/Submissions/Submissio
 
 interface Submision {
   id: number;
-  status: string;
+  status: any;
   created_at: string;
   code: string;
 }
@@ -93,21 +93,12 @@ export default function submissionDetail({
         <div className="space-x-2">
           {submission.status ? (
             <Badge
-              variant="customTailwind"
-              className={`${
-                submission.status === "Accepted"
-                  ? "bg-green-500"
-                  : submission.status === "Wrong Answer"
-                  ? "bg-red-500"
-                  : submission.status === "Compile Time Error"
-                  ? "bg-yellow-500"
-                  : ""
-              }`}
+              variant={submission.status}
             >
               {submission.status}
             </Badge>
           ) : (
-            <Badge variant="customTailwind" className={"bg-purple-500"}>
+            <Badge variant="pending">
               Pending
             </Badge>
           )}
@@ -120,7 +111,7 @@ export default function submissionDetail({
         </div>
         <div className="space-y-1">
           <Label className="text-md font-bold">Test Data Results</Label>
-          <div className="p-4 bg-background border rounded space-y-4">
+          <div className="px-4 bg-background border rounded space-y-4">
             <div className="table-wrapper">
               <table className="w-full border-separate border-spacing-y-2 text-sm">
                 <thead>
@@ -146,29 +137,11 @@ export default function submissionDetail({
                         {index + 1}
                       </td>
                       <td className={`border-y border-black`}>
-                        {testResult.status ? (
                           <Badge
-                            variant="customTailwind"
-                            className={`${
-                              testResult.status === "AC"
-                                ? "bg-green-500"
-                                : testResult.status === "WA"
-                                ? "bg-red-500"
-                                : testResult.status === "CTE"
-                                ? "bg-yellow-500"
-                                : ""
-                            }`}
+                            variant={testResult.status}
                           >
                             {testResult.status}
                           </Badge>
-                        ) : (
-                          <Badge
-                            variant="customTailwind"
-                            className={"bg-purple-500"}
-                          >
-                            Pending
-                          </Badge>
-                        )}
                       </td>
                       <td className={`border-y border-black`}>
                         {testResult.time}
