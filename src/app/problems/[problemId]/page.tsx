@@ -176,41 +176,41 @@ export default function ProblemDetail({
 
         <div className="space-y-1">
           <Label className="text-md font-bold">Description</Label>
-          <div className="p-4 bg-slate-100 border rounded-md space-y-4">
+          <div className="p-4 bg-background border rounded space-y-4">
             <p>{problem.description}</p>
           </div>
         </div>
 
         <div className="space-y-1">
           <Label className="text-md font-bold">Explanation</Label>
-          <div className="p-4 bg-slate-100 border rounded-md space-y-4">
+          <div className="p-4 bg-background border rounded space-y-4">
             <p>{problem.explanation}</p>
           </div>
         </div>
 
         <div className="space-y-1">
           <Label className="text-md font-bold">Input Format</Label>
-          <div className="p-4 bg-slate-100 border rounded-md space-y-4">
+          <div className="p-4 bg-background border rounded space-y-4">
             <p>{problem.input_format}</p>
           </div>
         </div>
 
         <div className="space-y-1">
           <Label className="text-md font-bold">Output Format</Label>
-          <div className="p-4 bg-slate-100 border rounded-md space-y-4">
+          <div className="p-4 bg-background border rounded space-y-4">
             <p>{problem.output_format}</p>
           </div>
         </div>
 
         <div className="space-y-1">
           <Label className="text-md font-bold">Input sample</Label>
-          <div className="p-4 bg-slate-100 border rounded-md">
+          <div className="p-4 bg-background border rounded">
             <p>{problem.sample_input}</p>
           </div>
         </div>
         <div className="space-y-1">
           <Label className="text-md font-bold">Output sample</Label>
-          <div className="p-4 bg-slate-100 border rounded-md">
+          <div className="p-4 bg-background border rounded">
             <p>{problem.sample_output}</p>
           </div>
         </div>

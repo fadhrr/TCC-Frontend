@@ -41,7 +41,7 @@ export default function ProblemSubmission({
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchSubs = async () => {
       try {
         const allSubs = await getSubmissions(params.problemId);
         setSubmissions(allSubs);
@@ -51,7 +51,7 @@ export default function ProblemSubmission({
         setLoading(false);
       }
     };
-    fetchData();
+    fetchSubs();
   }, []);
 
   useEffect(() => {
@@ -69,7 +69,7 @@ export default function ProblemSubmission({
       }
     };
     fetchData();
-  });
+  }, []);
 
   if (error) {
     console.log(error);
@@ -110,7 +110,7 @@ export default function ProblemSubmission({
                   <tr
                     key={index}
                     className={`text-left ${
-                      index % 2 === 0 ? "bg-white" : "bg-[#EDEDED]"
+                      index % 2 === 0 ? "bg-background" : "bg-card"
                     }`}
                   >
                     <td className={`pl-2 py-1 border-y border-s border-black`}>
@@ -198,7 +198,7 @@ export default function ProblemSubmission({
                   <tr
                     key={index}
                     className={`text-left ${
-                      index % 2 === 0 ? "bg-white" : "bg-[#EDEDED]"
+                      index % 2 === 0 ? "bg-background" : "bg-card"
                     }`}
                   >
                     <td className={`pl-2 py-1 border-y border-s border-black`}>
