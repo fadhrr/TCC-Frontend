@@ -1,7 +1,7 @@
 import { Skeleton } from "../../ui/skeleton";
 import { Card, CardContent } from "../Card";
 
-export default function () {
+export default function ProblemsLoader() {
   return (
     <div className="container mx-auto my-12">
       <div className="flex gap-4">

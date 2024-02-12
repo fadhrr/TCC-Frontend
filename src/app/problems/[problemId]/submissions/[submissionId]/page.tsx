@@ -46,7 +46,7 @@ async function getTestResults(submissionId: any) {
   return res.json();
 }
 
-export default function submissionDetail({
+export default function SubmissionDetail({
   params,
 }: {
   params: { submissionId: string };
@@ -74,7 +74,7 @@ export default function submissionDetail({
     };
 
     fetchData();
-  }, []);
+  }, [params.submissionId]);
 
   if (error) {
     console.log(error);

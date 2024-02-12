@@ -1,7 +1,7 @@
 import { Card } from "@/components/Problems/Card";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function () {
+export default function SubmisionDetailLoader() {
   return (
     <Card className="w-full max-w-full">
       <div className="p-4 border-b">

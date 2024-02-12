@@ -108,7 +108,7 @@ export default function ProblemDetail({
     };
 
     fetchData();
-  }, []);
+  }, [params.problemId]);
 
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
