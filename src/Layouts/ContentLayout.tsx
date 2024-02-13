@@ -2,6 +2,7 @@
 
 import { useState, ReactNode } from 'react';
 
+
 interface ContentLayoutProps {
   user: any;
   header?: ReactNode;
@@ -10,7 +11,7 @@ interface ContentLayoutProps {
 
 export default function ContentLayout({ user, header, children }: ContentLayoutProps) {
   const [showingNavigationDropdown, setShowingNavigationDropdown] = useState<boolean>(false);
-
+  
   return (
     <div className="min-h-screen bg-[#212121] px-4">
       {header && (
