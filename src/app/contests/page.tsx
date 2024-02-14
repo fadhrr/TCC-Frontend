@@ -2,8 +2,9 @@
 
 import { ContestCard } from '@/components/ui/card';
 import { ModalInput } from '@/components/ui/modal';
-import Headline from '@/components/ui/headline';
+import { Headline } from '@/components/ui/headline';
 import React, { useState } from 'react';
+import SectionContainer from '@/Layouts/SectionContainer';
 
 export default function Contest() {
   const [showModal, setShowModal] = useState(false);
@@ -32,8 +33,7 @@ export default function Contest() {
 
   const filteredData = contestData.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
   return (
-    <section className="overflow-hidden font-mono md:min-w-fit pb-8  pt-[70px] md:pt-[80px] px-0 md:px-10 xl:min-w-full">
-      <div className="container px-8 py-10 mx-auto">
+    <SectionContainer className="container py-8 px-0">
         <Headline
           title="Contests"
           desc=" Welcome to the Contests section, here you will find a variety of exciting contests and challenges that cater to diverse interests and skills. Each contest is designed to test your abilities and knowledge in a specific area."
@@ -74,8 +74,8 @@ export default function Contest() {
             {/* {isModalVisible && <Modal />} */}
           </div>
         </div>
-      </div>
+      
       <ContestCard contestData={filteredData} />
-    </section>
+      </SectionContainer>
   );
 }

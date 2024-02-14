@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import Image from 'next/image';
 // import Team from '/images/team.jpg';
@@ -15,9 +16,17 @@ export default function Hero() {
           </div>
           <p className="mt-6 mb-8 text-lg sm:mb-12">TCC adalah platform yang membantu kamu meningkatkan keterampilan, memperluas pengetahuan, dan mempersiapkan diri untuk industri</p>
           <div className="flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 lg:justify-start">
-            <a rel="noopener noreferrer" href="#" className="px-8 py-3 text-lg font-semibold border-2 border-black bg-black text-white">
+            <div
+              className="px-8 cursor-pointer py-3 text-lg font-semibold border-2 border-black bg-black text-white"
+              onClick={() => {
+                const featureSection = document.getElementById('#fiture');
+                if (featureSection) {
+                  featureSection.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            >
               Lihat program
-            </a>
+            </div>
             <a rel="noopener noreferrer" href="#" className="px-8 py-3 text-lg text-black font-semibold border-2 border-black ">
               Daftar
             </a>

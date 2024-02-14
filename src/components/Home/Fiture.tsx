@@ -21,9 +21,9 @@ const articles = [
   },
   // tambahkan artikel lain jika diperlukan
 ];
-export default function Step() {
+export default function Fiture() {
   return (
-    <section>
+    <section id='#fiture'>
       <div className=" rounded-md py-4 mx-auto max-w-full lg:max-w-screen-xl  ">
         <div className="grid gap-2 lg:grid-cols-3 sm:grid-cols-1">
           {articles.map((article, index) => (

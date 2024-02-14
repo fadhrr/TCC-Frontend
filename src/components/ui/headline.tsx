@@ -9,12 +9,14 @@ interface HeadlineProps {
 const Headline: React.FC<HeadlineProps> = ({ title, desc }) => {
   return (
     <>
-      <h1 className="text-3xl font-semibold text-black capitalize lg:text-4xl ">
-        <span className="underline decoration-blue-500">{title}</span>
-      </h1>
-      <p className="mt-4 w-full lg:w-3/5 text-black xl:mt-6 ">{desc}</p>
+      <div className="flex max-w-[980px] flex-col  gap-2 ">
+        <h1 className="text-3xl font-semibold text-black capitalize lg:text-4xl ">
+          <span className="underline decoration-blue-500">{title}</span>
+        </h1>
+        <p className="mt-2 w-full lg:w-3/5 text-black xl:mt-6 ">{desc}</p>
+      </div>
     </>
   );
 };
 
-export default Headline;
+export { Headline };

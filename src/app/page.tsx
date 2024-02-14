@@ -1,5 +1,5 @@
 import Hero from '@/components/Home/Hero';
-import Step from '@/components/Home/Step';
+import Fiture from '@/components/Home/Fiture';
 import Rank from '@/components/Home/Rank';
 import Cta from '@/components/Home/Cta';
 import ContentLayout from '@/Layouts/ContentLayout';
@@ -11,7 +11,7 @@ const Home: React.FC<HomeProps> = ({ auth }) => {
   return (
     <ContentLayout user={auth?.user}>
       <Hero />
-      <Step />
+      <Fiture />
       <Rank />
       <Cta />
     </ContentLayout>

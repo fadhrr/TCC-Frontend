@@ -2,7 +2,7 @@ import React from 'react';
 import Hero from './Hero';
 import Footer from './Footer';
 import Rank from './Rank';
-import Step from './Step';
+import Step from './Fiture';
 import Cta from './Cta';
 
 function Home() {
@@ -17,4 +17,3 @@ function Home() {
 }
 
 export default Home;
-
