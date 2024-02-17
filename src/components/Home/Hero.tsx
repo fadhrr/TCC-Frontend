@@ -27,11 +27,13 @@ export default function Hero() {
         </div>
         {/* image */}
         <div className="flex  items-center justify-center lg:w-1/2 p-6 mt-8 lg:mt-0 h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128 order-1 md:order-2">
-          <Image
+          {/* <Image
             src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Hand Image"
+            width={100}
+            height={100}
             className="object-cover border-black border shadow-[4px_4px_0px_rgba(0,0,0,1)] h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128 "
-          />
+          /> */}
           {/* <img src="/images/Hand.png" alt="Hand Image" className="object-contain h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128" /> */}
         </div>
       </div>
