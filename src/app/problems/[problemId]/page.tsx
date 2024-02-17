@@ -218,13 +218,13 @@ export default function ProblemDetail({
         <div className="space-y-1">
           <Label className="text-md font-bold">Input sample</Label>
           <div className="p-4 bg-background border rounded">
-            <p>{problem.sample_input}</p>
+            <pre>{problem.sample_input}</pre>
           </div>
         </div>
         <div className="space-y-1">
           <Label className="text-md font-bold">Output sample</Label>
           <div className="p-4 bg-background border rounded">
-            <p>{problem.sample_output}</p>
+            <pre>{problem.sample_output}</pre>
           </div>
         </div>
 
