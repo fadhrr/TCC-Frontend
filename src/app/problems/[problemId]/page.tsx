@@ -84,7 +84,6 @@ export default function ProblemDetail({
   const [lang, setLang] = useState(null);
   const [topTime, setTopTime] = useState([]);
   const [topMemory, setTopMemory] = useState([]);
-  const [selectedLang, setSelectedLang] = useState("");
   const [fileContent, setFileContent] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [submitLoading, setSubmitLoading] = useState(false);
@@ -107,7 +106,6 @@ export default function ProblemDetail({
         setLoading(false);
       }
     };
-
     fetchData();
   }, [params.problemId]);
 
@@ -128,25 +126,24 @@ export default function ProblemDetail({
     }
   };
 
-  const handleSubmit = async () => {
-    setSubmitLoading(true);
-    if (!fileContent) {
-      return;
-    }
-    await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/submission`, {
-      method: "POST",
-      body: JSON.stringify({
-        user_id: currentUser.uid,
-        problem_id: params.problemId,
-        language_id: selectedLang,
-        time: 0,
-        memory: 0,
-        code: fileContent,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitLoading(true)
+    const lang = e.target[1].value;
+      await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/submission`, {
+        method: "POST",
+        body: JSON.stringify({
+          user_id: currentUser.uid,
+          problem_id: params.problemId,
+          language_id: lang,
+          time: 0,
+          memory: 0,
+          code: fileContent,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
     router.push(`/problems/${params.problemId}/submissions`);
   };
 
@@ -230,13 +227,13 @@ export default function ProblemDetail({
           </div>
         </div>
 
-        {currentUser && (
           <div className="space-y-1">
             <Label className="text-md font-bold">Submmit Solution</Label>
+        {currentUser ? (
             <form className="flex space-x-2" onSubmit={handleSubmit}>
-              <Select onValueChange={setSelectedLang}>
+              <Select defaultValue="1">
                 <SelectTrigger className="w-24">
-                  <SelectValue placeholder="Lang" />
+                  <SelectValue/>
                 </SelectTrigger>
                 <SelectContent>
                   {lang.map((lang, index) => (
@@ -246,11 +243,15 @@ export default function ProblemDetail({
                   ))}
                 </SelectContent>
               </Select>
-              <Input type="file" onChange={handleFileChange} />
+              <Input required type="file" onChange={handleFileChange} />
               <Button disabled={submitLoading} type="submit">Submit</Button>
             </form>
+        ) : (
+          <div className="p-4 text-sm text-muted-foreground bg-muted rounded">  
+            You must login to submit a solution!!
           </div>
-        )}
+          )}
+          </div>
 
         <div className="flex">
           <div className="w-full">
@@ -288,7 +289,7 @@ export default function ProblemDetail({
                   <tr className="text-left">
                     <th>#</th>
                     <th>User</th>
-                    <th>Time</th>
+                    <th>Memory</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -296,7 +297,7 @@ export default function ProblemDetail({
                     <tr key={index} className="text-left">
                       <td>{index + 1}</td>
                       <td>{user.name}</td>
-                      <td>{user.time}</td>
+                      <td>{user.memory}</td>
                     </tr>
                   ))}
                 </tbody>
