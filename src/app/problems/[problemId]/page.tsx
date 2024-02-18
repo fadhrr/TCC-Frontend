@@ -227,9 +227,9 @@ export default function ProblemDetail({
           </div>
         </div>
 
-        {currentUser && (
           <div className="space-y-1">
             <Label className="text-md font-bold">Submmit Solution</Label>
+        {currentUser ? (
             <form className="flex space-x-2" onSubmit={handleSubmit}>
               <Select defaultValue="1">
                 <SelectTrigger className="w-24">
@@ -246,8 +246,12 @@ export default function ProblemDetail({
               <Input required type="file" onChange={handleFileChange} />
               <Button disabled={submitLoading} type="submit">Submit</Button>
             </form>
+        ) : (
+          <div className="p-4 text-sm text-muted-foreground bg-muted rounded">  
+            You must login to submit a solution!!
           </div>
-        )}
+          )}
+          </div>
 
         <div className="flex">
           <div className="w-full">
