@@ -87,6 +87,7 @@ export default function ProblemDetail({
   const [selectedLang, setSelectedLang] = useState("");
   const [fileContent, setFileContent] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [submitLoading, setSubmitLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -128,6 +129,7 @@ export default function ProblemDetail({
   };
 
   const handleSubmit = async () => {
+    setSubmitLoading(true);
     if (!fileContent) {
       return;
     }
@@ -245,7 +247,7 @@ export default function ProblemDetail({
                 </SelectContent>
               </Select>
               <Input type="file" onChange={handleFileChange} />
-              <Button type="submit">Submit</Button>
+              <Button disabled={submitLoading} type="submit">Submit</Button>
             </form>
           </div>
         )}

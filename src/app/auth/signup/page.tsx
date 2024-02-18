@@ -44,7 +44,7 @@ export default function SignUp() {
             }
           );
         }
-        router.push("/auth/signin");
+        router.push("/");
       })
       .catch((error) => {
         setLoading(false);
