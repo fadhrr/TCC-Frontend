@@ -15,7 +15,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useRouter, usePathname } from 'next/navigation';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase-config';
 import menuData from './menuData';
 import Link from 'next/link';
@@ -25,9 +25,6 @@ import { AuthContext } from "@/context/AuthContext";
 export default function Header() {
   const router = useRouter();
   const { currentUser } = useContext(AuthContext);
-
-  const [user, setUser] = useState<any>(null);
-
 
   const handleLogout = () => {
     signOut(auth)
