@@ -19,19 +19,15 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase-config';
 import menuData from './menuData';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { AuthContext } from "@/context/AuthContext";
 
 export default function Header() {
   const router = useRouter();
+  const { currentUser } = useContext(AuthContext);
 
   const [user, setUser] = useState<any>(null);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user: any) => {
-      setUser(user);
-    });
-    return () => unsubscribe();
-  }, []);
 
   const handleLogout = () => {
     signOut(auth)
@@ -39,7 +35,9 @@ export default function Header() {
         router.push('/');
         console.log('Signed out successfully');
       })
-      .catch((error) => {});
+      .catch((error) => {
+        alert(error.message)
+      });
   };
 
   const pathUrl = usePathname();
@@ -167,13 +165,13 @@ export default function Header() {
           {/* 3 */}
           {/* dropdown untuk user */}
           <div className="flex items-center  space-x-2 lg:mr-0 mr-3">
-            {user ? (
+            {currentUser ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button type="button" className="relative infline-flex items-center justify-start inline-block border shadow-[4px_4px_0px_rgba(0,0,0,1)] border-black px-4 py-2 overflow-hidden font-bold rounded-full group bg-[#fae74d]">
                     <span className="w-32 h-32 rotate-45 translate-x-12 -translate-y-2 absolute left-0 top-0 bg-black opacity-[3%]"></span>
                     <span className="absolute top-0 left-0 w-48 h-48 -mt-1 transition-all duration-500 ease-in-out rotate-45 -translate-x-56 -translate-y-24 bg-black opacity-100 group-hover:-translate-x-8"></span>
-                    <span className="relative w-full text-left text-black transition-colors duration-200 ease-in-out group-hover:text-white">{user.displayName}</span>
+                    <span className="relative w-full text-left text-black transition-colors duration-200 ease-in-out group-hover:text-white">{currentUser.displayName}</span>
                     <span className="absolute inset-0  rounded-full"></span>
                   </Button>
                 </DropdownMenuTrigger>

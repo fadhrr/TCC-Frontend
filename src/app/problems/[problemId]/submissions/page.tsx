@@ -42,11 +42,11 @@ export default function ProblemSubmission({
 
   useEffect(() => {
     try {
-      if (currentUser.uid) {
-        const fetchSubs = async () => {
-          const allSubs = await getSubmissions(params.problemId);
-          setSubmissions(allSubs);
-        };
+      const fetchSubs = async () => {
+        const allSubs = await getSubmissions(params.problemId);
+        setSubmissions(allSubs);
+      };
+      if (currentUser && currentUser.uid) {
         const fetchCurrentSubs = async () => {
           const mySubs = await getMySubmissions(
             currentUser.uid,
@@ -55,8 +55,8 @@ export default function ProblemSubmission({
           setMySubmissions(mySubs);
         };
         fetchCurrentSubs();
-        fetchSubs();
       }
+      fetchSubs();
     } catch (error) {
       setError(error.message);
     } finally {
@@ -110,7 +110,7 @@ export default function ProblemSubmission({
                       {submission.id}
                     </td>
                     <td className={`border-y border-black`}>
-                      {submission.user_id}
+                      {submission.user && submission.user.name}
                     </td>
                     <td className={`border-y border-black`}>
                       {submission.language_id}
@@ -182,7 +182,7 @@ export default function ProblemSubmission({
                       {submission.id}
                     </td>
                     <td className={`border-y border-black`}>
-                      {submission.user_id}
+                    {submission.user && submission.user.name}
                     </td>
                     <td className={`border-y border-black`}>
                       {submission.language_id}
