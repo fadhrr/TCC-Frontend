@@ -1,15 +1,21 @@
-import Hero from "@/components/Home/Hero";
-import Step from "@/components/Home/Step";
-import Rank from "@/components/Home/Rank";
-import Cta from "@/components/Home/Cta";
+import Hero from '@/components/Home/Hero';
+import Step from '@/components/Home/Step';
+import Rank from '@/components/Home/Rank';
+import Cta from '@/components/Home/Cta';
+import ContentLayout from '@/Layouts/ContentLayout';
 
-export default function Home() {
+interface HomeProps {
+  auth?: { user: any };
+}
+const Home: React.FC<HomeProps> = ({ auth }) => {
   return (
-    <div className="">
+    <ContentLayout user={auth?.user}>
       <Hero />
       <Step />
       <Rank />
       <Cta />
-    </div>
+    </ContentLayout>
   );
 };
+
+export default Home;
