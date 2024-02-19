@@ -1,19 +1,22 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { auth } from "@/lib/firebase-config";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { FormError } from "@/components/form-error";
 
 export default function SignUp() {
   const router = useRouter();
+  const [error, setError] = useState<string | undefined>("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
+
     const email = e.target[0].value;
     const username = e.target[1].value;
     const nim = e.target[2].value;
@@ -26,29 +29,25 @@ export default function SignUp() {
           await updateProfile(user, {
             displayName: username,
           });
-
-          const res = await fetch(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user`,
-            {
-              method: "POST",
-              body: JSON.stringify({
-                id: user.uid,
-                name: user.displayName,
-                nim: `${nim}`,
-                score: 0,
-                email: user.email,
-              }),
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
+          await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user`, {
+            method: "POST",
+            body: JSON.stringify({
+              id: user.uid,
+              name: user.displayName,
+              nim: `${nim}`,
+              score: 0,
+              email: user.email,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
         }
         router.push("/");
       })
       .catch((error) => {
         setLoading(false);
-        alert(`${error.message}`);
+        setError(`${error.message}`);
       });
   };
 
@@ -71,6 +70,7 @@ export default function SignUp() {
               <Input required type="password" placeholder="Password" />
             </div>
             <div className="space-y-2">
+              <FormError message={error} />
               <Button disabled={loading} type="submit" className="w-full">
                 Sign Up
               </Button>

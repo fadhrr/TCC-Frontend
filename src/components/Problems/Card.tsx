@@ -68,21 +68,3 @@ const CardFooter = React.forwardRef<
 CardFooter.displayName = "CardFooter"
 
 export { Card, CardContent, CardTitle, CardDescription, CardFooter }
-
-// export default function ContesCard() {
-//   return (
-//     <div className="bg-gray-50 flex flex-col p-4 border-2 rounded-lg border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]">
-//       <div className="flex justify-start">
-//         <h3 className="mt-4 text-lg font-medium sm:text-xl">{problem.title}</h3>
-//       </div>
-//       <p className="mt-1 text-sm text-gray-700">{problem.description}</p>
-//       <div className="mt-4 flex gap-2 sm:items-center">
-//         <div className="flex items-center gap-1 p-1 text-gray-500">
-//           <Badge variant="default">Badge</Badge>
-//           <Badge variant="outline">Badge</Badge>
-//           <Badge variant="destructive">Badge</Badge>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }

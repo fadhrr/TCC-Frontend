@@ -1,5 +1,5 @@
-import { Skeleton } from "../../ui/skeleton";
-import { Card } from "../Card";
+import { Skeleton } from "../ui/skeleton";
+import { Card } from "./Card";
 
 export default function ProblemsLoader() {
   return (

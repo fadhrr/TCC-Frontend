@@ -1,7 +1,7 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { AuthContext } from "@/context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,8 +12,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Card } from "@/components/Problems/Card";
-import Loading from "@/components/Problems/Loading/Problem/Loading";
+import { Card } from "@/components/problems/Card";
+import Loading from "@/components/problems/ProblemDetailLoader";
 
 interface Problem {
   title: string;
@@ -79,7 +79,7 @@ export default function ProblemDetail({
   params: { problemId: string };
 }) {
   const router = useRouter();
-  const { currentUser } = useContext(AuthContext);
+  const currentUser = useAuth();
   const [problem, setProblem] = useState<Problem | null>(null);
   const [lang, setLang] = useState(null);
   const [topTime, setTopTime] = useState([]);
