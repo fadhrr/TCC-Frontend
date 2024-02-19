@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Card, CardContent } from "@/components/problems/Card";
+import { Card, CardContent } from "@/components/problem/Card";
 import { Label } from "@/components/ui/label";
 
 export default function Sidebar({ slug }) {
