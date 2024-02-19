@@ -12,8 +12,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Card } from "@/components/problem/Card";
-import Loading from "@/components/problem/ProblemDetailLoader";
+import { Card } from "@/components/problems/Card";
+import Loading from "@/components/problems/ProblemDetailLoader";
 
 interface Problem {
   title: string;

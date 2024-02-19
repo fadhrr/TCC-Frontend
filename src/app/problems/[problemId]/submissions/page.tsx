@@ -6,8 +6,8 @@ import { useAuth } from "@/context/AuthContext";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card } from "@/components/problem/Card";
-import Loading from "@/components/problem/SubmissionsLoader";
+import { Card } from "@/components/problems/Card";
+import Loading from "@/components/problems/SubmissionsLoader";
 
 async function getSubmissions(problemId: any) {
   const res = await fetch(

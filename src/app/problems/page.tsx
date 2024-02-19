@@ -8,8 +8,8 @@ import {
   CardTitle,
   CardDescription,
   CardFooter,
-} from "@/components/problem/Card";
-import Loading from "@/components/problem/ProblemsLoader";
+} from "@/components/problems/Card";
+import Loading from "@/components/problems/ProblemsLoader";
 
 async function getProblems() {
   const res = await fetch(
