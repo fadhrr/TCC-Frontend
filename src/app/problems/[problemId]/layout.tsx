@@ -1,4 +1,4 @@
-import Sidebar from "@/components/Problems/Sidebar";
+import Sidebar from "@/components/problems/Sidebar";
 import { AuthContextProvider } from "@/context/AuthContext";
 
 export const metadata = {

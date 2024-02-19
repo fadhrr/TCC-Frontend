@@ -1,26 +1,25 @@
 "use client";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext,useEffect, useState } from "react";
 import { auth } from "@/lib/firebase-config";
-import { onAuthStateChanged } from "firebase/auth";
 
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState({});
+  const [user, setUser] = useState({});
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      setUser(authUser);
     });
 
-    return () => {
-      unsub();
-    };
+    return () => unsubscribe();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ currentUser }}>
+    <AuthContext.Provider value={user}>
       {children}
     </AuthContext.Provider>
   );
 };
+
+export const useAuth = () => useContext(AuthContext);

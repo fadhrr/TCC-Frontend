@@ -1,5 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { Card } from "../../Card";
+import { Card } from "./Card";
 
 export default function ProblemDetailLoader() {
   return (

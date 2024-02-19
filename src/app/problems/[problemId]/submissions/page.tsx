@@ -2,12 +2,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import moment from "moment";
-import { AuthContext } from "@/context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card } from "@/components/Problems/Card";
-import Loading from "@/components/Problems/Loading/Problem/Submissions/Loading";
+import { Card } from "@/components/problems/Card";
+import Loading from "@/components/problems/SubmissionsLoader";
 
 async function getSubmissions(problemId: any) {
   const res = await fetch(
@@ -34,7 +34,7 @@ export default function ProblemSubmission({
 }: {
   params: { problemId: string };
 }) {
-  const { currentUser } = useContext(AuthContext);
+  const currentUser = useAuth();
   const [submissions, setSubmissions] = useState([]);
   const [mySubmissions, setMySubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -45,7 +45,7 @@ export default function ProblemSubmission({
       const fetchSubs = async () => {
         const allSubs = await getSubmissions(params.problemId);
         setSubmissions(allSubs);
-      };
+      }
       if (currentUser && currentUser.uid) {
         const fetchCurrentSubs = async () => {
           const mySubs = await getMySubmissions(
@@ -171,7 +171,7 @@ export default function ProblemSubmission({
               </thead>
 
               <tbody>
-                {mySubmissions.map((submission, index) => (
+                {mySubmissions && (mySubmissions.map((submission, index) => (
                   <tr
                     key={index}
                     className={`text-left ${
@@ -182,7 +182,7 @@ export default function ProblemSubmission({
                       {submission.id}
                     </td>
                     <td className={`border-y border-black`}>
-                    {submission.user && submission.user.name}
+                      {submission.user && submission.user.name}
                     </td>
                     <td className={`border-y border-black`}>
                       {submission.language_id}
@@ -222,7 +222,7 @@ export default function ProblemSubmission({
                       </Link>
                     </td>
                   </tr>
-                ))}
+                )))}
               </tbody>
             </table>
           </div>
