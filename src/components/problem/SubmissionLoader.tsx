@@ -1,4 +1,4 @@
-import { Card } from "@/components/problems/Card";
+import { Card } from "@/components/problem/Card";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function SubmisionDetailLoader() {
