@@ -5,7 +5,7 @@ export const metadata = {
   
   export default async function ProblemLayout({ children }) {
     return (
-        <div className="py-24">
+        <div className="pt-40">
           {children}
         </div>
     );

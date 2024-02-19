@@ -116,20 +116,13 @@ export default function ProblemSubmission({
                       {submission.language_id}
                     </td>
                     <td className={`border-y border-black`}>
-                        <Badge
-                          variant={submission.status}
-                          // className={`${
-                          //   submission.status === "Accepted"
-                          //     ? "bg-green-500"
-                          //     : submission.status === "Wrong Answer"
-                          //     ? "bg-red-500"
-                          //     : submission.status === "Compile Time Error"
-                          //     ? "bg-yellow-500"
-                          //     : ""
-                          // }`}
-                        >
+                      {submission.status ? (
+                        <Badge variant={submission.status}>
                           {submission.status}
                         </Badge>
+                      ) : (
+                        <Badge variant="pending">Pending</Badge>
+                      )}
                     </td>
                     <td className={`border-y border-black`}>
                       {moment(submission.created_at).fromNow()}
@@ -195,21 +188,13 @@ export default function ProblemSubmission({
                       {submission.language_id}
                     </td>
                     <td className={`border-y border-black`}>
-                        <Badge
-                          variant={submission.status}
-                          // className={`${
-                          //   submission.status === "Accepted"
-                          //     ? "bg-green-500"
-                          //     : submission.status === "Wrong Answer"
-                          //     ? "bg-red-500"
-                          //     : submission.status === "Compile Time Error"
-                          //     ? "bg-yellow-500"
-                          //     : ""
-                          // }`}
-                        >
+                      {submission.status ? (
+                        <Badge variant={submission.status}>
                           {submission.status}
                         </Badge>
-        
+                      ) : (
+                        <Badge variant="pending">Pending</Badge>
+                      )}
                     </td>
                     <td className={`border-y border-black`}>
                       {moment(submission.created_at).fromNow()}

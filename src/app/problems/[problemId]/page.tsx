@@ -218,33 +218,38 @@ export default function ProblemDetail({
         <div className="space-y-1">
           <Label className="text-md font-bold">Input sample</Label>
           <div className="p-4 bg-background border rounded">
-            <p>{problem.sample_input}</p>
+            <pre>{problem.sample_input}</pre>
           </div>
         </div>
         <div className="space-y-1">
           <Label className="text-md font-bold">Output sample</Label>
           <div className="p-4 bg-background border rounded">
-            <p>{problem.sample_output}</p>
+            <pre>{problem.sample_output}</pre>
           </div>
         </div>
 
-        <div className="space-y-1">
-          <Label className="text-md font-bold">Submmit Solution</Label>
-          <form className="flex space-x-2" onSubmit={handleSubmit}>
-            <Select onValueChange={setSelectedLang}>
-              <SelectTrigger className="w-24">
-                <SelectValue placeholder="Lang" />
-              </SelectTrigger>
-              <SelectContent>
-                {lang.map((lang, index) => (
-                    <SelectItem key={index} value={`${lang.id}`}>{lang.name}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Input type="file" onChange={handleFileChange} />
-            <Button type="submit">Submit</Button>
-          </form>
-        </div>
+        {currentUser && (
+          <div className="space-y-1">
+            <Label className="text-md font-bold">Submmit Solution</Label>
+            <form className="flex space-x-2" onSubmit={handleSubmit}>
+              <Select onValueChange={setSelectedLang}>
+                <SelectTrigger className="w-24">
+                  <SelectValue placeholder="Lang" />
+                </SelectTrigger>
+                <SelectContent>
+                  {lang.map((lang, index) => (
+                    <SelectItem key={index} value={`${lang.id}`}>
+                      {lang.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Input type="file" onChange={handleFileChange} />
+              <Button type="submit">Submit</Button>
+            </form>
+          </div>
+        )}
+
         <div className="flex">
           <div className="w-full">
             <div className="p-2 border-b">
