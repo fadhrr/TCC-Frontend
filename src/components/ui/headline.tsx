@@ -4,12 +4,13 @@ import React from 'react';
 interface HeadlineProps {
   title: string;
   desc: string;
+  className?: string;
 }
 
-const Headline: React.FC<HeadlineProps> = ({ title, desc }) => {
+const Headline: React.FC<HeadlineProps> = ({ title, desc, className  }) => {
   return (
     <>
-      <div className="flex max-w-[980px] flex-col  gap-2 ">
+    <div className={`flex max-w-[980px] flex-col  gap-2 ${className}`}>
         <h1 className="text-3xl font-semibold text-black capitalize lg:text-4xl ">
           <span className="underline decoration-blue-500">{title}</span>
         </h1>

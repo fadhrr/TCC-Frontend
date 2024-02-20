@@ -49,6 +49,7 @@ export default function Problems() {
       <Headline
         title="Problem"
         desc=" Welcome to the Contests section, here you will find a variety of exciting contests and challenges that cater to diverse interests and skills. Each contest is designed to test your abilities and knowledge in a specific area."
+        className="mb-4 md:mb-8"
       />
       <div className="flex flex-col w-full space-y-4">
         {problems.map((problem, index) => (
