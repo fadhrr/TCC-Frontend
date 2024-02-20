@@ -1,4 +1,3 @@
-// Headline.tsx
 import React from 'react';
 
 interface HeadlineProps {

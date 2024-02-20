@@ -1,7 +1,7 @@
-import Hero from '@/components/Home/Hero';
-import Fiture from '@/components/Home/Fiture';
-import Rank from '@/components/Home/Rank';
-import Cta from '@/components/Home/Cta';
+import Hero from '@/components/Hero';
+import Fiture from '@/components/Fiture';
+import Rank from '@/components/Rank';
+import Cta from '@/components/Cta';
 import ContentLayout from '@/Layouts/ContentLayout';
 
 interface HomeProps {

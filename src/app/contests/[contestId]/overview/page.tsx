@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ModalSucces } from '@/components/ui/modal';
 import Image from 'next/image';
+import SectionContainer from '@/Layouts/SectionContainer';
+import { Card } from '@/components/Problems/Card';
 
 const articlesData = [
   {
@@ -21,17 +23,17 @@ const articlesData = [
 export default function ContestDetail() {
   const [showModal, setShowModal] = useState(false);
   return (
-    <div className="w-full my-8 space-x-8 pt-[80px]">
+    <Card className="container md:mt-0 !z-0 py-8 px-6">
       <h1 className="text-4xl font-bold text-center w-full mb-8">Contest Information</h1>
       {articlesData.map((article, index) => (
         <article key={index} className="group w-full flex-col flex gap-6 mb-8">
           <div className="flex gap-8 justify-center items-center flex-col">
             <Image src={article.imageUrl} width={800} height={600} className="md:h-56 md:w-56 w-full object-cover rounded-md border-2 border-black transition group-hover:grayscale-[50%]" alt="" />
-            <div className="w-full flex text-center justify-center flex-col ">
+            <div className="w-full flex text-center items-center justify-center flex-col ">
               <a href="#">
                 <h3 className="md:text-4xl text-2xl font-reguler text-gray-900">{article.title}</h3>
               </a>
-              <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">{article.description}</p>
+              <p className="mt-2 line-clamp-3 w-4/5  text-sm/relaxed text-gray-500">{article.description}</p>
             </div>
           </div>
           <ul className="list-disc  px-4">
@@ -52,6 +54,6 @@ export default function ContestDetail() {
         Join
       </Button>
       {showModal && <ModalSucces setOpenModal={setShowModal} />}
-    </div>
+    </Card>
   );
 }
