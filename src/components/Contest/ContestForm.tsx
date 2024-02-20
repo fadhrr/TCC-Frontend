@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 
 export default function ContestForm() {
   return (
-    <section className="bg-white">
+    <section>
       <div className="container px-8 py-10 mx-auto">
         <Headline
           title="Create Contest"
@@ -12,7 +12,7 @@ export default function ContestForm() {
         />
         <div className="w-full  md:px-0 px-4 py-8 z-20 ">
           {/* card */}
-          <div id="section2" className="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+          <div id="section2" className="p-8 mt-6 lg:mt-0 rounded shadow ">
             <form>
               {/* 1 */}
               <div className="md:flex mb-6">

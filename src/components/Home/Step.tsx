@@ -1,160 +1,56 @@
+import React from 'react';
 
-import React from "react";
-
+const articles = [
+  {
+    title: 'Problem',
+    desc: 'Hadapi tantangan coding langsung dari berbagai tingkat kesulitan untuk mengasah keterampilan Anda dengan situasi dunia nyata',
+    color: '#4ccff9',
+    image: '/images/problem.svg',
+  },
+  {
+    title: 'Ikuti contest',
+    desc: 'Bergabunglah dalam beragam kompetisi coding yang menantang untuk menguji kemampuan Anda, bersaing dengan para ahli, dan menambahkan prestasi pada profil Anda',
+    color: '#62a1ff',
+    image: '/images/contest.svg',
+  },
+  {
+    title: 'Buat contest',
+    desc: 'Berperan sebagai pengorganisasi dengan membuat kontes coding sendiri, menantang para peserta dengan soal-soal menarik, dan membangun komunitas di sekitar minat coding Anda.',
+    color: '#e9f97f',
+    image: '/images/Createcontest.svg',
+  },
+  // tambahkan artikel lain jika diperlukan
+];
 export default function Step() {
-    return (
-        <section className="bg-black ">
+  return (
+    <section>
+      <div className=" rounded-md py-4 mx-auto max-w-full lg:max-w-screen-xl  ">
+        <div className="grid gap-2 lg:grid-cols-3 sm:grid-cols-1">
+          {articles.map((article, index) => (
+            <article key={index} className="hover:animate-background rounded-xl p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s]">
+              <div className={`rounded-[10px] min-h-[60vh] gap-2 flex flex-col justify-center p-4 sm:p-6 `} style={{ backgroundColor: article.color }}>
+                {/* SVG */}
+                {article.image && <img src={article.image} alt="SVG Icon" className="w-10 h-10 mb-4" />}
+                {/* Judul Artikel */}
+                <a href="#">
+                  <h3 className="mt-0.5 text-lg font-medium text-gray-900">{article.title}</h3>
+                </a>
 
-            {/* // <div className="px-4 bg-black py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20"> */}
-            <div className="px-4  py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl  md:px-24 lg:px-8 lg:py-20">
-                <div className="max-w-xl mb-10 md:mx-auto sm:text-center lg:max-w-2xl md:mb-12">
-                    <div>
-                        <p className="inline-block px-3 py-px mb-4 text-xs font-semibold tracking-wider text-white uppercase rounded-full bg-teal-accent-400">
-                            Brand new
-                        </p>
-                    </div>
-                    <h2 className=" mb-6 font-sans text-3xl font-bold leading-none tracking-tight text-white sm:text-4xl md:mx-auto">
-                        <span className="relative inline-block">
-                            <span className="relative">The</span>
-                        </span>{" "}
-                        quick, brown fox jumps over a lazy dog
-                    </h2>
-                    <p className="text-base text-white md:text-lg">
-                        Sed ut perspiciatis unde omnis iste natus error sit
-                        voluptatem accusantium doloremque rem aperiam, eaque
-                        ipsa quae.
-                    </p>
+                {/* Deskripsi Artikel */}
+                <p className="text-base md:text-sm">{article.desc}</p>
+
+                {/* Tombol Pelajari Lebih Lanjut */}
+                <div className="group mt-4 cursor-pointer inline-flex items-center gap-1 text-sm font-medium hover:text-[#fae74d]">
+                  Pelajari lebih lanjut
+                  <span aria-hidden="true" className="block transition-all group-hover:ms-0.5 rtl:rotate-180">
+                    &rarr;
+                  </span>
                 </div>
-                <div className="grid gap-10 lg:grid-cols-4 sm:grid-cols-2">
-                    <div>
-                        <div className="flex items-center justify-between mb-6">
-                            <p className="text-2xl text-white font-bold">
-                                Step 1
-                            </p>
-                            <svg
-                                className="w-6 text-white transform rotate-90 sm:rotate-0"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                viewBox="0 0 24 24"
-                            >
-                                <line
-                                    fill="none"
-                                    strokeMiterlimit="10"
-                                    x1="2"
-                                    y1="12"
-                                    x2="22"
-                                    y2="12"
-                                />
-                                <polyline
-                                    fill="none"
-                                    strokeMiterlimit="10"
-                                    points="15,5 22,12 15,19 "
-                                />
-                            </svg>
-                        </div>
-                        <p className="text-white">
-                            If one examines precultural libertarianism, one is
-                            faced with a choice: either accept rationalism or
-                            conclude that context.
-                        </p>
-                    </div>
-                    <div>
-                        <div className="flex items-center justify-between mb-6">
-                            <p className="text-2xl text-white font-bold">
-                                Step 2
-                            </p>
-                            <svg
-                                className="w-6 text-white transform rotate-90 sm:rotate-0"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                viewBox="0 0 24 24"
-                            >
-                                <line
-                                    fill="none"
-                                    strokeMiterlimit="10"
-                                    x1="2"
-                                    y1="12"
-                                    x2="22"
-                                    y2="12"
-                                />
-                                <polyline
-                                    fill="none"
-                                    strokeMiterlimit="10"
-                                    points="15,5 22,12 15,19 "
-                                />
-                            </svg>
-                        </div>
-                        <p className="text-white">
-                            That is the true genius of America - a faith in
-                            simple dreams, an insistence on small miracles.
-                        </p>
-                    </div>
-                    <div>
-                        <div className="flex items-center justify-between mb-6">
-                            <p className="text-2xl text-white font-bold">
-                                Step 3
-                            </p>
-                            <svg
-                                className="w-6 text-white transform rotate-90 sm:rotate-0"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                viewBox="0 0 24 24"
-                            >
-                                <line
-                                    fill="none"
-                                    strokeMiterlimit="10"
-                                    x1="2"
-                                    y1="12"
-                                    x2="22"
-                                    y2="12"
-                                />
-                                <polyline
-                                    fill="none"
-                                    strokeMiterlimit="10"
-                                    points="15,5 22,12 15,19 "
-                                />
-                            </svg>
-                        </div>
-                        <p className="text-white">
-                            Those options are already baked in with this model
-                            shoot me an email clear blue water but we need
-                            distributors.
-                        </p>
-                    </div>
-                    <div>
-                        <div className="flex items-center justify-between mb-6">
-                            <p className="text-2xl text-white font-bold">
-                                Success
-                            </p>
-                            <svg
-                                className="w-8 text-white"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <polyline
-                                    fill="none"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeMiterlimit="10"
-                                    points="6,12 10,16 18,8"
-                                />
-                            </svg>
-                        </div>
-                        <p className="text-white">
-                            Lookout flogging bilge rat main sheet bilge water
-                            nipper fluke to go on account heave down clap of
-                            thunder.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }

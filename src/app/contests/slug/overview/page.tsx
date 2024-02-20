@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ModalSucces } from '@/components/ui/modal';
+import Image from 'next/image';
 
 const articlesData = [
   {
@@ -25,7 +26,7 @@ export default function ContestDetail() {
       {articlesData.map((article, index) => (
         <article key={index} className="group w-full flex-col flex gap-6 mb-8">
           <div className="flex gap-8 justify-center items-center flex-col">
-            <img src={article.imageUrl} className="md:h-56 md:w-56 w-full object-cover rounded-md border-2 border-black transition group-hover:grayscale-[50%]" alt="" />
+            <Image src={article.imageUrl} width={800} height={600} className="md:h-56 md:w-56 w-full object-cover rounded-md border-2 border-black transition group-hover:grayscale-[50%]" alt="" />
             <div className="w-full flex text-center justify-center flex-col ">
               <a href="#">
                 <h3 className="md:text-4xl text-2xl font-reguler text-gray-900">{article.title}</h3>
