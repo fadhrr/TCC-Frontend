@@ -9,7 +9,7 @@ const page = () => {
             <span className="underline decoration-blue-500">Dashboard</span>
         </h1>
     </div>
-    <ScoreboardLayout/>
+      <ScoreboardLayout/>
 </div>
 
 
