@@ -128,7 +128,7 @@ export default function SubmissionDetail({
                     <tr
                       key={index}
                       className={`text-left ${
-                        index % 2 === 0 ? "bg-white" : "bg-card"
+                        index % 2 === 0 ? "bg-background" : "bg-muted"
                       }`}
                     >
                       <td
