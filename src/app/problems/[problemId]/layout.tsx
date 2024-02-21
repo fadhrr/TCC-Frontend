@@ -10,7 +10,7 @@ export default async function ProblemLayout({ children, params }) {
   return (
     <AuthContextProvider>
       <div className="container flex mx-auto my-8 space-x-4">
-        <div className="h-max min-w-80 space-y-4">
+        <div className="min-w-80 space-y-4">
           <Sidebar slug={params.problemId} />
         </div>
         {children}
