@@ -14,17 +14,19 @@ import {
 } from "@/components/ui/select";
 import { Card } from "@/components/problems/Card";
 import Loading from "@/components/problems/ProblemDetailLoader";
+import { FormError } from "@/components/form-error";
 
 interface Problem {
   title: string;
   time_limit: number;
   memory_limit: number;
   description: string;
-  explanation: string;
   input_format: string;
   output_format: string;
   sample_input: string;
   sample_output: string;
+  explanation: string;
+  constraints: string;
 }
 
 async function getProblem(problemId: string) {
@@ -128,28 +130,64 @@ export default function ProblemDetail({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitLoading(true)
-    const lang = e.target[1].value;
-      await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/submission`, {
-        method: "POST",
-        body: JSON.stringify({
-          user_id: currentUser.uid,
-          problem_id: params.problemId,
-          language_id: lang,
-          time: 0,
-          memory: 0,
-          code: fileContent,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-    router.push(`/problems/${params.problemId}/submissions`);
-  };
+    setSubmitLoading(true);
 
-  if (error) {
-    console.log(error);
-  }
+    const lang = e.target[1].value;
+    const fileName = e.target[2].files?.[0].name;
+    try {
+      if (!fileContent) {
+        setSubmitLoading(false);
+        return;
+      }
+
+      const langIdToExtension = {
+        1: "cpp",
+        2: "c",
+        3: "py",
+        // Add more mappings as needed
+      };
+
+      const fileExtension = fileName.split(".").pop().toLowerCase();
+
+      if (langIdToExtension[lang] !== fileExtension) {
+        // Instead of throwing an error, set the error message directly
+        setSubmitLoading(false);
+        setError("File extension does not match the selected language.");
+        return;
+      }
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/submission`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            user_id: currentUser.uid,
+            problem_id: params.problemId,
+            language_id: lang,
+            time: 0,
+            memory: 0,
+            code: fileContent,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        // Instead of throwing an error, set the error message directly
+        setSubmitLoading(false);
+        setError(`Failed to submit: ${response.statusText}`);
+        return;
+      }
+
+      router.push(`/problems/${params.problemId}/submissions`);
+    } catch (error) {
+      // Handle other types of errors as needed
+      setSubmitLoading(false);
+      setError("An unexpected error occurred.");
+    }
+  };
 
   if (loading || problem == null) {
     return <Loading />;
@@ -194,13 +232,6 @@ export default function ProblemDetail({
         </div>
 
         <div className="space-y-1">
-          <Label className="text-md font-bold">Explanation</Label>
-          <div className="p-4 bg-background border rounded space-y-4">
-            <p>{problem.explanation}</p>
-          </div>
-        </div>
-
-        <div className="space-y-1">
           <Label className="text-md font-bold">Input Format</Label>
           <div className="p-4 bg-background border rounded space-y-4">
             <p>{problem.input_format}</p>
@@ -227,31 +258,55 @@ export default function ProblemDetail({
           </div>
         </div>
 
-          <div className="space-y-1">
-            <Label className="text-md font-bold">Submmit Solution</Label>
-        {currentUser ? (
-            <form className="flex space-x-2" onSubmit={handleSubmit}>
-              <Select defaultValue="1">
-                <SelectTrigger className="w-24">
-                  <SelectValue/>
-                </SelectTrigger>
-                <SelectContent>
-                  {lang.map((lang, index) => (
-                    <SelectItem key={index} value={`${lang.id}`}>
-                      {lang.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Input required type="file" onChange={handleFileChange} />
-              <Button disabled={submitLoading} type="submit">Submit</Button>
-            </form>
-        ) : (
-          <div className="p-4 text-sm text-muted-foreground bg-muted rounded">  
-            You must login to submit a solution!!
+        <div className="space-y-1">
+          <Label className="text-md font-bold">Explanation</Label>
+          <div className="p-4 bg-background border rounded space-y-4">
+            <p>{problem.explanation}</p>
           </div>
+        </div>
+
+        <div className="space-y-1">
+          <Label className="text-md font-bold">Constraints</Label>
+          <div className="p-4 bg-background border rounded space-y-4">
+            <p>{problem.constraints}</p>
+          </div>
+        </div>
+
+        <div className="space-y-1">
+          <Label className="text-md font-bold">Submmit Solution</Label>
+          {currentUser ? (
+            <div className="space-y-2">
+              <form className="flex space-x-2" onSubmit={handleSubmit}>
+                <Select defaultValue="1">
+                  <SelectTrigger className="w-24">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {lang.map((lang, index) => (
+                      <SelectItem key={index} value={`${lang.id}`}>
+                        {lang.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Input
+                  required
+                  className="transition hover:bg-muted"
+                  type="file"
+                  onChange={handleFileChange}
+                />
+                <Button disabled={submitLoading} type="submit">
+                  Submit
+                </Button>
+              </form>
+              <FormError message={error} />
+            </div>
+          ) : (
+            <div className="p-4 text-sm text-muted-foreground bg-muted rounded">
+              You must login to submit a solution!!
+            </div>
           )}
-          </div>
+        </div>
 
         <div className="flex">
           <div className="w-full">
