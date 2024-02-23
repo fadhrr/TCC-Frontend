@@ -88,7 +88,7 @@ return (
                                   {submission.user && submission.user.name}
                                 </td>
                                 <td className={`border-y border-black`}>
-                                  {submission.language_id}
+                                  {submission.language}
                                 </td>
                                 <td className={`border-y border-black`}>
                                   {submission.status ? (

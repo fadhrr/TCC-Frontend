@@ -103,7 +103,7 @@ export default function ProblemSubmission({
                   <tr
                     key={index}
                     className={`text-left ${
-                      index % 2 === 0 ? "bg-background" : "bg-card"
+                      index % 2 === 0 ? "bg-background" : "bg-muted"
                     }`}
                   >
                     <td className={`pl-2 py-1 border-y border-s border-black`}>
@@ -113,7 +113,7 @@ export default function ProblemSubmission({
                       {submission.user && submission.user.name}
                     </td>
                     <td className={`border-y border-black`}>
-                      {submission.language_id}
+                      {submission.language}
                     </td>
                     <td className={`border-y border-black`}>
                       {submission.status ? (
@@ -175,7 +175,7 @@ export default function ProblemSubmission({
                   <tr
                     key={index}
                     className={`text-left ${
-                      index % 2 === 0 ? "bg-background" : "bg-card"
+                      index % 2 === 0 ? "bg-background" : "bg-muted"
                     }`}
                   >
                     <td className={`pl-2 py-1 border-y border-s border-black`}>
@@ -185,7 +185,7 @@ export default function ProblemSubmission({
                       {submission.user && submission.user.name}
                     </td>
                     <td className={`border-y border-black`}>
-                      {submission.language_id} 
+                      {submission.language}
                     </td>
                     <td className={`border-y border-black`}>
                       {submission.status ? (
