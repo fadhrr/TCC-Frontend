@@ -10,15 +10,19 @@ export default function Sidebar({ menuItems, title, title_menu }) {
   useEffect(() => {
     function handleClickOutside(event) {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setShowMenu(false);
+        closeMenu();
       }
     }
-
+  
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  
+  const closeMenu = () => {
+    setShowMenu(false);
+  };
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -44,7 +48,7 @@ export default function Sidebar({ menuItems, title, title_menu }) {
 
       <div ref={menuRef} className={`md:block z-30 md:visible md:opacity-100 ${showMenu ? 'visibility py-10 duration-300 opacity-100 absolute border-2 border-black rounded-md left-10 top-20 w-32 bg-white' : 'invisible left-[120%] top-[120%] w-full opacity-0'}`}>
         {menuItems.map((item, index) => (
-          <Link key={index} href={item.href} onClick={handleLinkClick}  className={`hover:text-[#FFC900] focus:text-[#FFC900] ${item.active ? 'text-[#FFC900]' : ''}`}>
+          <Link key={index} href={item.href} onClick={handleLinkClick} className={`hover:text-[#FFC900] focus:text-[#FFC900] ${item.active ? 'text-[#FFC900]' : ''}`}>
             <p className="text-md ml-2 mt-2">{item.label}</p>
           </Link>
         ))}

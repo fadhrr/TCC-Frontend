@@ -4,6 +4,7 @@ import {
   CreditCard,
   Github,
   Keyboard,
+  LayoutGrid,
   LifeBuoy,
   LogOut,
   Mail,
@@ -34,6 +35,7 @@ import menuData from "./menuData";
 import Link from "next/link";
 import { useState, useEffect, useContext } from "react";
 import { useAuth } from "@/context/AuthContext";
+
 
 export default function Header() {
   const router = useRouter();
@@ -79,6 +81,63 @@ export default function Header() {
   useEffect(() => {
     window.addEventListener("scroll", handleStickyNavbar);
   });
+
+// Profile link
+  const handleProfileClick = () => {
+    router.replace(`/profiles/${currentUser.uid}`);
+  };
+
+  // fetching role for dashboard
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admins`);
+        const data = await response.json();
+        setData(data);
+      } catch (error) {
+        console.log(`error fetching role user: `, error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+  
+  
+  const handleDashboardClick = () => {
+    if (currentUser.uid) {
+      const currentUserData = data.find(user => user.id === currentUser.uid);
+      if (currentUserData) {
+        console.log("data role: ", currentUserData.role)
+        if (currentUserData.role === 'Admin') {
+          router.replace(`/admin`);
+        } else if (currentUserData.role === 'Assistant') {
+          router.replace(`/assistant`);
+        } else {
+          console.log("User is not an Admin and is not an Assistant");
+        }
+      }
+    } else {
+      console.log("Current user not found");
+    }
+  };
+
+  const isAdminOrAssistant = () => {
+    if (currentUser.uid) {
+      const currentUserData = data.find(user => user.id === currentUser.uid);
+      if (currentUserData) {
+        if (currentUserData.role === 'Admin') {
+          return "Admin";
+        } else if (currentUserData.role === 'Assistant') {
+          return "Assistant";
+        } else {
+          return "User";
+        }
+      }
+    }
+    return "User";
+  }
 
   return (
     <header
@@ -262,15 +321,26 @@ export default function Header() {
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
-                    <DropdownMenuItem>
-                      <User className="mr-2 h-4 w-4" />
-                      <span>Profile</span>
-                      <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-                    </DropdownMenuItem>
+                  {isAdminOrAssistant() === "Admin" || isAdminOrAssistant() === "Assistant" && (
+                    <div onClick={handleDashboardClick}>
+                      <DropdownMenuItem>
+                        <LayoutGrid className="mr-2 h-4 w-4"/>
+                        <span>Dashboard</span>
+                        <DropdownMenuShortcut>⇧⌘D</DropdownMenuShortcut>
+                      </DropdownMenuItem>
+                    </div>
+                  )}
+                    <div onClick={handleProfileClick}>
+                      <DropdownMenuItem>
+                        <User className="mr-2 h-4 w-4" />
+                        <span>Profile</span>
+                        <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                      </DropdownMenuItem>
+                    </div>
                     <DropdownMenuItem>
                       <Settings className="mr-2 h-4 w-4" />
                       <span>Settings</span>
-                      <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                      <DropdownMenuShortcut>⇧⌘S</DropdownMenuShortcut>
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />

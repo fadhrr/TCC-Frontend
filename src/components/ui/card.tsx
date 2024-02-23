@@ -80,6 +80,27 @@ CardFooter.displayName = "CardFooter"
 
 const ContestCard: React.FC<{ contestData: { title: string; link: string; description: string; start_time: string; end_time: string }[] }> = ({ contestData }) => {
 
+  const formatDeadline = (deadline: string): string => {
+    const deadlineDate = new Date(deadline);
+  
+    if (isNaN(deadlineDate.getTime())) {
+      return "Invalid Deadline";
+    }
+  
+    const options: Intl.DateTimeFormatOptions = {
+      day: "numeric",
+      month: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+      timeZoneName: "short",
+    };
+  
+    return new Intl.DateTimeFormat("id-ID", options).format(deadlineDate);
+  };
+  
+
   return (
     <div className="px-8">
       {contestData.map((article, index) => (
@@ -97,9 +118,9 @@ const ContestCard: React.FC<{ contestData: { title: string; link: string; descri
             {/* tag */}
             <div className="mt-4 flex gap-2 sm:items-center">
               <div className="flex items-center gap-1 p-1 text-gray-500">
-                <p className="text-xs font-medium">{article.start_time}</p>
+                <p className="text-xs font-medium">{formatDeadline(article.start_time)}</p>
                 <span>|</span>
-                <p className="text-xs font-medium">{article.end_time}</p>
+                <p className="text-xs font-medium">{formatDeadline(article.end_time)}</p>
               </div>
             </div>
           </div>

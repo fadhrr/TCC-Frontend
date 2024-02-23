@@ -81,7 +81,7 @@ export default function ProblemSubmission({
       <Tabs defaultValue="allSubmissions" className="p-8">
         <TabsList className="flex w-max mx-auto">
           <TabsTrigger value="allSubmissions">All Submissions</TabsTrigger>
-          <TabsTrigger value="mySubmissions">My Submision</TabsTrigger>
+          <TabsTrigger value="mySubmissions">My Submission</TabsTrigger>
         </TabsList>
 
         <TabsContent value="allSubmissions" className="space-y-4">
@@ -185,7 +185,7 @@ export default function ProblemSubmission({
                       {submission.user && submission.user.name}
                     </td>
                     <td className={`border-y border-black`}>
-                      {submission.language_id}
+                      {submission.language_id} 
                     </td>
                     <td className={`border-y border-black`}>
                       {submission.status ? (

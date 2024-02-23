@@ -1,5 +1,5 @@
 import React from "react";
-import ProfileLayout from "@/Layouts/ProfileLayout";
+import ProfileLayout from "@/components/Profile/ProfileLayout";
 
 const Profile = () => {
 return (

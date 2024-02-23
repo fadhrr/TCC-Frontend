@@ -12,25 +12,6 @@ export default function Contest() {
     // fetching card contest
     const [data, setData] = useState([]);
 
-const formatDeadline = (deadline: string): string => {
-  const deadlineDate = new Date(deadline);
-
-  if (isNaN(deadlineDate.getTime())) {
-    return "Invalid Deadline";
-  }
-
-  const options: Intl.DateTimeFormatOptions = {
-    day: "numeric",
-    month: "numeric",
-    year: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
-    timeZoneName: "short",
-  };
-
-  return new Intl.DateTimeFormat("id-ID", options).format(deadlineDate);
-};
 
 useEffect(()=>{
   const fetchData = async() =>{
