@@ -2,36 +2,37 @@
 
 import { ContestCard } from '@/components/ui/card';
 import { ModalInput } from '@/components/ui/modal';
-import { Headline } from '@/components/ui/headline';
-import React, { useState } from 'react';
+import {Headline} from '@/components/ui/headline';
+import React, { useState, useEffect } from 'react';
 import SectionContainer from '@/Layouts/SectionContainer';
 
 export default function Contest() {
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState<string>('');
 
+    // fetching card contest
+    const [data, setData] = useState([]);
+
+
+useEffect(()=>{
+  const fetchData = async() =>{
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contests`)
+      const data = await response.json();
+      setData(data);
+
+    } catch (error) {
+      console.log("Error fetching data ", error);
+    }
+  }
+  fetchData();
+}, []);
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
 
-  const contestData = [
-    {
-      title: 'Hello world',
-      link: '/contests/slug/overview', // Replace with the actual link
-      content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque aut corrupti iure tempora',
-      duration: '2 hours 30 minutes',
-      time: 'October 21, 21:05',
-    },
-    {
-      title: 'Die world',
-      link: '#', // Replace with the actual link
-      content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque aut corrupti iure tempora',
-      duration: '2 hours 30 minutes',
-      time: 'October 21, 21:05',
-    },
-  ];
-
-  const filteredData = contestData.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
+  const filteredData = data.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
   return (
     <SectionContainer className="container py-8 px-0">
       <Headline

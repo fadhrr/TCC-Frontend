@@ -1,11 +1,17 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
+"use client";
+import React, { useEffect, useState } from "react";
 import { Headline } from '@/components/ui/headline';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardTitle, CardDescription, CardFooter } from '@/components/Problems/Card';
-import Loading from '@/components/Problems/Loading';
 import SectionContainer from '@/Layouts/SectionContainer';
+import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+import {
+  Card,
+  CardContent,
+  CardTitle,
+  CardDescription,
+  CardFooter,
+} from "@/components/Problems/Card";
+import Loading from "@/components/Problems/ProblemsLoader";
 
 async function getProblems() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/problems`);

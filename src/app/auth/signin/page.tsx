@@ -6,9 +6,11 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { FormError } from "@/components/form-error";
 
 export default function SignUp() {
   const router = useRouter();
+  const [error, setError] = useState<string | undefined>("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -17,16 +19,12 @@ export default function SignUp() {
     const email = e.target[0].value;
     const password = e.target[1].value;
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
+      .then(() => {
         router.push("/");
-        console.log("Sign Up successfully");
-        // ...
       })
       .catch((error) => {
         setLoading(false);
-        alert(`${error.message}`);
+        setError(`${error.message}`);
       });
   };
 
@@ -43,6 +41,7 @@ export default function SignUp() {
               <Input required type="password" placeholder="Password" />
             </div>
             <div className="space-y-2">
+              <FormError message={error} />
               <Button disabled={loading} type="submit" className="w-full">
                 Sign In
               </Button>

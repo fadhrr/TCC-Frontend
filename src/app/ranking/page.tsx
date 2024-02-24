@@ -1,14 +1,50 @@
-import React from "react";
-import RankingsLayout from "@/Layouts/RankingsLayout";
+'use client';
 
-const Rankings = () => {
+import React, { useState, useEffect } from 'react';
+
+const Scorers = () => {
+  const [leaderboard, setLeaderboard] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/leaderboard`);
+        const data = await response.json();
+        setLeaderboard(data);
+      } catch (error) {
+        console.log(`error fetching leaderboard: ${error.message}`);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
-    <div className="w-full">
-        <div className="my-10">
-            <RankingsLayout/>
-        </div>
+    <div className="m-10">
+      <h1 className="text-3xl font-bold pt-[70px] md:pt-[80px] lg:text-4xl">
+        <span className="underline decoration-blue-500">Rankings</span>
+      </h1>
+      <div className="table-wrapper">
+        <table className="w-full border-separate border-spacing-y-3 table-auto">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th className="text-left pl-3">Name</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody className="text-center">
+            {leaderboard.map((item, index) => (
+              <tr key={index} className={`duration-300 hover:scale-105 ${index % 2 === 0 ? 'bg-white text-black' : 'bg-[#212121] text-white'}`}>
+                <td className={`border-y-2 border-r-2 border-s-2 border-black h-10 w-10`}>{index + 1}</td>
+                <td className={`border-y-2 border-black text-left pl-3 w-2/3`}>{item.name}</td>
+                <td className={`border-y-2 border-e-2 border-black`}>{item.score}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
 
-export default Rankings;
+export default Scorers;

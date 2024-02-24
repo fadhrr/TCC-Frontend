@@ -1,28 +1,112 @@
 'use client'
 
-import React from "react";
-import Link from "next/link";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { useState } from "react";
+import {
+    Modal, 
+    ModalContent, 
+    ModalHeader, 
+    ModalBody, 
+    ModalFooter,
+    Button,
+    useDisclosure,
+    Input
+  } from "@nextui-org/react";
 
 const AssistantUserLayout = () => {
-    const [data, setData] = useState(
-        [
-            { id: 1011010,  nama: "Sepuh", submitted: "20" },
-            { id: 1011011,  nama: "Andi", submitted: "40"},
-            { id: 1011012,  nama: "Sepuh", submitted: "20" },
-            { id: 1011013,  nama: "Andi", submitted: "40"},
-            { id: 1011014,  nama: "Michel", submitted: "20" },
-            { id: 1011015,  nama: "Ridwan", submitted: "20" },
-            { id: 1011016,  nama: "Sepuh", submitted: "18"},
-            { id: 1011017,  nama: "Andi", submitted: "18"},
-            { id: 1011018,  nama: "Michael", submitted: "18"},
-            { id: 1011019,  nama: "Rifa", submitted: "18"},
-        ]
-    );
 
+    const [userData, setUserData] = useState([]);
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const [submissionData, setSubmissionData] = useState([]);
+    const [editedUserData, setEditedUserData] = useState({
+        name: "",
+        nim: "",
+        email: "",
+        score: "",
+    });
+    const [editingUserId, setEditingUserId] = useState(null);
+    const [contestData, setContestData] = useState(null);
+
+    useEffect(() => {
+      const fetchUserData = async () => {
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users`);
+            const data = await response.json();
+            setUserData(data);
+        } catch (error) {
+            console.log("error fetching", error);
+        }
+      }
+
+      const fetchSubmissionsData = async () => {
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/submissions`);
+            const data = await response.json();
+            setSubmissionData(data);
+        } catch (error) {
+            console.log("error fetching", error);
+        }
+      }
+
+      const getScoreboard = async () => {
+        try {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contest/1/scoreboard`);
+          const data = await response.json();
+          setContestData(data);
+        } catch (error) {
+          console.log("error fetching scoreboard", error);
+        }
+      };
+      
+      fetchUserData();
+      fetchSubmissionsData();
+      getScoreboard();
+    }, []);
     
+    const mergeData = userData.map((user) => {
+        const submitCount = submissionData.filter((submission) => submission.user_id === user.id).length;
+        return { ...user, submitted: submitCount };
+    });    
 
+    const editUser = (userId) => {
+        const userToEdit = userData.find((user) => user.id === userId);
+
+        setEditedUserData({
+            name: userToEdit.name,
+            nim: userToEdit.nim,
+            email: userToEdit.email,
+            score: userToEdit.score,
+        });
+
+        setEditingUserId(userId);
+        onOpen();
+    };
+
+    const handleEditUser = async () => {
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/${editingUserId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(editedUserData)
+            })
+
+            if (response.status === 200) {
+                console.log(`User with ID ${editingUserId} edited successfully.`);
+                setUserData(prevData => prevData.map((user) =>
+                    user.id === editingUserId ? { ...user, ...editedUserData } : user
+                ));
+            } else {
+                const errorData = await response.json()
+                console.error(`Failed to edit user with ID ${editingUserId}. Server error: ${errorData.message}`);
+            }
+        } catch (error) {
+            console.error(`Error editing user with ID ${editingUserId}.`, error);
+        }
+    };
+    
 return (
 <div>
     <div className="pt-[70px] md:pt-[80px] mb-5">
@@ -30,6 +114,87 @@ return (
             <span className="underline decoration-blue-500">Users List</span>
         </h1>
     </div>
+
+    <Modal 
+    size="lg"
+    backdrop="blur" 
+    isOpen={isOpen} 
+    onOpenChange={onOpenChange}
+    motionProps={{
+        variants: {
+            enter: {
+            y: 0,
+            opacity: 1,
+            transition: {
+                duration: 0.3,
+                ease: "easeOut",
+            },
+            },
+            exit: {
+            y: -20,
+            opacity: 0,
+            transition: {
+                duration: 0.2,
+                ease: "easeIn",
+            },
+            },
+        }
+        }}
+    >
+        <ModalContent>
+        {(onClose) => (
+             <>
+             <div className="bg-white p-4 rounded-lg shadow-md">
+               <ModalHeader className="flex flex-col gap-1 text-2xl">Edit</ModalHeader>
+               <ModalBody>
+                    <label htmlFor="">Name</label>
+                    <Input
+                    autoFocus
+                    placeholder="Enter your name"
+                    variant="bordered"
+                    value={editedUserData.name}
+                    onChange={(e) => setEditedUserData({ ...editedUserData, name: e.target.value })}
+                    />
+                    <label htmlFor="">NIM</label>
+                    <Input
+                    autoFocus
+                    placeholder="Enter your NIM"
+                    variant="bordered"
+                    value={editedUserData.nim}
+                    onChange={(e) => setEditedUserData({ ...editedUserData, nim: e.target.value })}
+                    />
+                    <label htmlFor="">Email</label>
+                    <Input
+                    autoFocus
+                    placeholder="Enter your email"
+                    type="email"
+                    variant="bordered"
+                    value={editedUserData.email}
+                    onChange={(e) => setEditedUserData({ ...editedUserData, email: e.target.value })}
+                    />
+                    <label htmlFor="">Score</label>
+                    <Input
+                    autoFocus
+                    placeholder="Enter your Score"
+                    variant="bordered"
+                    value={editedUserData.score}
+                    onChange={(e) => setEditedUserData({ ...editedUserData, score: e.target.value })}
+                    />
+               </ModalBody>
+               <ModalFooter>
+                 <Button color="danger" variant="light" onPress={onClose} className="hover:opacity-60">
+                   Close
+                 </Button>
+                 <Button color="primary" onPress={()=>{onClose(); handleEditUser();}} className="px-3 py-1 rounded-sm hover:opacity-60">
+                   Submit
+                 </Button>
+               </ModalFooter>
+             </div>
+           </>
+        )}
+    </ModalContent>
+    </Modal>
+
     <div className="table-wrapper">
         <table className="w-full border-separate border-spacing-y-3">
             <thead>
@@ -37,19 +202,30 @@ return (
                     <th className="pl-3">Id</th>
                     <th>Name</th>
                     <th>Submitted</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                {data.map((item, index) => (
+                {mergeData.map((item, index) => (
                     <tr key={index} className={index%2 === 0? 'bg-white' : 'bg-[#EDEDED]'}>
                         <td className={`border-y-2 border-s-2 border-black h-10 pl-3`}>
-                            {item.id}
+                            {index+1}
                         </td>
                         <td className={`border-y-2 border-black`}>
-                            {item.nama}
+                            {item.name}
                         </td>
-                        <td className={`border-y-2 border-r-2 border-black`}>
+                        <td className={`border-y-2 border-black`}>
                             {item.submitted}
+                        </td>
+                        <td className="border-y-2 border-r-2 border-black">
+                            <div className="flex space-x-3">
+                                <Button onPress={()=>editUser(item.id)}>
+                                    <Image alt="edit" src="/assets/icons/edit.svg" width={20} height={20} className="hover:opacity-65"/>
+                                </Button>
+                                <button type="submit">
+                                    <Image alt="remove" src="/assets/icons/trash.svg" width={20} height={20} className="hover:opacity-65" />
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 ))}

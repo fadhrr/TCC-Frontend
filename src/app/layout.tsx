@@ -1,10 +1,10 @@
-import { Inter } from "next/font/google";
-import Header from "@/components/Nav";
+import Header from '@/components/Nav';
+import { Suspense } from 'react'
 import Footer from "@/components/Footer";
 import { AuthContextProvider } from "@/context/AuthContext";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+// const inter = inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "TCC",
@@ -14,10 +14,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`min-h-[100vh] flex flex-col ${inter.className}`}>
+      <body className={`min-h-[100vh] flex flex-col`}>
         <AuthContextProvider>
           <Header />
-          <div>{children}</div>
+          {children}
           <Footer />
         </AuthContextProvider>
       </body>

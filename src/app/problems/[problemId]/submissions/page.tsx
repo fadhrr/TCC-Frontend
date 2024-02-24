@@ -2,12 +2,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import moment from "moment";
-import { AuthContext } from "@/context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/Problems/Card";
-import Loading from "@/components/Problems/Loading/Problem/Submissions/Loading";
+import Loading from "@/components/Problems/SubmissionsLoader";
 
 async function getSubmissions(problemId: any) {
   const res = await fetch(
@@ -34,7 +34,7 @@ export default function ProblemSubmission({
 }: {
   params: { problemId: string };
 }) {
-  const { currentUser } = useContext(AuthContext);
+  const currentUser = useAuth();
   const [submissions, setSubmissions] = useState([]);
   const [mySubmissions, setMySubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -42,11 +42,11 @@ export default function ProblemSubmission({
 
   useEffect(() => {
     try {
-      if (currentUser.uid) {
-        const fetchSubs = async () => {
-          const allSubs = await getSubmissions(params.problemId);
-          setSubmissions(allSubs);
-        };
+      const fetchSubs = async () => {
+        const allSubs = await getSubmissions(params.problemId);
+        setSubmissions(allSubs);
+      }
+      if (currentUser && currentUser.uid) {
         const fetchCurrentSubs = async () => {
           const mySubs = await getMySubmissions(
             currentUser.uid,
@@ -55,8 +55,8 @@ export default function ProblemSubmission({
           setMySubmissions(mySubs);
         };
         fetchCurrentSubs();
-        fetchSubs();
       }
+      fetchSubs();
     } catch (error) {
       setError(error.message);
     } finally {
@@ -81,7 +81,7 @@ export default function ProblemSubmission({
       <Tabs defaultValue="allSubmissions" className="p-8">
         <TabsList className="flex w-max mx-auto">
           <TabsTrigger value="allSubmissions">All Submissions</TabsTrigger>
-          <TabsTrigger value="mySubmissions">My Submision</TabsTrigger>
+          <TabsTrigger value="mySubmissions">My Submission</TabsTrigger>
         </TabsList>
 
         <TabsContent value="allSubmissions" className="space-y-4">
@@ -103,17 +103,17 @@ export default function ProblemSubmission({
                   <tr
                     key={index}
                     className={`text-left ${
-                      index % 2 === 0 ? "bg-background" : "bg-card"
+                      index % 2 === 0 ? "bg-background" : "bg-muted"
                     }`}
                   >
                     <td className={`pl-2 py-1 border-y border-s border-black`}>
                       {submission.id}
                     </td>
                     <td className={`border-y border-black`}>
-                      {submission.user_id}
+                      {submission.user && submission.user.name}
                     </td>
                     <td className={`border-y border-black`}>
-                      {submission.language_id}
+                      {submission.language}
                     </td>
                     <td className={`border-y border-black`}>
                       {submission.status ? (
@@ -171,21 +171,21 @@ export default function ProblemSubmission({
               </thead>
 
               <tbody>
-                {mySubmissions.map((submission, index) => (
+                {mySubmissions && (mySubmissions.map((submission, index) => (
                   <tr
                     key={index}
                     className={`text-left ${
-                      index % 2 === 0 ? "bg-background" : "bg-card"
+                      index % 2 === 0 ? "bg-background" : "bg-muted"
                     }`}
                   >
                     <td className={`pl-2 py-1 border-y border-s border-black`}>
                       {submission.id}
                     </td>
                     <td className={`border-y border-black`}>
-                      {submission.user_id}
+                      {submission.user && submission.user.name}
                     </td>
                     <td className={`border-y border-black`}>
-                      {submission.language_id}
+                      {submission.language}
                     </td>
                     <td className={`border-y border-black`}>
                       {submission.status ? (
@@ -222,7 +222,7 @@ export default function ProblemSubmission({
                       </Link>
                     </td>
                   </tr>
-                ))}
+                )))}
               </tbody>
             </table>
           </div>

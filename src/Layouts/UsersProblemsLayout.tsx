@@ -3,23 +3,66 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const AdminProblemsLayout = ({url_create}:any) => {
-    const [data, setData] = useState(
-        [
-            { id: 1011010,  problems: "Tugas Menumpuk", submitted: 40},
-            { id: 1011011,  problems: "Tugas Menumpuk", submitted: 30},
-            { id: 1011012,  problems: "Tugas Menumpuk", submitted: 10},
-            { id: 1011013,  problems: "Tugas Menumpuk", submitted: 30},
-            { id: 1011014,  problems: "Tugas Menumpuk", submitted: 20},
-            { id: 1011015,  problems: "Tugas Menumpuk", submitted: 35},
-            { id: 1011016,  problems: "Tugas Menumpuk", submitted: 41},
-            { id: 1011017,  problems: "Tugas Menumpuk", submitted: 19},
-            { id: 1011018,  problems: "Tugas Menumpuk", submitted: 20},
-            { id: 1011019,  problems: "Tugas Menumpuk", submitted: 10},
-        ]
-    );
+    const [problemsData, setProblemsData] = useState([]);
+
+    const [submissionsData, setSubmissionsData] = useState([]);
+
+    useEffect(() => {
+      const fetchProblemsData = async () => {
+        try {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/problems`);
+          const data = await response.json();
+          setProblemsData(data);
+        } catch (error) {
+          console.log('Error fetching problems data', error);
+        }
+      };
+  
+      const fetchSubmissionsData = async () => {
+        try {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/submissions`);
+          const data = await response.json();
+          setSubmissionsData(data);
+        } catch (error) {
+          console.log('Error fetching submissions data', error);
+        }
+      };
+  
+      fetchProblemsData();
+      fetchSubmissionsData();
+    }, []);
+
+    const removeProblem = async (problemId: any)=>{
+      try {
+         const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/problem/${problemId}`, {
+             method: 'DELETE',
+             headers: {
+                 'content-type': 'application/json',
+             }
+         })
+     
+         if (response.status === 200) {
+             setProblemsData((prevData)=>prevData.filter((problem)=>problem.id !== problemId));
+             console.log(`Problem with ${problemId} deleted successfully`)
+         } else if(response.status === 404) {
+             console.log(`Problem with ${problemId} not found.`);
+         } else{
+             const error = await response.json();
+             console.log(`Failed to delete user with ID ${problemId}. Server error: ${error.message}`);
+         }
+      } 
+     catch (error) {
+         console.log(`Error deleting with ID ${problemId}`, error)}
+     }
+  
+    // Hitung jumlah submit untuk setiap masalah
+    const problems = problemsData.map((problem) => {
+      const submitCount = submissionsData.filter((submission) => submission.problem_id === problem.id).length;
+      return { ...problem, submitted: submitCount };
+    });
     
   return (
 <div>
@@ -39,30 +82,30 @@ const AdminProblemsLayout = ({url_create}:any) => {
         <table className="w-full border-separate border-spacing-y-3">
             <thead>
                 <tr className="text-left">
-                    <th className="pl-3">Id</th>
+                    <th className="px-3">Id</th>
                     <th>Problems</th>
-                    <th>Submitted</th>
+                    <th className=" pr-10">Submitted</th>
                 </tr>
             </thead>
             <tbody>
-                {data.map((item, index) => (
+                {problems.map((item, index) => (
                     <tr key={index} className={index%2 === 0? 'bg-white' : 'bg-[#EDEDED]'}>
                         <td className="border-y-2 border-s-2 border-black h-10 pl-3">
                             {item.id}
                         </td>
                         <td className="border-y-2 border-black">
-                            {item.problems}
+                            {item.title}
                         </td>
-                        <td className="border-y-2 border-black">
+                        <td className="border-y-2 border-black text-center w-1/12 pr-10">
                             {item.submitted}
                         </td>
                         <td className="border-y-2 border-r-2 border-black">
                             <div className="flex space-x-3">
-                                <a href="" className="">
-                                    <Image alt="edit" src="/assets/icons/edit.svg" width={20} height={20} className="hover:opacity-65"/>
-                                </a>
-                                <button type="submit" className="">
-                                    <Image alt="remove" src="/assets/icons/trash.svg" width={20} height={20} className="hover:opacity-65"/>
+                                <Link href={`/admin/problems/edit/${item.id}`}>
+                                    <Image alt="edit" src="/assets/icons/edit.svg" width={20} height={20} className="hover:opacity-65 max-w-10"/>
+                                </Link>
+                                <button type="submit" onClick={()=>removeProblem(item.id)}>
+                                    <Image alt="remove" src="/assets/icons/trash.svg" width={20} height={20} className="hover:opacity-65 max-w-10"/>
                                 </button>
                             </div>
                         </td>

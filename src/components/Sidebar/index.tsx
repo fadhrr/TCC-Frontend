@@ -9,15 +9,20 @@ export default function Sidebar({ menuItems, title, title_menu }) {
   useEffect(() => {
     function handleClickOutside(event) {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setShowMenu(false);
+        closeMenu();
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside);
+
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+  
+  const closeMenu = () => {
+    setShowMenu(false);
+  };
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
