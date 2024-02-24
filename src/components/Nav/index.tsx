@@ -23,6 +23,10 @@ import { useState, useEffect } from 'react';
 
 export default function Header() {
   const router = useRouter();
+  const pathUrl = usePathname();
+  // Navbar toggle
+  const [navbarOpen, setNavbarOpen] = useState(false);
+  const [openIndex, setOpenIndex] = useState(-1);
 
   const [user, setUser] = useState<any>(null);
 
@@ -42,15 +46,13 @@ export default function Header() {
       .catch((error) => {});
   };
 
-  const pathUrl = usePathname();
-  // Navbar toggle
-  const [navbarOpen, setNavbarOpen] = useState(false);
+  
   const navbarToggleHandler = () => {
     setNavbarOpen(!navbarOpen);
   };
 
   // submenu handler
-  const [openIndex, setOpenIndex] = useState(-1);
+  
   const handleSubmenu = (index: any) => {
     if (openIndex === index) {
       setOpenIndex(-1);

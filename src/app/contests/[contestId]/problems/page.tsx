@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
+import { Card } from '@/components/Problems/Card';
 
 const menuItems = [
   {
@@ -56,7 +57,7 @@ const menuItems = [
 
 export default function ContestProblem() {
   return (
-    <div className="w-full my-8 px-8 pt-[80px]">
+    <Card className="container md:mt-0 !z-0 py-8 px-6">
       <h1 className="text-4xl font-bold text-center w-full mb-8">Contest Information</h1>
 
       <div className="space-y-10 text-black">
@@ -74,6 +75,6 @@ export default function ContestProblem() {
           </div>
         ))}
       </div>
-    </div>
+    </Card>
   );
 }

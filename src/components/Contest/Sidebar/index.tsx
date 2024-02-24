@@ -80,7 +80,7 @@ export default function Sidebar({ slug, open, onClose }) {
         <Link onClick={handleLinkClick} href={`/contests/${slug}/overview`} className={`hover:text-black ${isLinkActive(`/contests/${slug}`) ? 'font-medium' : 'text-muted-foreground'}`}>
           Overview
         </Link>
-        <Link onClick={handleLinkClick} href={`/contests/${slug}/problem`} className={`hover:text-black ${isLinkActive(`/contests/${slug}/problem`) ? 'font-medium' : 'text-muted-foreground'}`}>
+        <Link onClick={handleLinkClick} href={`/contests/${slug}/problems`} className={`hover:text-black ${isLinkActive(`/contests/${slug}/problem`) ? 'font-medium' : 'text-muted-foreground'}`}>
           Problem
         </Link>
         <Link onClick={handleLinkClick} href={`/contests/${slug}/scoreboard`} className={`hover:text-black ${isLinkActive(`/contests/${slug}/scoreboard`) ? 'font-medium' : 'text-muted-foreground'}`}>
