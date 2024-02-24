@@ -5,7 +5,7 @@ const ProblemsAssistant = () => {
   return (
     <div className="w-full">
         <div className="my-10">
-          <AssistantProblemsLayout url_create="/assistant/problems/create"/>
+          <AssistantProblemsLayout url_create="/assistant/problems/create" url_edit="/assistant"/>
         </div>
     </div>
   );
