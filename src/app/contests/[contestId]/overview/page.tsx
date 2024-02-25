@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ModalSucces } from '@/components/ui/modal';
 import Image from 'next/image';
-import { Card } from '@/components/Problems/Card';
+import { Card } from '@/components/problems/Card';
 
 const articlesData = [
   {
