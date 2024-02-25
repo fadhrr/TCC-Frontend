@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Card, CardContent } from '@/components/Problems/Card';
+import { Card, CardContent } from '@/components/problems/Card';
 import { Label } from '@/components/ui/label';
 
 export default function Sidebar({ slug, open, onClose }) {
