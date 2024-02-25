@@ -23,8 +23,8 @@ const articles = [
 ];
 export default function Fiture() {
   return (
-    <section id='#fiture'>
-      <div className=" rounded-md py-4 mx-auto max-w-full lg:max-w-screen-xl  ">
+    <section id="#fiture">
+      <div className=" rounded-md py-4 mx-auto max-w-full lg:max-w-screen  ">
         <div className="grid gap-2 lg:grid-cols-3 sm:grid-cols-1">
           {articles.map((article, index) => (
             <article key={index} className="hover:animate-background rounded-xl p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s]">

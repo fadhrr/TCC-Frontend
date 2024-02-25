@@ -1,17 +1,12 @@
-"use client";
-import React, { useEffect, useState } from "react";
+'use client';
+import React, { useEffect, useState } from 'react';
 import { Headline } from '@/components/ui/headline';
 import SectionContainer from '@/Layouts/SectionContainer';
-import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardTitle,
-  CardDescription,
-  CardFooter,
-} from "@/components/Problems/Card";
-import Loading from "@/components/Problems/ProblemsLoader";
+import Link from 'next/link';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardTitle, CardDescription, CardFooter } from '@/components/Problems/Card';
+import Loading from '@/components/Problems/ProblemsLoader';
+import SearchBar from '@/components/SearchBar';
 
 async function getProblems() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/problems`);
@@ -26,6 +21,9 @@ export default function Problems() {
   const [problems, setProblems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  // fetching card contest
+  // const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,15 +48,23 @@ export default function Problems() {
     return <Loading />;
   }
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredData = problems.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
+
   return (
     <SectionContainer className="container py-8 px-0">
       <Headline
         title="Problem"
         desc=" Welcome to the Contests section, here you will find a variety of exciting contests and challenges that cater to diverse interests and skills. Each contest is designed to test your abilities and knowledge in a specific area."
-        className="mb-4 md:mb-8"
       />
-      <div className="flex flex-col w-full space-y-4">
-        {problems.map((problem, index) => (
+      <div className="flex justify-start mb-4 gap-4 items-center">
+        <SearchBar searchTerm={searchTerm} handleChange={handleChange} />
+      </div>
+      <div className="flex flex-col pt-10 w-full space-y-4">
+        {filteredData.map((problem, index) => (
           <Link key={index} href={`/problems/${problem.id}`}>
             <Card>
               <CardContent>
