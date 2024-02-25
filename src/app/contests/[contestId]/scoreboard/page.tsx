@@ -1,15 +1,14 @@
 'use client';
 import ScoreboardLayout from '@/Layouts/ScoreboardLayout';
+import { Card } from '@/components/Problems/Card';
 
 const Scoreboard = () => {
   return (
-  <div className="w-full">
-    <div className="my-10 pt-[70px] md:pt-[80px]">
+    <Card className="w-full container md:mt-0 !z-0 py-8 px-6">
       <h1 className="text-3xl font-bold font-lato">The final round of who will be the Sepuh</h1>
-      <ScoreboardLayout/>
-    </div>
-  </div>
-  )
+      <ScoreboardLayout />
+    </Card>
+  );
 };
 
 export default Scoreboard;

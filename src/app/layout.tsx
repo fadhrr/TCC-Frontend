@@ -1,6 +1,6 @@
-import Header from "@/components/Header";
+import Header from '@/components/Nav';
 import { Suspense } from 'react'
-import Footer from "@/components/Home/Footer";
+import Footer from "@/components/Footer";
 import { AuthContextProvider } from "@/context/AuthContext";
 import "./globals.css";
 

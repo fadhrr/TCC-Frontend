@@ -1,26 +1,24 @@
-'use client'
+'use client';
 
 import React, {useState, useEffect} from "react";
 import { Card } from "@/components/problems/Card";
 
 
 const Scorers = () => {
-    const [leaderboard, setLeaderboard] = useState([]);
-    
+  const [leaderboard, setLeaderboard] = useState([]);
 
-    useEffect(() => {
-      const fetchData =async () => {
-        try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/leaderboard`)
-            const data = await response.json();
-            setLeaderboard(data);
-        } catch (error) {
-            console.log(`error fetching leaderboard: ${error.message}`)
-        }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/leaderboard`);
+        const data = await response.json();
+        setLeaderboard(data);
+      } catch (error) {
+        console.log(`error fetching leaderboard: ${error.message}`);
       }
-      fetchData();
-    }, []);
-    
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="container flex mx-auto mb-8 space-x-4 mt-28">

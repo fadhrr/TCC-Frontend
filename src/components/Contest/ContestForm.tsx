@@ -1,18 +1,18 @@
 'use client';
-import Headline from '../ui/headline';
+import { Headline } from '../ui/headline';
 import { Button } from '@/components/ui/button';
 
 export default function ContestForm() {
   return (
     <section>
-      <div className="container px-8 py-10 mx-auto">
+      <div className="container px-2 md:px-8  mx-auto">
         <Headline
           title="Create Contest"
           desc=" Welcome to the Contests section, here you will find a variety of exciting contests and challenges that cater to diverse interests and skills. Each contest is designed to test your abilities and knowledge in a specific area."
         />
-        <div className="w-full  md:px-0 px-4 py-8 z-20 ">
+        <div className="w-full  md:px-0  py-8 z-20 ">
           {/* card */}
-          <div id="section2" className="p-8 mt-6 lg:mt-0 rounded shadow ">
+          <div id="section2" className="p-4 rounded shadow ">
             <form>
               {/* 1 */}
               <div className="md:flex mb-6">
@@ -20,7 +20,7 @@ export default function ContestForm() {
                   <label htmlFor="image">Image</label>
                 </div>
                 <div className="md:w-2/3">
-                  <input type="file" id="image" className="mb-2" required />
+                  <input type="file" id="image" className="mb-2" />
                   <p className="py-2 text-sm italic text-gray-600">tambah gambar berkaitan kontes</p>
                 </div>
               </div>
@@ -45,7 +45,7 @@ export default function ContestForm() {
               {/* 4 */}
               <div className="md:flex mb-6">
                 <div className="md:w-1/3">
-                  <label htmlFor="image">Available Until</label>
+                  <label htmlFor="image">Time</label>
                 </div>
                 <div className="md:w-2/3">
                   <input className="block w-full p-4 text-lg  mb-2 border border-black rounded-md" required type="datetime-local" id="deadline" />

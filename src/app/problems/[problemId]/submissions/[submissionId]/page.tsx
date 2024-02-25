@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
-import { Card } from "@/components/problems/Card";
+import { Card } from "@/components/Problems/Card";
 import { Badge } from "@/components/ui/badge";
 import moment from "moment";
-import Loading from "@/components/problems/SubmissionLoader";
+import Loading from "@/components/Problems/SubmissionLoader";
 
 interface Submision {
   id: number;
