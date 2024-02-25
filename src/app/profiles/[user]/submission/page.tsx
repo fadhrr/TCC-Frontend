@@ -1,14 +1,10 @@
 'use client'
 
-import SubmissionsLayout from "@/Layouts/SubmissionsLayout";
-import { mySubmissionsData } from "@/Data/mySubmissionsData";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import moment from "moment";
 import { useAuth } from "@/context/AuthContext";
 import { Badge } from "@/components/ui/badge";
-import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/problems/Card";
 import Loading from "@/components/problems/SubmissionsLoader";
 
