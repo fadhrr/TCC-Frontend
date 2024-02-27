@@ -98,8 +98,8 @@ export default async function Problems() {
         <div className="grid gap-3">
           <h1 className="px-1 text-xl font-bold underline">Browse problems</h1>
           {problems.map((problem, index) => (
-            <Link href={`/problems/detail/${problem.id}`}>
-              <Card key={index} className="h-full">
+            <Link key={index} href={`/problems/detail/${problem.id}`}>
+              <Card className="h-full">
                 <CardHeader>
                   <CardTitle className="text-md">{problem.title} </CardTitle>
                   <CardDescription>
