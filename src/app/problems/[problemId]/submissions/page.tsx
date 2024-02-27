@@ -64,11 +64,7 @@ export default function ProblemSubmission({
     }
   }, [params.problemId, currentUser]);
 
-  if (error) {
-    console.log(error);
-  }
-
-  if (loading) {
+  if (loading || submissions == null) {
     return <Loading />;
   }
 
@@ -99,7 +95,7 @@ export default function ProblemSubmission({
               </thead>
 
               <tbody>
-                {submissions.map((submission, index) => (
+                {submissions && (submissions.map((submission, index) => (
                   <tr
                     key={index}
                     className={`text-left ${
@@ -150,7 +146,7 @@ export default function ProblemSubmission({
                       </Link>
                     </td>
                   </tr>
-                ))}
+                )))}
               </tbody>
             </table>
           </div>
