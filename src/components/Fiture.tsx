@@ -25,10 +25,10 @@ export default function Fiture() {
   return (
     <section id="#fiture">
       <div className=" rounded-md py-4 mx-auto max-w-full lg:max-w-screen  ">
-        <div className="grid gap-2 lg:grid-cols-3 sm:grid-cols-1">
+        <div className="grid gap-2 md:grid-cols-3 grid-cols-1">
           {articles.map((article, index) => (
             <article key={index} className="hover:animate-background rounded-xl p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s]">
-              <div className={`rounded-[10px] min-h-[60vh] gap-2 flex flex-col justify-center p-4 sm:p-6 `} style={{ backgroundColor: article.color }}>
+              <div className="rounded-[10px] min-h-[60vh] max-h-[60vh] gap-2 flex flex-col justify-center p-4 sm:p-6 " style={{ backgroundColor: article.color }}>
                 {/* SVG */}
                 {article.image && <img src={article.image} alt="SVG Icon" className="w-10 h-10 mb-4" />}
                 {/* Judul Artikel */}
