@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardTitle, CardDescription, CardFooter } from '@/components/Problems/Card';
 import Loading from '@/components/Problems/ProblemsLoader';
 import SearchBar from '@/components/SearchBar';
+import PaginationControls from '@/components/PaginationControls';
 
 async function getProblems() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/problems`);
@@ -17,13 +18,22 @@ async function getProblems() {
   return res.json();
 }
 
-export default function Problems() {
+export default function Problems({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
   const [problems, setProblems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState<string>('');
-  // fetching card contest
-  // const [data, setData] = useState([]);
+
+  //pagination test
+  const page = searchParams['page'] ?? '1';
+  const perPage = searchParams['per_page'] ?? '5';
+
+  // mocked, skipped and limited in the real app
+  const start = (Number(page) - 1) * Number(perPage); // 0, 5, 10 ...
+  const end = start + Number(perPage); // 5, 10, 15 ...
+
+  //ini untuk slice problem data
+  const entries = problems.slice(start, end);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,6 +91,7 @@ export default function Problems() {
             </Card>
           </Link>
         ))}
+        <PaginationControls hasNextPage={end < problems.length} hasPrevPage={start > 0} />
       </div>
     </SectionContainer>
   );
