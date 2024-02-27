@@ -1,6 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from "react";
+import { Card } from "@/components/problems/Card";
+
 
 const Scorers = () => {
   const [leaderboard, setLeaderboard] = useState([]);
@@ -19,32 +21,43 @@ const Scorers = () => {
   }, []);
 
   return (
-    <div className="m-10">
-      <h1 className="text-3xl font-bold pt-[70px] md:pt-[80px] lg:text-4xl">
-        <span className="underline decoration-blue-500">Rankings</span>
-      </h1>
-      <div className="table-wrapper">
-        <table className="w-full border-separate border-spacing-y-3 table-auto">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th className="text-left pl-3">Name</th>
-              <th>Score</th>
-            </tr>
-          </thead>
-          <tbody className="text-center">
-            {leaderboard.map((item, index) => (
-              <tr key={index} className={`duration-300 hover:scale-105 ${index % 2 === 0 ? 'bg-white text-black' : 'bg-[#212121] text-white'}`}>
-                <td className={`border-y-2 border-r-2 border-s-2 border-black h-10 w-10`}>{index + 1}</td>
-                <td className={`border-y-2 border-black text-left pl-3 w-2/3`}>{item.name}</td>
-                <td className={`border-y-2 border-e-2 border-black`}>{item.score}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    <div className="container flex mx-auto mb-8 space-x-4 mt-28">
+      <Card className="w-full">
+         <div className="m-10">
+          <h1 className="text-3xl font-bold lg:text-4xl">
+              <span className="underline decoration-blue-500">Rankings</span>
+          </h1>
+          <div className="table-wrapper">
+              <table className="w-full border-separate border-spacing-y-3 table-auto">
+                  <thead>
+                      <tr>
+                          <th>#</th>
+                          <th className="text-left pl-3">Name</th>
+                          <th>Score</th>
+                      </tr>
+                  </thead>
+                  <tbody className="text-center">
+                      {leaderboard.map((item, index) => (
+                          <tr key={index}>
+                              <td className={`bg-[#4D4D4D] text-white border-y-2 border-s-2 border-black h-10 w-10`}>
+                                  {index+1}
+                              </td>
+                              <td className={`border-y-2 border-black text-left pl-3 w-2/3`}>
+                                  {item.name}
+                              </td>
+                              <td className={`border-y-2 border-e-2 border-black`}>
+                                  {item.score}
+                              </td>
+                          </tr>
+                      ))}
+                  </tbody>
+              </table>
+          </div>
       </div>
+      </Card>
     </div>
-  );
+   
+  )
 };
 
 export default Scorers;

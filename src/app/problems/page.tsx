@@ -4,10 +4,10 @@ import { Headline } from '@/components/ui/headline';
 import SectionContainer from '@/Layouts/SectionContainer';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardTitle, CardDescription, CardFooter } from '@/components/Problems/Card';
-import Loading from '@/components/Problems/ProblemsLoader';
+import { Card, CardContent, CardTitle, CardDescription, CardFooter } from '@/components/problems/Card';
 import SearchBar from '@/components/SearchBar';
 import PaginationControls from '@/components/PaginationControls';
+import Loading from '@/components/problems/ProblemsLoader';
 
 async function getProblems() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/problems`);
