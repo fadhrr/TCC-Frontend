@@ -1,6 +1,6 @@
-import { Skeleton } from "@/components/ui/skeleton";
-import { Label } from "@/components/ui/label";
-import { Card } from "./Card";
+import { Skeleton } from '@/components/ui/skeleton';
+import { Label } from '@/components/ui/label';
+import { Card } from './Card';
 
 export default function ProblemSubmisionsLoader() {
   return (
