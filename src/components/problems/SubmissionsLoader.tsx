@@ -20,7 +20,6 @@ export default function ProblemSubmisionsLoader() {
               <th>#</th>
             </tr>
           </thead>
-
           <tbody>
             <tr>
               <td className="p-2">
