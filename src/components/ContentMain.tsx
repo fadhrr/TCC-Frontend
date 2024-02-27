@@ -1,8 +1,8 @@
-import Hero from '@/components/Home/Hero';
-import Step from '@/components/Home/Fiture';
-import Rank from '@/components/Home/Rank';
-import Cta from '@/components/Home/Cta';
-import Footer from '@/components/Home/Footer';
+import Hero from './Hero';
+import Step from './Fiture';
+import Rank from './Rank';
+import Cta from './Cta';
+import Footer from './Footer';
 
 export default function ContentMain() {
   return (

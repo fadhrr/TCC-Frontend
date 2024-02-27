@@ -1,5 +1,4 @@
 import Header from '@/components/Nav';
-import { Suspense } from 'react'
 import Footer from "@/components/Footer";
 import { AuthContextProvider } from "@/context/AuthContext";
 import "./globals.css";
