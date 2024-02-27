@@ -33,9 +33,7 @@ const PaginationControls: FC<PaginationControlsProps> = (hasNextPage, hasPrevPag
             </svg>
           </button>
 
-          <div
-            className="flex items-center gap-2 text-md font-bold"
-          >
+          <div className="flex items-center  text-md font-bold">
             <span className="flex  items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-[#3399ff] hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
               {page}
             </span>{' '}
