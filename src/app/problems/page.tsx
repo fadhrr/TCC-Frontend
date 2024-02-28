@@ -65,9 +65,10 @@ export default function Problems({ searchParams }: { searchParams: { [key: strin
         setLoading(false);
       }
     };
-
+  
     fetchData();
-  }, []);
+  }, [searchParams]);
+
 
   if (error) {
     console.log(error);
