@@ -52,24 +52,6 @@ export default function Problems({ searchParams }: { searchParams: { [key: strin
     fetchData();
   }, [searchParams]);
 
-
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getProblems();
-        setProblems(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-  
-    fetchData();
-  }, [searchParams]);
-
-
   if (error) {
     console.log(error);
   }

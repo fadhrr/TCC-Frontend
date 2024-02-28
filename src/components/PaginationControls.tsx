@@ -17,9 +17,6 @@ const PaginationControls: FC<PaginationControlsProps> = ({hasNextPage, hasPrevPa
   const page = searchParams.get('page') ?? '1'; //ngambil nilai dari parameter page, jika tak ada maka default 1
   const per_page = searchParams.get('per_page') ?? '5'; //ngambil nilai dari parameter per_page, jika tak ada maka defaut 5
 
-  const start = (Number(page) - 1) * Number(per_page);
-  const end = start + Number(per_page);
-
   const totalProblems = problems.length;
   const totalPages = Math.ceil(totalProblems / Number(per_page));
 
