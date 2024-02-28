@@ -8,7 +8,7 @@ import ContesCard from "@/components/Contest/ContestCard";
 const page = () => {
   return (
   <div className="w-full my-10">
-    <div className="pt-[70px] md:pt-[80px]">
+    <div className="mt-28">
         <h1 className="text-3xl font-bold lg:text-4xl">
             <span className="underline decoration-blue-500">Contests List</span>
         </h1>
