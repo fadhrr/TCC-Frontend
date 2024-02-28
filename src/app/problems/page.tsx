@@ -18,22 +18,41 @@ async function getProblems() {
   return res.json();
 }
 
+
 export default function Problems({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
   const [problems, setProblems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState<string>('');
 
-  //pagination test
+  //pagination
   const page = searchParams['page'] ?? '1';
   const perPage = searchParams['per_page'] ?? '5';
 
-  // mocked, skipped and limited in the real app
-  const start = (Number(page) - 1) * Number(perPage); // 0, 5, 10 ...
-  const end = start + Number(perPage); // 5, 10, 15 ...
+  const start = (Number(page) - 1) * Number(perPage);
+  const end = start + Number(perPage);
 
-  //ini untuk slice problem data
+  
+  //Slice problem data
   const entries = problems.slice(start, end);
+
+  // pagination
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getProblems();
+        setProblems(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchData();
+  }, [searchParams]);
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,6 +83,9 @@ export default function Problems({ searchParams }: { searchParams: { [key: strin
 
   const filteredData = problems.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
+  // combines search and pagination features
+  const displayedData = searchTerm ? filteredData : entries;
+
   return (
     <SectionContainer className="container py-8 px-0">
       <Headline
@@ -74,7 +96,7 @@ export default function Problems({ searchParams }: { searchParams: { [key: strin
         <SearchBar searchTerm={searchTerm} handleChange={handleChange} />
       </div>
       <div className="flex flex-col pt-10 w-full space-y-4">
-        {filteredData.map((problem, index) => (
+        {displayedData.map((problem, index) => (
           <Link key={index} href={`/problems/${problem.id}`}>
             <Card>
               <CardContent>
@@ -91,7 +113,7 @@ export default function Problems({ searchParams }: { searchParams: { [key: strin
             </Card>
           </Link>
         ))}
-        <PaginationControls hasNextPage={end < problems.length} hasPrevPage={start > 0} />
+        <PaginationControls hasNextPage={end < problems.length} hasPrevPage={start > 0} problems={problems} />
       </div>
     </SectionContainer>
   );
