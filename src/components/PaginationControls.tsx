@@ -7,14 +7,21 @@ import { useRouter, useSearchParams } from 'next/navigation';
 interface PaginationControlsProps {
   hasNextPage: boolean;
   hasPrevPage: boolean;
+  problems: any[];
 }
 
-const PaginationControls: FC<PaginationControlsProps> = (hasNextPage, hasPrevPage) => {
+const PaginationControls: FC<PaginationControlsProps> = ({hasNextPage, hasPrevPage, problems}) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const page = searchParams.get('page') ?? '1'; //ngambnil nilai dari parameter page, jika tak ada maka default 1
-  const per_page = searchParams.get('per_page') ?? '5'; //ngambnil nilai dari parameter per_page, jika tak ada maka defaut 5
+  const page = searchParams.get('page') ?? '1'; //ngambil nilai dari parameter page, jika tak ada maka default 1
+  const per_page = searchParams.get('per_page') ?? '5'; //ngambil nilai dari parameter per_page, jika tak ada maka defaut 5
+
+  const start = (Number(page) - 1) * Number(per_page);
+  const end = start + Number(per_page);
+
+  const totalProblems = problems.length;
+  const totalPages = Math.ceil(totalProblems / Number(per_page));
 
   return (
     <>
@@ -24,7 +31,7 @@ const PaginationControls: FC<PaginationControlsProps> = (hasNextPage, hasPrevPag
             className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white  hover:bg-gray-300 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
             disabled={!hasPrevPage}
             onClick={() => {
-              router.push(`/?page=${Number(page) - 1}&per_page=${per_page}`);
+              router.push(`/problems/?page=${Number(page) - 1}&per_page=${per_page}`);
             }}
           >
             <span className="sr-only">Previous</span>
@@ -38,7 +45,7 @@ const PaginationControls: FC<PaginationControlsProps> = (hasNextPage, hasPrevPag
               {page}
             </span>{' '}
             <span className="flex  items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-[#3399ff] hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-              {Math.ceil(10 / Number(per_page))}
+              {totalPages}
             </span>
           </div>
 
@@ -46,7 +53,7 @@ const PaginationControls: FC<PaginationControlsProps> = (hasNextPage, hasPrevPag
             className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white   hover:bg-gray-300  hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
             disabled={!hasNextPage}
             onClick={() => {
-              router.push(`/?page=${Number(page) + 1}&per_page=${per_page}`);
+              router.push(`/problems/?page=${Number(page) + 1}&per_page=${per_page}`);
             }}
           >
             <span className="sr-only">Next</span>

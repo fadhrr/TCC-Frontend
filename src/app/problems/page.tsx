@@ -18,6 +18,7 @@ async function getProblems() {
   return res.json();
 }
 
+
 export default function Problems({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
   const [problems, setProblems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -28,13 +29,14 @@ export default function Problems({ searchParams }: { searchParams: { [key: strin
   const page = searchParams['page'] ?? '1';
   const perPage = searchParams['per_page'] ?? '5';
 
-  // mocked, skipped and limited in the real app
-  const start = (Number(page) - 1) * Number(perPage); // 0, 5, 10 ...
-  const end = start + Number(perPage); // 5, 10, 15 ...
+  const start = (Number(page) - 1) * Number(perPage);
+  const end = start + Number(perPage);
 
+  
   //ini untuk slice problem data
   const entries = problems.slice(start, end);
 
+  // pagination
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -46,9 +48,10 @@ export default function Problems({ searchParams }: { searchParams: { [key: strin
         setLoading(false);
       }
     };
-
+  
     fetchData();
-  }, []);
+  }, [searchParams]);
+
 
   if (error) {
     console.log(error);
@@ -74,7 +77,7 @@ export default function Problems({ searchParams }: { searchParams: { [key: strin
         <SearchBar searchTerm={searchTerm} handleChange={handleChange} />
       </div>
       <div className="flex flex-col pt-10 w-full space-y-4">
-        {filteredData.map((problem, index) => (
+        {entries.map((problem, index) => (
           <Link key={index} href={`/problems/${problem.id}`}>
             <Card>
               <CardContent>
@@ -91,7 +94,7 @@ export default function Problems({ searchParams }: { searchParams: { [key: strin
             </Card>
           </Link>
         ))}
-        <PaginationControls hasNextPage={end < problems.length} hasPrevPage={start > 0} />
+        <PaginationControls hasNextPage={end < problems.length} hasPrevPage={start > 0} problems={problems} />
       </div>
     </SectionContainer>
   );
