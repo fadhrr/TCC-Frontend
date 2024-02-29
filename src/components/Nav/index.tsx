@@ -108,8 +108,8 @@ export default function Header() {
   const handleDashboardClick = () => {
     if (currentUser.uid) {
       const currentUserData = data.find(user => user.id === currentUser.uid);
+      console.log("data role: ", currentUserData.role)
       if (currentUserData) {
-        console.log("data role: ", currentUserData.role)
         if (currentUserData.role === 'Admin') {
           router.replace(`/admin`);
         } else if (currentUserData.role === 'Assistant') {
@@ -321,7 +321,7 @@ export default function Header() {
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
-                  {isAdminOrAssistant() === "Admin" || isAdminOrAssistant() === "Assistant" && (
+                  {(isAdminOrAssistant() === "Admin" || isAdminOrAssistant() === "Assistant") && (
                     <div onClick={handleDashboardClick}>
                       <DropdownMenuItem>
                         <LayoutGrid className="mr-2 h-4 w-4"/>
