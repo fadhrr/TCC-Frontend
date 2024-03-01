@@ -12,8 +12,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Card } from "@/components/Problems/Card";
-import Loading from "@/components/Problems/ProblemDetailLoader";
+import { Card } from "@/components/problems/Card";
+import Loading from "@/components/problems/ProblemDetailLoader";
 import { FormError } from "@/components/form-error";
 
 interface Problem {

@@ -35,7 +35,7 @@ export default function Sidebar({ menuItems, title, title_menu }) {
   };
 
   return (
-    <div className="relative w-0 md:w-1/5  md:px-6 px-0 block md:sticky h-[calc(100vh-55px)]">
+    <div className="relative w-0 md:w-1/5 mt-28 md:px-6 px-0 block md:sticky h-[calc(100vh-55px)]">
       <h1 className="text-3xl font-bold md:block hidden w-full mb-4">{title}</h1>
       <div className="md:hidden z-50 flex gap-2 items-center absolute md:left-[125%] left-[100%] top-0" style={{ width: '300px' }}>
         <button onClick={toggleMenu} className="text-xl text-black focus:outline-none">

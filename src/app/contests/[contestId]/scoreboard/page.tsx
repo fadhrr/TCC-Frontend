@@ -1,6 +1,6 @@
 'use client';
 import ScoreboardLayout from '@/Layouts/ScoreboardLayout';
-import { Card } from '@/components/Problems/Card';
+import { Card } from '@/components/problems/Card';
 
 const Scoreboard = () => {
   return (

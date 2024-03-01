@@ -5,7 +5,7 @@ const ProblemsAdmin = () => {
   return (
     <div className="w-full">
         <div className="my-10">
-          <AdminProblemsLayout url_create="/admin/problems/create"/>
+          <AdminProblemsLayout url_create="/admin/problems/create" url_edit="/admin"/>
         </div>
     </div>
   );

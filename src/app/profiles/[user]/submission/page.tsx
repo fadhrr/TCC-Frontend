@@ -1,16 +1,12 @@
 'use client'
 
-import SubmissionsLayout from "@/Layouts/SubmissionsLayout";
-import { mySubmissionsData } from "@/Data/mySubmissionsData";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import moment from "moment";
 import { useAuth } from "@/context/AuthContext";
 import { Badge } from "@/components/ui/badge";
-import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card } from "@/components/Problems/Card";
-import Loading from "@/components/Problems/SubmissionsLoader";
+import { Card } from "@/components/problems/Card";
+import Loading from "@/components/problems/SubmissionsLoader";
 
 
 export default function SubmissionsHistory({
@@ -21,6 +17,7 @@ export default function SubmissionsHistory({
     const [mySubmissions, setMySubmissions] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [problemsData, setProblemsData] = useState([]);
   
     const currentUser = useAuth();
 
@@ -38,10 +35,21 @@ export default function SubmissionsHistory({
             setLoading(false);
           }
         };
-    
+
+        const getProblems = async()=> {
+            try {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/problems`);
+                const data = await response.json();
+                setProblemsData(data)
+            } catch (error) {
+                console.log("Error fetching data ", error);
+            }
+          }    
         if (currentUser && currentUser.uid) {
           fetchData(currentUser.uid);
         }
+        getProblems();
+
       }, [currentUser, params.problemId]);
     
       if (error) {
@@ -51,6 +59,14 @@ export default function SubmissionsHistory({
       if (loading) {
         return <Loading />;
       }
+
+      const mergeData = mySubmissions.map((problem) => {
+        const problemData = problemsData.find((data) => data.id === problem.problem_id);
+        const title = problemData ? problemData.title : "Tanpa title";
+      
+        return { ...problem, title };
+      });
+
 
 return (
     <Card className="w-full h-full mt-28">
@@ -66,7 +82,7 @@ return (
                           <thead>
                             <tr className="text-left">
                               <th className="pl-2">Id</th>
-                              <th>User</th>
+                              <th>Problem</th>
                               <th>Lang</th>
                               <th>Verdict</th>
                               <th>Time</th>
@@ -74,7 +90,7 @@ return (
                             </tr>
                           </thead>
                           <tbody>
-                            {mySubmissions && (mySubmissions.map((submission, index) => (
+                            {mergeData && (mergeData.map((submission, index) => (
                               <tr
                                 key={index}
                                 className={`text-left ${
@@ -85,7 +101,7 @@ return (
                                   {submission.id}
                                 </td>
                                 <td className={`border-y border-black`}>
-                                  {submission.user && submission.user.name}
+                                  {submission.title}
                                 </td>
                                 <td className={`border-y border-black`}>
                                   {submission.language}
