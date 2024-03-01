@@ -1,7 +1,7 @@
-import Hero from '@/components/Home/Hero';
-import Step from '@/components/Home/Step';
-import Rank from '@/components/Home/Rank';
-import Cta from '@/components/Home/Cta';
+import Hero from '@/components/Hero';
+import Fiture from '@/components/Fiture';
+import Rank from '@/components/Rank';
+import Cta from '@/components/Cta';
 import ContentLayout from '@/Layouts/ContentLayout';
 
 interface HomeProps {
@@ -11,7 +11,7 @@ const Home: React.FC<HomeProps> = ({ auth }) => {
   return (
     <ContentLayout user={auth?.user}>
       <Hero />
-      <Step />
+      <Fiture />
       <Rank />
       <Cta />
     </ContentLayout>

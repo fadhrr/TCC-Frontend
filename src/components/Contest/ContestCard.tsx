@@ -2,24 +2,6 @@
 
 import { useEffect, useState } from "react";
 
-const contestCardData = [
-
-  {
-    title: 'Hello world',
-    link: '/contests/slug/overview', // Replace with the actual link
-    content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque aut corrupti iure tempora',
-    duration: '2 hours 30 minutes',
-    time: 'October 21, 21:05',
-  },
-  {
-    title: 'Die world',
-    link: '#', // Replace with the actual link
-    content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque aut corrupti iure tempora',
-    duration: '2 hours 30 minutes',
-    time: 'October 21, 21:05',
-  },
-];
-
 const formatDeadline = (deadline: string): string => {
   const deadlineDate = new Date(deadline);
 
@@ -39,6 +21,8 @@ const formatDeadline = (deadline: string): string => {
 
   return new Intl.DateTimeFormat("id-ID", options).format(deadlineDate);
 };
+
+
 
 export default function ContesCard() {
 const [data, setData] = useState([]);

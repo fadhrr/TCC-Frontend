@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/problems/Card";
-import Loading from "@/components/problems/SubmissionsLoader";
+import Loading from "@/components/problems/SubmissionLoader";
 
 async function getSubmissions(problemId: any) {
   const res = await fetch(
@@ -77,7 +77,7 @@ export default function ProblemSubmission({
       <Tabs defaultValue="allSubmissions" className="p-8">
         <TabsList className="flex w-max mx-auto">
           <TabsTrigger value="allSubmissions">All Submissions</TabsTrigger>
-          <TabsTrigger value="mySubmissions">My Submision</TabsTrigger>
+          <TabsTrigger value="mySubmissions">My Submission</TabsTrigger>
         </TabsList>
 
         <TabsContent value="allSubmissions" className="space-y-4">

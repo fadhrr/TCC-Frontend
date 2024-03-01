@@ -1,106 +1,73 @@
 'use client'
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const ScoreboardLayout = () => {
-  const [scoreboard, setScoreboard] = useState([
-    {
-      labels: [
-        { label: "A", totalNilai: 100 },
-        { label: "B", totalNilai: 200 },
-        { label: "C", totalNilai: 250 },
-        { label: "D", totalNilai: 400 },
-        { label: "E", totalNilai: 550 },
-        { label: "F", totalNilai: 600 },
-        { label: "G", totalNilai: 700 },
-        { label: "H", totalNilai: 800 },
-      ],
-      no: 1,
-      contestant: 'Sepuh',
-      total: 3600,
-      total_time: '01:11',
-      details: [
-        { top: '+', bottom: '00:02' },
-        { top: '+1', bottom: '00:05' },
-        { top: '+', bottom: '00:09' },
-        { top: '+', bottom: '00:17' },
-        { top: '+', bottom: '00:28' },
-        { top: '+', bottom: '00:43' },
-        { top: '+1', bottom: '00:52' },
-        { top: '+', bottom: '01:07' }
-      ]
-    },
-    {
-      no: 2,
-      contestant: 'Michel',
-      total: 3600,
-      total_time: '01:18',
-      details: [
-        { top: '+', bottom: '00:02' },
-        { top: '+', bottom: '00:03' },
-        { top: '+', bottom: '00:07' },
-        { top: '+', bottom: '00:17' },
-        { top: '+', bottom: '00:27' },
-        { top: '+', bottom: '00:40' },
-        { top: '+', bottom: '01:04' },
-        { top: '+', bottom: '01:18' }
-      ]
-    },
-    {
-      no: 3,
-      contestant: 'Andi',
-      total: 2100,
-      total_time: '01:35',
-      details: [
-        { top: '+', bottom: '00:02' },
-        { top: '+1', bottom: '00:05' },
-        { top: '+', bottom: '00:12' },
-        { top: '+1', bottom: '00:33' },
-        { top: '+', bottom: '01:06' },
-        { top: '+1', bottom: '01:23' },
-        { top: '+3', bottom: '-' },
-        { top: '-', bottom: '-' }
-      ]
-    }
-  ]);
+  const [data, setData] = useState(null);
 
+  useEffect(() => {
+      const getScoreboard =async () => {
+        try {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contest/1/scoreboard`)
+          const data = await response.json();
+          setData(data);
+        } catch (error) {
+          console.log("error fetching scoreboard", error);
+        }
+       
+      };
+    getScoreboard();
+  }, []);
+  
   return (
     <div>
       <div className="table-wrapper">
         <h1 className=" mt-5 text-2xl">Scoreboard</h1>
-        <table className="w-full border-separate border-spacing-y-3 table-auto">
+          <table className="mt-4 w-full">
           <thead>
             <tr>
               <th>#</th>
-              <th className="text-left pl-3">Contestant</th>
-              <th>Total</th>
-              {scoreboard[0].labels.map((label, index) => (
-                <th key={index}>
-                  {label.label} <p>{label.totalNilai}</p>
-                </th>
+              <th>Participant</th>
+              {data && data.contestants.length > 0 && data.contestants[0].problems.map((problem) => (
+                <th key={problem.problem_id}>Problem {data.problem_length > 5 ? <br/>: ''} {problem.problem_id}</th>
               ))}
             </tr>
           </thead>
           <tbody className="text-center">
-            {scoreboard.map((item, index) => (
-              <tr key={index}>
-                <td className="bg-[#4D4D4D] text-white border-y-2 border-s-2 border-black h-10 w-10">
-                  {item.no}
-                </td>
-                <td className="border-y-2 border-black text-left pl-3">
-                  {item.contestant}
-                </td>
-                <td className="border-y-2 border-e-2 border-black">
-                  {item.total}
-                </td>
-                {item.details.map((detail, detailIndex) => (
-                  <td key={detailIndex} className={`border-y-2 border-e-2 border-black ${detail.bottom === '-' && detail.top === '-' ? 'bg-[#4D4D4D] text-white' : detail.bottom === '-' ? ' bg-[#E36262] text-white' : 'bg-[#E1FDD7]'}`}>
-                    <span className="font-bold">{detail.top}</span>
-                    <p>{detail.bottom}</p>
-                  </td>
-                ))}
-              </tr>
-            ))}
+            {data && data.contestants && data.contestants.length > 0 && data.contestants[0].problems && (
+              data.contestants.map((contestant, index) => (
+                <tr key={index}>
+                  {index === 0 && (
+                    <td className="bg-[#4D4D4D] text-white border-y-2 border-s-2 border-black min-w-[25px] font-semibold" rowSpan={data.contestants_length}>
+                      {data.contest.id}
+                    </td>
+                  )}
+                  <td className="border-2 border-black">{contestant.user.username}</td>
+                  {contestant.problems.map((problem, problemIndex) => {
+                    let cellClassName = 'border-2 border-black font-semibold';
+                    if (problem.status === 'Not Attempted') {
+                      cellClassName += '';
+                    } else if (problem.status === 'WA') {
+                      cellClassName += ' bg-[#E36262]';
+                    } else if (problem.status === 'RTE') {
+                      cellClassName += ' bg-[#FCF55F]';
+                    } else {
+                      cellClassName += ' bg-[#22C55E] text-white';
+                    }
+                    return (
+                      <td key={problemIndex} className={cellClassName}>
+                      {problem.attempted > 0 && (
+                        <React.Fragment>
+                          <div>{problem.status}</div>
+                          <p>{problem.attempted > 0 ? `+${problem.attempted}` : ''}</p>
+                        </React.Fragment>
+                      )}
+                    </td>
+                    );
+                  })}
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
