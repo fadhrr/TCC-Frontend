@@ -18,8 +18,10 @@ export default function ContestForm() {
     const description = e.target[1].value;
     const timeStart = e.target[2].value;
     const duration = e.target[3].value;
+
+
+    
     try {
-  
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contest`,
         {
