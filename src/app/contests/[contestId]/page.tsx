@@ -23,7 +23,7 @@ const articlesData = [
 
 async function getContestOverview(contestId: string) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contest/${2}`
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contest/${1}`
   );
   if (res.status == 404) {
     return res.status;
@@ -33,6 +33,7 @@ async function getContestOverview(contestId: string) {
   }
   return res.json();
 }
+
 export default function ContestDetail({
   params,
 }: {

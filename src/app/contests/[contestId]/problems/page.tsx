@@ -76,6 +76,7 @@ export default function ContestProblem({
   const [contestProblems, setContestProblems] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  console.log(contestProblems);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -100,19 +101,17 @@ export default function ContestProblem({
       <h1 className="text-4xl font-bold text-center w-full mb-8">Contest Information</h1>
 
       <div className="space-y-10 text-black">
-        {contestProblems.map((section, index) => (
-          <div key={index} className="space-y-5">
-            <div className="text-xs font-semibold uppercase tracking-wider ">{section.name}</div>
+          <div className="space-y-5">
+            {/* <div className="text-xs font-semibold uppercase tracking-wider ">{problems.title}</div> */}
             <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-              {section.items.map((item) => (
-                <Link key={item.id} href="#" className="group block space-y-1.5 rounded-lg  px-5 py-3 border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]">
-                  <div className="font-medium  group-hover:text-gray-50">{item.name}</div>
+              {contestProblems.map((item, index) => (
+                <Link key={index} href="#" className="group block space-y-1.5 rounded-lg  px-5 py-3 border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+                <div className="font-medium  group-hover:text-gray-50">{item.title}</div>
                   {item.description ? <div className="line-clamp-3 text-sm  group-hover:text-gray-300">{item.description}</div> : null}
                 </Link>
               ))}
             </div>
           </div>
-        ))}
       </div>
     </Card>
   );
