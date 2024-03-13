@@ -1,4 +1,4 @@
-import ContestForm from "@/components/Contest/ContestForm";
+import ContestForm from "@/components/Contest/Form";
 import React from "react";
 
 const page = () => {

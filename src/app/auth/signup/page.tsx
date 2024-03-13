@@ -8,6 +8,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/form-error";
 
+function isUsk(email) {
+  const domain = "mhs.usk.ac.id";
+  const extractedDomain = email.split('@')[1];
+  return extractedDomain === domain;
+}
+
 export default function SignUp() {
   const router = useRouter();
   const [error, setError] = useState<string | undefined>("");
@@ -18,6 +24,11 @@ export default function SignUp() {
     e.preventDefault();
 
     const email = e.target[0].value;
+    if (!isUsk(email)) {
+      setError("Please provide a valid email");
+      setLoading(false);
+      return
+    }
     const username = e.target[1].value;
     const nim = e.target[2].value;
     const password = e.target[3].value;

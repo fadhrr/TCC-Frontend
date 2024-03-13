@@ -1,6 +1,6 @@
 "use client";
 import { useAuth } from "@/context/AuthContext";
-import { Headline } from "../ui/headline";
+import { Headline } from "../../ui/headline";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -8,27 +8,10 @@ import { useRouter } from "next/navigation";
 export default function ContestForm() {
   const router = useRouter();
   const currentUser = useAuth();
-  const [submitLoading, setSubmitLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [contestRes, setContestRes] = useState(null);
+  const [submitLoading, setSubmitLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  const handleNext = () => {
-    setCurrentStep(currentStep + 1);
-  };
-
-  const handleCancel = async (e) => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contest`,
-      {
-        method: "DELETE",
-        body: JSON.stringify(1),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-  };
 
   const handleSubmitContest = async (e) => {
     e.preventDefault();
@@ -37,8 +20,6 @@ export default function ContestForm() {
     const description = e.target[1].value;
     const timeStart = e.target[2].value;
     const duration = e.target[3].value;
-    // const test = formdata.get('title')
-    // console.log(test);
 
     try {
       const response = await fetch(
@@ -65,14 +46,15 @@ export default function ContestForm() {
         setError(`Failed to submit: ${response.statusText}`);
         return;
       }
-      setContestRes(await response.json());
+      const res = await response.json()
+      setContestRes(res);
+      router.push(`/admin/contests/edit/${res.contest?.id}`);
 
     } catch (error) {
       setSubmitLoading(false);
       setError("An unexpected error occurred.");
     }
   };
-
 
   return (
     <section>
@@ -85,7 +67,7 @@ export default function ContestForm() {
           {/* card */}
           <div className="p-4 rounded shadow ">
             {/* {currentStep < 2 && ( */}
-            <form onSubmit={handleSubmitContest}>
+            <form onSubmit={handleSubmitContest} >
               <div>
                 <div className="md:flex mb-6">
                   <div className="md:w-1/3">
@@ -95,7 +77,6 @@ export default function ContestForm() {
                     <input
                       className="block w-full p-4 text-lg border border-black rounded-md"
                       type="text"
-                      id="title"
                       name="title"
                       required
                     />
@@ -110,7 +91,7 @@ export default function ContestForm() {
                     <input
                       className="block w-full p-4 text-lg border border-black rounded-md"
                       type="text"
-                      id="title"
+                      name="description"
                       required
                     />
                   </div>
@@ -123,9 +104,9 @@ export default function ContestForm() {
                   <div className="md:w-2/3">
                     <input
                       className="block w-full p-4 text-lg  mb-2 border border-black rounded-md"
-                      required
                       type="datetime-local"
-                      id="deadline"
+                      name="startTime"
+                      required
                     />
                   </div>
                 </div>
@@ -137,9 +118,9 @@ export default function ContestForm() {
                   <div className="md:w-2/3">
                     <input
                       className="block w-full p-4 text-lg  mb-2 border border-black rounded-md"
-                      required
                       type="datetime-local"
-                      id="deadline"
+                      name="endTime"
+                      required
                     />
                   </div>
                 </div>
@@ -147,8 +128,8 @@ export default function ContestForm() {
               {/* button */}
               <div className="md:col-span-5 text-left md:text-right">
                 <div className="inline-flex  md:items-end">
-                  <Button type="submit" onClick={handleNext} className="w-40">
-                    Next
+                  <Button type="submit" disabled={submitLoading} className="w-40">
+                    Post
                   </Button>
                 </div>
               </div>

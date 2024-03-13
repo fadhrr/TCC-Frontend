@@ -3,6 +3,7 @@
 import React from 'react';
 
 import { cn } from '@/lib/utils';
+import Link from 'next/link';
 
 const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => <div ref={ref} className={cn('rounded-lg border bg-card text-card-foreground shadow-sm', className)} {...props} />);
 Card.displayName = 'Card';
@@ -24,7 +25,7 @@ CardContent.displayName = 'CardContent';
 const CardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => <div ref={ref} className={cn('flex items-center p-6 pt-0', className)} {...props} />);
 CardFooter.displayName = 'CardFooter';
 
-const ContestCard: React.FC<{ contestData: { title: string; link: string; description: string; start_time: string; end_time: string }[] }> = ({ contestData }) => {
+const ContestCard: React.FC<{ contestData: { title: string; slug: string; description: string; start_time: string; end_time: string }[] }> = ({ contestData }) => {
   const formatDeadline = (deadline: string): string => {
     const deadlineDate = new Date(deadline);
 
@@ -45,6 +46,7 @@ const ContestCard: React.FC<{ contestData: { title: string; link: string; descri
     return new Intl.DateTimeFormat('id-ID', options).format(deadlineDate);
   };
 
+  console.log(contestData);
   return (
     <div className="pt-10">
       {contestData.map((article, index) => (
@@ -52,9 +54,9 @@ const ContestCard: React.FC<{ contestData: { title: string; link: string; descri
           <div className="relative bg-gray-50 z-10 flex flex-col overflow-hidden p-4 border-2 rounded-lg border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] sm:gap-4">
             <div className="flex justify-start">
               <h3 className="mt-4 text-lg font-medium sm:text-xl cursor-pointer">
-                <a href={article.link} className="hover:underline">
+                <Link href={`/contests/${article.slug}`} className="hover:underline">
                   {article.title}
-                </a>
+                </Link>
               </h3>
             </div>
 

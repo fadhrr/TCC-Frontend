@@ -16,24 +16,11 @@ const menuData: Menu[] = [
   {
     id: 3,
     title: 'Contests',
+    path: '/contests',
     newTab: false,
-    submenu: [
-      {
-        id: 31,
-        title: 'Join Contest',
-        path: '/contests/',
-        newTab: false,
-      },
-      {
-        id: 32,
-        title: 'Create Contest',
-        path: '/contests/createContest',
-        newTab: false,
-      },
-    ],
   },
   {
-    id: 5,
+    id: 4,
     title: 'Ranking',
     path: '/ranking',
     newTab: false,
