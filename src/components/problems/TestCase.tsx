@@ -2,6 +2,7 @@
 import React, {useState, useEffect} from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@nextui-org/react";
+import { Suspense } from "react";
 import Image from "next/image";
 
 const TestCase = () => {
@@ -26,6 +27,7 @@ const TestCase = () => {
       const router = useRouter();
 
       // Get the newly created problem id
+
       const problemId = searchParams.get("problem_id");
       
       //   Get test case ID
@@ -39,38 +41,39 @@ const TestCase = () => {
       }, []);
 
 
-      // get test case data
+      // get test case data when editing
       useEffect(() => {
-        if (editingTestCaseId !== null) {
+        if (editingTestCaseId !== null && editingTestCaseId !== 'testcase') {
           const fetchData = async () => {
             try {
               const response = await fetch(
                 `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/test_case/${editingTestCaseId}`
               );
+              console.log({ editingTestCaseId });
               if (!response.ok) {
                 console.error(
-                  `Failed to fetch problem data with ID ${editingTestCaseId}. Server error.`
+                  `Failed to fetch test case data with ID ${editingTestCaseId}. Server error.`
                 );
                 return;
               }
-    
+      
               const data = await response.json();
-    
+      
               setEditedTestCaseData({
                 id: data.id,
                 problem_id: data.problem_id,
                 input: data.input,
-                output: data.output
+                output: data.output,
               });
-    
+      
               const countNewlinesInput = (data.input.match(/\n/g) || []).length;
               const countNewlinesOutput = (data.output.match(/\n/g) || []).length;
-    
+      
               const maxLines = Math.max(countNewlinesInput, countNewlinesOutput);
-    
+      
               const inputLines = data.input.split("\n");
               const outputLines = data.output.split("\n");
-    
+      
               setTestCaseInputs(Array.from({ length: maxLines + 1 }, (_, i) => inputLines[i] || ""));
               setTestCaseOutputs(Array.from({ length: maxLines + 1 }, (_, i) => outputLines[i] || ""));
             } catch (error) {
@@ -80,6 +83,7 @@ const TestCase = () => {
           fetchData();
         }
       }, [editingTestCaseId]);
+      
 
       // Make a test case
     const handleCreateTestCase = async () => {
@@ -197,13 +201,22 @@ const TestCase = () => {
               }));
             }
           };
+
+          const Loading = (): React.ReactNode => {
+            return (
+              <Button>
+                <Image alt="Back" src="/assets/icons/left.svg" width={30} height={30} className="hover:opacity-65" />
+              </Button>
+            );
+          }
           
     return (
      <div className="mt-20">
-      <Button className="mb-4" onPress={() => editedTestCaseData.id ? router.push(`/admin/problems/edit/${editedTestCaseData.problem_id}`) : router.push(`/admin/problems/edit/${problemId}`)}>
-        <Image alt="Back" src="/assets/icons/left.svg" width={30} height={30} className="hover:opacity-65" />
-      </Button>
-
+      <Suspense fallback={Loading()}>
+        <Button className="mb-4" onPress={() => editedTestCaseData.id ? router.push(`/admin/problems/edit/${editedTestCaseData.problem_id}`) : router.push(`/admin/problems/edit/${problemId}`)}>
+          <Image alt="Back" src="/assets/icons/left.svg" width={30} height={30} className="hover:opacity-65" />
+        </Button>
+      </Suspense>
        <h1 className="text-3xl font-bold lg:text-4xl">
           <span className="underline decoration-blue-500">
               {editedTestCaseData.id ? "Edit Test Case" : "Create Test Case"}

@@ -85,7 +85,7 @@ const ProfileLayout = () => {
     };
   
     fetchDataUser();
-  }, [currentUser, router]);
+  }, [currentUser, user.id, router]);
   
 
   return (
@@ -108,7 +108,7 @@ const ProfileLayout = () => {
             }}
             >
             {isSettingsPressed ? buttonText : <Settings />}
-</button>
+        </button>
         </div>
         <div className="flex p-5">
           <Image
