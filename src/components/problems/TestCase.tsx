@@ -212,7 +212,7 @@ const TestCase = () => {
           
     return (
      <div className="mt-20">
-      <Suspense fallback={Loading()}>
+      <Suspense fallback={<Loading/>}>
         <Button className="mb-4" onPress={() => editedTestCaseData.id ? router.push(`/admin/problems/edit/${editedTestCaseData.problem_id}`) : router.push(`/admin/problems/edit/${problemId}`)}>
           <Image alt="Back" src="/assets/icons/left.svg" width={30} height={30} className="hover:opacity-65" />
         </Button>

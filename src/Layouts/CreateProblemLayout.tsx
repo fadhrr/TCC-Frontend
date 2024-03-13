@@ -54,7 +54,7 @@ const AdminCreateProblem = () => {
 
     // get problem data
     useEffect(() => {
-      if (editingProblemsId !== null) {
+      if (editingProblemsId !== null && editingProblemsId !== 'create') {
         const fetchData = async () => {
           try {
             const response = await fetch(
@@ -322,7 +322,6 @@ const AdminCreateProblem = () => {
             router.push(`/admin/problems/edit/${editingProblemsId}/testcase/${correspondingTestCaseId}`);
           } else {
             router.push(`/admin/problems/create/testcase?problem_id=${editingProblemsId}`);
-            console.log("No suitable test cases found.");
           }
         } else {
           const errorData = await response.json();
