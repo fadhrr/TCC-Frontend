@@ -60,11 +60,12 @@ const AdminProblemsLayout = ({url_create, url_edit}:any) => {
          console.log(`Error deleting with ID ${problemId}`, error)}
      }
   
-    // Hitung jumlah submit untuk setiap masalah
+    // Calculate the number of submissions for each problem
     const problems = problemsData.map((problem) => {
       const submitCount = submissionsData.filter((submission) => submission.problem_id === problem.id).length;
       return { ...problem, submitted: submitCount };
     });
+
     
   return (
     <Card className="w-full mt-28">

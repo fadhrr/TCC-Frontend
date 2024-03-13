@@ -2,17 +2,17 @@
 
 import Sidebar from '@/components/Sidebar';
 import { useAuth } from '@/context/AuthContext';
-import { useRouter } from 'next/navigation';
-
 
 export default function UserLayout({ children }) {
   const currentUser = useAuth();
-  const router = useRouter();
   
+  const uid = currentUser ? currentUser.uid : null;
+
   const menuItems = [
-    { label: 'Summary', href: `/profiles/${currentUser.uid}`  },
-    { label: 'Submission', href: `/profiles/${currentUser.uid}/submission` },
+    { label: 'Summary', href: `/profiles/${uid || ''}` },
+    { label: 'Submission', href: `/profiles/${uid || ''}/submission` },
   ];
+  
   return (
     <div className="flex px-2 space-x-4">
       <Sidebar menuItems={menuItems} title="Profile" title_menu="Profile Menu"/>
