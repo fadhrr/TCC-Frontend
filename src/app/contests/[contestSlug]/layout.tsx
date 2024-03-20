@@ -38,7 +38,7 @@ export default function ContestLayout({ children, params }) {
 
       <div className="container flex md:flex-row flex-col mx-auto md:my-8 md:space-x-4">
         <div className="h-max min-w-80 space-y-4">
-          <Sidebar open={open} onClose={() => setOpen(false)} slug={params.contestSlug} id={contestId} />
+          <Sidebar slug={params.contestSlug} open={open}/>
         </div>
         {children}
       </div>

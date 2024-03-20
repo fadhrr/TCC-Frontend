@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { Card, CardContent } from '@/components/problems/Card';
 import { Label } from '@/components/ui/label';
 
-export default function Sidebar({ slug, open, onClose}) {
+export default function Sidebar({ slug, open }) {
   const pathname = usePathname();
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
