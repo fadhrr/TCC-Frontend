@@ -118,7 +118,7 @@ export default function ContestProblem({
             {/* <div className="text-xs font-semibold uppercase tracking-wider ">{problems.title}</div> */}
             <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
               {contestProblems.map((item, index) => (
-                <Link key={index} href="#" className="group block space-y-1.5 rounded-lg  px-5 py-3 border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+                <Link key={index} href={`/contests/${params.contestSlug}/problems/${item.id}`} className="group block space-y-1.5 rounded-lg  px-5 py-3 border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]">
                 <div className="font-medium  group-hover:text-gray-50">{item.title}</div>
                   {item.description ? <div className="line-clamp-3 text-sm  group-hover:text-gray-300">{item.description}</div> : null}
                 </Link>
