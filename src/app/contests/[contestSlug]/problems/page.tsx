@@ -55,9 +55,22 @@ const menuItems = [
   // Tambahkan package lain jika diperlukan
 ];
 
+async function getId(contestSlug: string) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contest/s/${contestSlug}`
+  );
+  if (res.status == 404) {
+    return res.status;
+  }
+  if (!res.ok) {
+    throw new Error("Failed to fetch score memory data");
+  }
+  return res.json();
+}
+
 async function getContestProblems(contestId: string) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contest/${1}/problems`
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contest/${contestId}/problems`
   );
   if (res.status == 404) {
     return res.status;
@@ -71,17 +84,17 @@ async function getContestProblems(contestId: string) {
 export default function ContestProblem({
   params,
 }: {
-  params: { contestId: string };
+  params: { contestSlug: string };
 }) {
   const [contestProblems, setContestProblems] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  console.log(contestProblems);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const contestProbsData = await getContestProblems(params.contestId);
+        const contestObj = await getId(params.contestSlug);
+        const contestProbsData = await getContestProblems(contestObj.id);
         setContestProblems(contestProbsData);
       } catch (error) {
         setError(error.message);
@@ -90,7 +103,7 @@ export default function ContestProblem({
       }
     };
     fetchData();
-  }, [params.contestId]);
+  }, [params.contestSlug]);
 
   if (loading || contestProblems == null) {
     return <>Loading</>;

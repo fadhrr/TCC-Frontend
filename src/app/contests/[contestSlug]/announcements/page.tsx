@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Card } from "@/components/problems/Card";
+import moment from "moment";
 
 const announcements = [
   {
@@ -35,18 +36,59 @@ const announcements = [
   // Tambahkan package lain jika diperlukan
 ];
 
+async function getId(contestSlug: string) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contest/s/${contestSlug}`
+  );
+  if (res.status == 404) {
+    return res.status;
+  }
+  if (!res.ok) {
+    throw new Error("Failed to fetch score memory data");
+  }
+  return res.json();
+}
+
+async function getAnnouncemnets(contestId: string) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contest/${contestId}/notification`
+  );
+  if (res.status == 404) {
+    return res.status;
+  }
+  if (!res.ok) {
+    throw new Error("Failed to fetch score memory data");
+  }
+  return res.json();
+}
+
 export default function ContestProblem({
   params,
 }: {
-  params: { contestId: string };
+  params: { contestSlug: string };
 }) {
-  //   const [announcements, setAnnouncements] = useState(null);
+  const [announcements, setAnnouncements] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  //   if (loading || announcements == null) {
-  //     return <>Loading</>;
-  //   }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const contestObj = await getId(params.contestSlug);
+        const contestProbsData = await getAnnouncemnets(contestObj.id);
+        setAnnouncements(contestProbsData);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [params.contestSlug]);
+
+    if (loading || announcements == null) {
+      return <>Loading</>;
+    }
 
   return (
     <Card className="container md:mt-0 !z-0 py-8 px-6">
@@ -63,10 +105,12 @@ export default function ContestProblem({
             <div className="flex border-b-2 justify-between">
               <div className="flex space-x-4">
                 <div className="text-xs font-semibold uppercase tracking-wider">
-                  {section.time}
+                  {
+                    moment(section.created_at).format("HH:mm:ss, DD-MM-YYYY")
+                  }
                 </div>
                 <div className="text-xs font-semibold uppercase tracking-wider ">
-                  {section.name}
+                  {section.title}
                 </div>
               </div>
               <div>

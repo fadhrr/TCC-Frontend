@@ -5,25 +5,22 @@ import { ModalSucces } from "@/components/ui/modal";
 import Image from "next/image";
 import { Card } from "@/components/problems/Card";
 
-const articlesData = [
-  {
-    title: "Bracket Competion",
-    imageUrl: "/images/compete.png",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae dolores, possimus pariatur animi temporibus nesciunt praesentium dolore sed nulla ipsum eveniet corporis quidem, ?",
-    details: [
-      { label: "Time", value: "Saturday, 20 Jan 2024" },
-      { label: "Difficulty", value: "Hard" },
-      { label: "Author", value: "Mas Ben" },
-      { label: "Question", value: "50" },
-      { label: "Duration", value: "100" },
-    ],
-  },
-];
+async function getId(slug: string) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contest/s/${slug}`
+  );
+  if (res.status == 404) {
+    return res.status;
+  }
+  if (!res.ok) {
+    throw new Error("Failed to fetch score memory data");
+  }
+  return res.json();
+}
 
 async function getContestOverview(contestId: string) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contest/${1}`
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contest/${contestId}`
   );
   if (res.status == 404) {
     return res.status;
@@ -37,7 +34,7 @@ async function getContestOverview(contestId: string) {
 export default function ContestDetail({
   params,
 }: {
-  params: { contestId: string };
+  params: { contestSlug: string };
 }) {
   const [showModal, setShowModal] = useState(false);
   const [contestOverview, setContestOverview] = useState(null);
@@ -47,7 +44,8 @@ export default function ContestDetail({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const contestData = await getContestOverview(params.contestId);
+        const contestObj = await getId(params.contestSlug);
+        const contestData = await getContestOverview(contestObj.id);
         setContestOverview(contestData);
       } catch (error) {
         setError(error.message);
@@ -56,7 +54,7 @@ export default function ContestDetail({
       }
     };
     fetchData();
-  }, [params.contestId]);
+  }, [params.contestSlug]);
 
   if (loading || contestOverview == null) {
     return <>Loading</>;
