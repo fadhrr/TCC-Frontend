@@ -3,9 +3,9 @@
 import { Card } from "@/components/problems/Card";
 import { useState, useEffect } from "react";
 
-async function getScoreBoards(contestId: string) {
+async function getId(contestSlug: string) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contest/${1}/scoreboard`
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contest/s/${contestSlug}`
   );
   if (res.status == 404) {
     return res.status;
@@ -16,15 +16,30 @@ async function getScoreBoards(contestId: string) {
   return res.json();
 }
 
-const Scoreboard = ({ params }: { params: { contestId: string } }) => {
+async function getScoreBoards(contestId: string) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contest/${contestId}/scoreboard`
+  );
+  if (res.status == 404) {
+    return res.status;
+  }
+  if (!res.ok) {
+    throw new Error("Failed to fetch score memory data");
+  }
+  return res.json();
+}
+
+const Scoreboard = ({ params}: { params: { contestSlug: string } }) => {
   const [scoreBoards, setScoreBoards] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const scoreBoardsData = await getScoreBoards(params.contestId);
+        const contestObj = await getId(params.contestSlug);
+        const scoreBoardsData = await getScoreBoards(contestObj.id);
         setScoreBoards(scoreBoardsData);
       } catch (error) {
         setError(error.message);
@@ -33,7 +48,7 @@ const Scoreboard = ({ params }: { params: { contestId: string } }) => {
       }
     };
     fetchData();
-  }, [params.contestId]);
+  }, [params.contestSlug]);
 
   if (loading || scoreBoards == null) {
     return <>Loading</>;
@@ -68,14 +83,6 @@ const Scoreboard = ({ params }: { params: { contestId: string } }) => {
               scoreBoards.contestants[0].problems &&
               scoreBoards.contestants.map((contestant, index) => (
                 <tr key={index}>
-                  {/* {index === 0 && (
-                    <td
-                      className="bg-[#4D4D4D] text-white border-y-2 border-s-2 border-black min-w-[25px] font-semibold"
-                      rowSpan={scoreBoards.contestants_length}
-                    >
-                      {scoreBoards.contest.id}
-                    </td>
-                  )} */}
                   <td className="bg-[#4D4D4D] text-white border-y-2 border-s-2 border-black min-w-[25px] font-semibold">
                     {index + 1}
                   </td>
