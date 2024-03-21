@@ -27,7 +27,6 @@ const AdminUserLayout = () => {
     const [emailSuggestions, setEmailSuggestions] = useState([]);
     const [emailData, setEmailData] = useState<string | undefined>(undefined);
 
-
     
     const [editedUserData, setEditedUserData] = useState({
         name: "",
@@ -118,7 +117,7 @@ const AdminUserLayout = () => {
     // delete user
     const deleteUser = async (userId: any) => {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/${userId}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/${userId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
