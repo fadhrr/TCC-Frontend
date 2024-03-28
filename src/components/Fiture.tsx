@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 
 const articles = [
@@ -30,7 +31,7 @@ export default function Fiture() {
             <article key={index} className="hover:animate-background rounded-xl p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s]">
               <div className={`rounded-[10px] min-h-[60vh] gap-2 flex flex-col justify-center p-4 sm:p-6 `} style={{ backgroundColor: article.color }}>
                 {/* SVG */}
-                {article.image && <img src={article.image} alt="SVG Icon" className="w-10 h-10 mb-4" />}
+                {article.image && <Image src={article.image} alt="SVG Icon" className="w-10 h-10 mb-4" />}
                 {/* Judul Artikel */}
                 <a href="#">
                   <h3 className="mt-0.5 text-lg font-medium text-gray-900">{article.title}</h3>

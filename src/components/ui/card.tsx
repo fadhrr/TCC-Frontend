@@ -52,8 +52,8 @@ const ContestCard: React.FC<{ contestData: { id: string; title: string; slug: st
   return (
     <div className="pt-10">
       {contestData.map((article, index) => (
-        <div onClick={()=>router.replace(`/contests/${article.slug.replace(/\s+/g, '-')}`)} className='cursor-pointer'>
-          <article key={index} className="group relative w-full my-4 cursor-pointe inline-block">
+        <div key={index} onClick={()=>router.replace(`/contests/${article.slug.replace(/\s+/g, '-')}`)} className='cursor-pointer'>
+          <article className="group relative w-full my-4 cursor-pointe inline-block">
             <div className="relative bg-gray-50 z-10 flex flex-col overflow-hidden p-4 border-2 rounded-lg border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] sm:gap-4">
               <div className="flex justify-start">
                 <h3 className="mt-4 text-lg font-medium sm:text-xl cursor-pointer">
