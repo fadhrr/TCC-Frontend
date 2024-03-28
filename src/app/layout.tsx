@@ -5,6 +5,8 @@ import { AuthContextProvider } from '@/context/AuthContext';
 import './globals.css';
 import { cn } from '@/lib/utils';
 import { fontSans } from '@/lib/fonts';
+import { RoleProvider } from '@/context/RoleContext';
+
 
 // const inter = inter({ subsets: ["latin"] });
 
@@ -18,9 +20,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={cn('min-h-screen flex flex-col font-sans antialiased', fontSans.className)}>
         <AuthContextProvider>
-          <Header />
-          {children}
-          <Footer />
+          <RoleProvider>
+            <Header />
+            {children}
+            <Footer />
+          </RoleProvider>
         </AuthContextProvider>
       </body>
     </html>

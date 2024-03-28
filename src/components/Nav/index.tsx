@@ -33,13 +33,17 @@ import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase-config";
 import menuData from "./menuData";
 import Link from "next/link";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { useRole } from "@/context/RoleContext";
+
 
 
 export default function Header() {
   const router = useRouter();
   const currentUser = useAuth();
+ 
+  const { setRole } = useRole();
 
   const handleLogout = () => {
     signOut(auth)
@@ -128,16 +132,23 @@ export default function Header() {
       const currentUserData = data.find(user => user.id === currentUser.uid);
       if (currentUserData) {
         if (currentUserData.role === 'Admin') {
+          const userRole = "Admin";
+          setRole(userRole);
           return "Admin";
         } else if (currentUserData.role === 'Assistant') {
+          const userRole = "Assistant";
+          setRole(userRole);
           return "Assistant";
         } else {
+          const userRole = "User";
+          setRole(userRole);
           return "User";
         }
       }
     }
     return "User";
-  }
+  };
+  
 
   return (
     <header

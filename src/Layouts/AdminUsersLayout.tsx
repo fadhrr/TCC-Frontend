@@ -15,14 +15,15 @@ import {
 import { Card } from "@/components/problems/Card";
 
 const AdminUserLayout = () => {
-
     const [data, setData] = useState([]);
     const [editingUserId, setEditingUserId] = useState(null);
+    const [userToDeleteId, setUserToDeleteId] = useState(null);
     const [sortOption, setSortOption] = useState('default');
     const [selectedRole, setSelectedRole] = useState('default');
 
     const [isEditUserOpen, setIsEditUserOpen] = useState(false);
     const [isAddRolesOpen, setIsAddRolesOpen] = useState(false);
+    const [isDeleteUserOpen, setIsDeleteUserOpen] = useState(false);
 
     const [emailSuggestions, setEmailSuggestions] = useState([]);
     const [emailData, setEmailData] = useState<string | undefined>(undefined);
@@ -38,17 +39,19 @@ const AdminUserLayout = () => {
 
     const [addRoleUser, setAddRoleUser] = useState('');
 
+
     useEffect(() => {
         const fetchData = async () => {
-        try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/role`);
-            const data = await response.json();
-
-            const updatedData = data.map((user: { role: string; })=>({...user, role: user.role!=="Admin" && user.role!=="Assistant"? "User": user.role}));
-            setData(updatedData);
-        } catch (error) {
-            console.log("Error fetching data ", error);
-        }
+            try {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/role`);
+                const data = await response.json();
+    
+                const updatedData = data.map((user: { role: string; })=>({...user, role: user.role!=="Admin" && user.role!=="Assistant"? "User": user.role}));
+                const userRole = updatedData.role; 
+                setData(updatedData);
+            } catch (error) {
+                console.log("Error fetching data ", error);
+            }
         };
         fetchData(); 
     }, []);
@@ -117,21 +120,23 @@ const AdminUserLayout = () => {
     // delete user
     const deleteUser = async (userId: any) => {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/${userId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            if (response.status === 200) {
-                setData((prevData) => prevData.filter((user) => user.id !== userId));
-                console.log(`User with ID ${userId} deleted successfully.`);
-            } else if (response.status === 404) {
-                console.error(`User with ID ${userId} not found.`);
-            } else {
-                const errorData = await response.json();
-                console.error(`Failed to delete user with ID ${userId}. Server error: ${errorData.message}`);
+            if (userId === userToDeleteId) {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/${userId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+    
+                if (response.status === 200) {
+                    setData((prevData) => prevData.filter((user) => user.id !== userId));
+                    console.log(`User with ID ${userId} deleted successfully.`);
+                } else if (response.status === 404) {
+                    console.error(`User with ID ${userId} not found.`);
+                } else {
+                    const errorData = await response.json();
+                    console.error(`Failed to delete user with ID ${userId}. Server error: ${errorData.message}`);
+                }
             }
         } catch (error) {
             console.error(`Error deleting user with ID ${userId}.`, error);
@@ -405,6 +410,55 @@ return (
         </ModalContent>
         </Modal>
 
+        {/* modal delete user */}
+        <Modal 
+        size="lg"
+        backdrop="blur" 
+        isOpen={isDeleteUserOpen}
+        onOpenChange={() => setIsDeleteUserOpen(!isDeleteUserOpen)}
+        motionProps={{
+            variants: {
+                enter: {
+                y: 0,
+                opacity: 1,
+                transition: {
+                    duration: 0.3,
+                    ease: "easeOut",
+                },
+                },
+                exit: {
+                y: -20,
+                opacity: 0,
+                transition: {
+                    duration: 0.2,
+                    ease: "easeIn",
+                },
+                },
+            }
+            }}>
+            <ModalContent>
+            {(onClose) => (
+                <>
+                <div className="bg-white p-4 rounded-lg shadow-md">
+                <ModalHeader className="flex flex-col gap-1 text-2xl">Delete User</ModalHeader>
+                <ModalBody>
+                    <h1>Are you sure you want to delete this user?</h1>
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="danger" variant="light" onPress={onClose} className="hover:opacity-60 mr-4 bg-white border px-3 py-1 rounded-sm">
+                    No, cancel
+                    </Button>
+                    <Button onPress={()=>{onClose(); deleteUser(userToDeleteId)}} className="px-3 py-1 rounded-sm hover:opacity-60 bg-[#DC2626] text-white">
+                    Yes, I'm sure
+                    </Button>
+                </ModalFooter>
+                </div>
+            </>
+            )}
+        </ModalContent>
+        </Modal>
+   
+
         <div className="flex items-center mb-3">
             <select className="mt-2 p-2 border" value={sortOption} onChange={handleSortChange}>
                 <option value="default">Sort By Role</option>
@@ -449,7 +503,7 @@ return (
                                         <Image alt="edit" src="/assets/icons/edit.svg" width={20} height={20} className="hover:opacity-65"/>
                                     </Button>
                                     {user.role !== 'Admin' && (
-                                        <Button type="submit" onClick={() => deleteUser(user.id)}>
+                                        <Button type="submit" onClick={() =>{setUserToDeleteId(user.id); setIsDeleteUserOpen(true);}} id="deleteButton" data-modal-target="deleteModal" data-modal-toggle="deleteModal">
                                             <Image alt="remove" src="/assets/icons/trash.svg" width={20} height={20} className="hover:opacity-65" />
                                         </Button>
                                     )}

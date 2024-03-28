@@ -4,5 +4,9 @@ export const metadata = {
 };
 
 export default async function ContestLayout({ children }) {
-  return <div className="py-24">{children}</div>;
+  return (
+      <div className="py-24">
+        {children}
+      </div>
+  )
 }

@@ -7,7 +7,7 @@ interface SearchBarProps {
 
 const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, handleChange }) => {
   return (
-    <form className="mt-4 md:w-1/3 w-full xl:mt-6">
+    <form className="mt-1 md:w-1/3 w-full xl:mt-3">
       <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
         Search
       </label>

@@ -404,8 +404,8 @@ const AdminCreateProblem = () => {
                 <label className="block mb-1">Title</label>
                 <input
                     type="text"
-                    name="name"
-                    id="name"
+                    name="title"
+                    id="title"
                     value={editedProblemsData.title}
                     onChange={(e) => setEditedProblemsData({ ...editedProblemsData, title: e.target.value })}
                     className="w-full p-2 border" required
@@ -446,8 +446,9 @@ const AdminCreateProblem = () => {
                 <label className="block mb-1">Time Limit</label>
                 <input
                     type="number"
-                    name=""
-                    id=""
+                    min={0}
+                    name="timeLimit"
+                    id="timeLimit"
                     placeholder="0"
                     className="w-full p-2 border"
                     value={editedProblemsData.time_limit}
@@ -461,8 +462,9 @@ const AdminCreateProblem = () => {
                 <input
                     type="number"
                     placeholder="0"
-                    name=""
-                    id=""
+                    min={0}
+                    name="memoryLimit"
+                    id="memoryLimit"
                     className="w-full p-2 border"
                     value={editedProblemsData.memory_limit}
                     onChange={(e) => setEditedProblemsData({ ...editedProblemsData, memory_limit: (e.target.value) })} required
@@ -473,8 +475,8 @@ const AdminCreateProblem = () => {
                 <label className="block mb-1">Input Format</label>
                 <input
                     type="text"
-                    name=""
-                    id=""
+                    name="inputFormat"
+                    id="inputFormat"
                     className="w-full p-2 border"
                     value={editedProblemsData.input_format}
                     onChange={(e) => setEditedProblemsData({ ...editedProblemsData, input_format: e.target.value })} required
@@ -485,8 +487,8 @@ const AdminCreateProblem = () => {
                 <label className="block mb-1">Output Format</label>
                 <input
                     type="text"
-                    name=""
-                    id=""
+                    name="outputFormat"
+                    id="outputFormat"
                     className="w-full p-2 border"
                     value={editedProblemsData.output_format}
                     onChange={(e) => setEditedProblemsData({ ...editedProblemsData, output_format: e.target.value })} required
@@ -498,8 +500,8 @@ const AdminCreateProblem = () => {
                 <label className="block mb-1">Constraint</label>
                 <input
                     type="text"
-                    name=""
-                    id=""
+                    name="constraint"
+                    id="constraint"
                     className="w-full p-2 border"
                     value={editedProblemsData.constraints}
                     onChange={(e) => setEditedProblemsData({ ...editedProblemsData, constraints: e.target.value })} required
@@ -510,8 +512,8 @@ const AdminCreateProblem = () => {
                 <label className="block mb-1">Explanation</label>
                 <input
                     type="text"
-                    name=""
-                    id=""
+                    name="explanation"
+                    id="explanation"
                     className="w-full p-2 border"
                     value={editedProblemsData.explanation}
                     onChange={(e) => setEditedProblemsData({ ...editedProblemsData, explanation: e.target.value })} required

@@ -32,7 +32,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-, "src/context/userContext.js", "src/context/userContext.tsz", "src/context/AuthContext.js", "src/context/ContestContext.ts", "src/context/ContestContexjsts"  ],
+, "src/context/userContext.js", "src/context/userContext.tsz", "src/context/AuthContext.js", "src/context/ContestContext.ts", "src/context/ContestContexjsts", "src/context/RoleContext.js"  ],
   "exclude": [
     "node_modules"
   ]
