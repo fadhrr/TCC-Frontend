@@ -31,7 +31,7 @@ interface Problem {
 
 async function getProblem(problemId: string) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/problem/${problemId}`
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/problem/${problemId}`,
   );
   if (!res.ok) {
     throw new Error("Failed to fetch problem data");
@@ -41,7 +41,7 @@ async function getProblem(problemId: string) {
 
 async function getLang() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/languages`
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/languages`,
   );
   if (!res.ok) {
     throw new Error("Failed to fetch problem data");
@@ -51,7 +51,7 @@ async function getLang() {
 
 async function getTopByTime(problemId: string) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/problem/${problemId}/submissions/topbytime`
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/problem/${problemId}/submissions/topbytime`,
   );
   if (res.status == 404) {
     return res.status;
@@ -64,7 +64,7 @@ async function getTopByTime(problemId: string) {
 
 async function getTopByMemory(problemId: string) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/problem/${problemId}/submissions/topbymemory`
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/problem/${problemId}/submissions/topbymemory`,
   );
   if (res.status == 404) {
     return res.status;
@@ -112,7 +112,7 @@ export default function ProblemDetail({
   }, [params.problemId]);
 
   const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const file = event.target.files?.[0];
 
@@ -171,7 +171,7 @@ export default function ProblemDetail({
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       if (!response.ok) {
@@ -195,28 +195,28 @@ export default function ProblemDetail({
 
   return (
     <Card className="w-full">
-      <div className="p-3 border-b">
+      <div className="border-b p-3">
         <Label className="text-xl font-bold">{problem.title}</Label>
       </div>
-      <div className="p-8 space-y-4">
+      <div className="space-y-4 p-8">
         <div className="flex justify-center">
-          <table className="border-separate border border-slate-500 ...">
+          <table className="... border-separate border border-slate-500">
             <thead>
               <tr>
-                <th className="px-10 border border-slate-600 ...">
+                <th className="... border border-slate-600 px-10">
                   Time Limit
                 </th>
-                <th className="px-10 border border-slate-600 ...">
+                <th className="... border border-slate-600 px-10">
                   Memory Limit
                 </th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="text-center border border-slate-700 ...">
+                <td className="... border border-slate-700 text-center">
                   {problem.time_limit} s
                 </td>
-                <td className="text-center border border-slate-700 ...">
+                <td className="... border border-slate-700 text-center">
                   {problem.memory_limit} mb
                 </td>
               </tr>
@@ -226,48 +226,48 @@ export default function ProblemDetail({
 
         <div className="space-y-1">
           <Label className="text-md font-bold">Description</Label>
-          <div className="p-4 bg-background border rounded space-y-4">
+          <div className="space-y-4 rounded border bg-background p-4">
             <p>{problem.description}</p>
           </div>
         </div>
 
         <div className="space-y-1">
           <Label className="text-md font-bold">Input Format</Label>
-          <div className="p-4 bg-background border rounded space-y-4">
+          <div className="space-y-4 rounded border bg-background p-4">
             <p>{problem.input_format}</p>
           </div>
         </div>
 
         <div className="space-y-1">
           <Label className="text-md font-bold">Output Format</Label>
-          <div className="p-4 bg-background border rounded space-y-4">
+          <div className="space-y-4 rounded border bg-background p-4">
             <p>{problem.output_format}</p>
           </div>
         </div>
 
         <div className="space-y-1">
           <Label className="text-md font-bold">Input sample</Label>
-          <div className="p-4 bg-background border rounded">
+          <div className="rounded border bg-background p-4">
             <pre>{problem.sample_input}</pre>
           </div>
         </div>
         <div className="space-y-1">
           <Label className="text-md font-bold">Output sample</Label>
-          <div className="p-4 bg-background border rounded">
+          <div className="rounded border bg-background p-4">
             <pre>{problem.sample_output}</pre>
           </div>
         </div>
 
         <div className="space-y-1">
           <Label className="text-md font-bold">Explanation</Label>
-          <div className="p-4 bg-background border rounded space-y-4">
+          <div className="space-y-4 rounded border bg-background p-4">
             <p>{problem.explanation}</p>
           </div>
         </div>
 
         <div className="space-y-1">
           <Label className="text-md font-bold">Constraints</Label>
-          <div className="p-4 bg-background border rounded space-y-4">
+          <div className="space-y-4 rounded border bg-background p-4">
             <p>{problem.constraints}</p>
           </div>
         </div>
@@ -302,7 +302,7 @@ export default function ProblemDetail({
               <FormError message={error} />
             </div>
           ) : (
-            <div className="p-4 text-sm text-muted-foreground bg-muted rounded">
+            <div className="rounded bg-muted p-4 text-sm text-muted-foreground">
               You must login to submit a solution!!
             </div>
           )}
@@ -310,7 +310,7 @@ export default function ProblemDetail({
 
         <div className="flex">
           <div className="w-full">
-            <div className="p-2 border-b">
+            <div className="border-b p-2">
               <Label className="text-md font-bold">Top User by Time</Label>
             </div>
             <div className="table-wrapper p-2 text-muted-foreground">
@@ -335,7 +335,7 @@ export default function ProblemDetail({
             </div>
           </div>
           <div className="w-full">
-            <div className="p-2 border-b">
+            <div className="border-b p-2">
               <Label className="text-md font-bold">Top User by Memory</Label>
             </div>
             <div className="table-wrapper p-2 text-muted-foreground">
