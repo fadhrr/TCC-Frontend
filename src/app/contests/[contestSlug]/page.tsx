@@ -38,7 +38,7 @@ async function getMember(contestId: string, userId: string) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contest/${contestId}/participant/${userId}`,
   );
-  if (res.status == 404) {
+  if (res.status == 404 || res.status == 400) {
     return false;
   }
   if (!res.ok) {
