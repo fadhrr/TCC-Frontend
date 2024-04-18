@@ -48,7 +48,8 @@ export default function ContestForm() {
       }
       const res = await response.json()
       setContestRes(res);
-      router.push(`/admin/contests/edit/${res.contest?.id}`);
+      // console.log(res.data.id);
+      router.push(`/admin/contests/edit/${res.data?.id}`);
 
     } catch (error) {
       setSubmitLoading(false);
