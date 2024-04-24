@@ -60,7 +60,7 @@ export default function CreateProblem({ contestId }) {
         const fetchData = async () => {
           try {
             const response = await fetch(
-              `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/problem/${editingProblemsId}`
+              `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contest/problem/${editingProblemsId}`
             );
             if (!response.ok) {
               console.error(
@@ -237,7 +237,7 @@ export default function CreateProblem({ contestId }) {
                 console.log(`Failed to add category. Server error: ${JSON.stringify(errorData)}`);
               }
             }
-            router.push(`/admin/problems/create/testcase?problem_id=${newProblemId}`);
+            // router.push(`/admin/problems/create/testcase?problem_id=${newProblemId}`);
 
           } else {
             const errorData = await problemResponse.json();

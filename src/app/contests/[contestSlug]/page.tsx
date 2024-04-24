@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import moment from "moment";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import { ModalSucces } from "@/components/ui/modal";
@@ -38,10 +39,11 @@ async function getMember(contestId: string, userId: string) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contest/${contestId}/participant/${userId}`,
   );
-  if (res.status == 404 || res.status == 400) {
-    return false;
-  }
+
   if (!res.ok) {
+    if (res.status == 404 || res.status == 400) {
+      return false;
+    }
     throw new Error("Failed to fetch score memory data");
   }
   return true;
@@ -56,38 +58,89 @@ export default function ContestDetail({
   const [showModal, setShowModal] = useState(false);
   const [contestOverview, setContestOverview] = useState(null);
   const [contestObj, setContestObj] = useState(null);
-  const [member, setmember] = useState(false);
+  const [member, setMember] = useState(false);
+  const [started, setStarted] = useState(false);
+  const [ended, setEnded] = useState(false);
   const [loading, setLoading] = useState(true);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [countdown, setCountdown] = useState("");
 
   useEffect(() => {
-    try {
-      const fetchData = async () => {
+    const fetchData = async () => {
+      try {
         const contestObj = await getId(params.contestSlug);
         setContestObj(contestObj);
+
         if (currentUser && currentUser.uid) {
           const isJoined = await getMember(contestObj.id, currentUser.uid);
-          console.log(isJoined);
-          setmember(isJoined)
+          setMember(isJoined);
         }
+
         const contestData = await getContestOverview(contestObj.id);
         setContestOverview(contestData);
-      };
-      fetchData();
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
+
+        // Check if the contest has ended
+        if (moment().isAfter(contestObj.end_time)) {
+          setEnded(true);
+          setCountdown("Contest has ended");
+          return;
+        }
+
+        let startTime;
+        let endTime;
+
+        // Check if the contest has not started yet
+        if (moment().isBefore(contestObj.start_time)) {
+          startTime = moment(contestObj.start_time);
+        } else {
+          // Contest has started, countdown to end time
+          startTime = moment();
+          endTime = moment(contestObj.end_time);
+          setStarted(true);
+        }
+
+        const intervalId = setInterval(() => {
+          const now = moment();
+          let duration;
+
+          if (started) {
+            // Contest has started, use end time for countdown
+            duration = moment.duration(endTime.diff(now));
+          } else {
+            // Contest has not started yet, use start time for countdown
+            duration = moment.duration(startTime.diff(now));
+          }
+
+          if (duration.asSeconds() <= 0) {
+            clearInterval(intervalId);
+            setStarted(false);
+          } else {
+            const hours = duration.hours();
+            const minutes = duration.minutes();
+            const seconds = duration.seconds();
+            setCountdown(`${hours}:${minutes}:${seconds}`);
+          }
+        }, 1000);
+
+        // Clear interval on component unmount
+        return () => clearInterval(intervalId);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, [params.contestSlug, currentUser]);
 
   if (loading || contestOverview == null) {
     return <>Loading</>;
   }
 
-  const handleJoinContest = async (e) => {
-    console.log(currentUser.uid);
+  const handleJoinContest = async () => {
+    setSubmitLoading(true);
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contest/participant`,
@@ -104,12 +157,11 @@ export default function ContestDetail({
       );
 
       if (!response.ok) {
-        // Instead of throwing an error, set the error message directly
         setSubmitLoading(false);
         setError(`Failed to submit: ${response.statusText}`);
         return;
       }
-      console.log("Join Successfull");
+      console.log("Join Successful");
     } catch (error) {
       setSubmitLoading(false);
       setError("An unexpected error occurred.");
@@ -121,10 +173,10 @@ export default function ContestDetail({
       <h1 className="mb-8 w-full text-center text-4xl font-bold">
         Contest Information
       </h1>
-      {/* {contestOverview.map((article, index) => ( */}
       <article className="group mb-8 flex w-full flex-col gap-6">
         <div className="flex flex-col items-center justify-center gap-8">
           <div className="flex w-full flex-col items-center justify-center text-center ">
+            <h1>{countdown && <p>{countdown}</p>}</h1>
             <a href="#">
               <h3 className="font-reguler text-2xl text-gray-900 md:text-4xl">
                 {contestOverview.title}
@@ -143,8 +195,7 @@ export default function ContestDetail({
           ))}
         </ul>
       </article>
-      {/* ))} */}
-      {!member && (
+      {!member && !ended && (
         <Button
           onClick={handleJoinContest}
           disabled={submitLoading}
