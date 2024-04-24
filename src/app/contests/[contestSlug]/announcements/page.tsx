@@ -21,14 +21,11 @@ async function getAnnouncemnets(contestId: string) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contest/${contestId}/notification`,
   );
-  if (res.status == 404) {
-    return res.status;
-  }
-  if (res.status == 400) {
-    return res.status;
-  }
   if (!res.ok) {
-    throw new Error("Failed to fetch score memory data");
+    if (res.status === 404 || res.status === 400) {
+      return [];
+    }
+    throw new Error("Failed to fetch announcements");
   }
   return res.json();
 }

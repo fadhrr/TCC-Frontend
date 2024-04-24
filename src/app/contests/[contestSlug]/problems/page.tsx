@@ -3,57 +3,6 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Card } from '@/components/problems/Card';
 
-const menuItems = [
-  {
-    name: 'Pack 1',
-    items: [
-      {
-        id: 1,
-        name: 'tesssss',
-        description: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maiores, velit! Dolorum dolore rem odio dicta, error voluptatum quaerat sint eius architecto eveniet nemo quae, asperiores tenetur nulla ut magni fuga?',
-      },
-      {
-        id: 1,
-        name: 'tesssss',
-        description: ' quae, asperiores tenetur nulla ut magni fuga?',
-      },
-      
-    ],
-  },
-  {
-    name: 'Pack 2',
-    items: [
-      {
-        id: 1,
-        name: 'tesssss',
-        description: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maiores, velit! Dolorum dolore rem odio dicta, error voluptatum quaerat sint eius architecto eveniet nemo quae, asperiores tenetur nulla ut magni fuga?',
-      },
-      {
-        id: 1,
-        name: 'tesssss',
-        description: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maiores, velit! Dolorum dolore rem odio dicta, error voluptatum quaerat sint eius architecto eveniet nemo quae, asperiores tenetur nulla ut magni fuga?',
-      },
-      
-    ],
-  },
-  {
-    name: 'Pack 2',
-    items: [
-      {
-        id: 1,
-        name: 'tesssss',
-        description: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maiores, velit! Dolorum dolore rem odio dicta, error voluptatum quaerat sint eius architecto eveniet nemo quae, asperiores tenetur nulla ut magni fuga?',
-      },
-      {
-        id: 1,
-        name: 'tesssss',
-        description: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maiores, velit! Dolorum dolore rem odio dicta, error voluptatum quaerat sint eius architecto eveniet nemo quae, asperiores tenetur nulla ut magni fuga?',
-      },
-      
-    ],
-  },
-  // Tambahkan package lain jika diperlukan
-];
 
 async function getId(contestSlug: string) {
   const res = await fetch(
