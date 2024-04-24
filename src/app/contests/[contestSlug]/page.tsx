@@ -71,69 +71,57 @@ export default function ContestDetail({
       try {
         const contestObj = await getId(params.contestSlug);
         setContestObj(contestObj);
-
+  
         if (currentUser && currentUser.uid) {
           const isJoined = await getMember(contestObj.id, currentUser.uid);
           setMember(isJoined);
         }
-
+  
         const contestData = await getContestOverview(contestObj.id);
         setContestOverview(contestData);
-
+  
         // Check if the contest has ended
         if (moment().isAfter(contestObj.end_time)) {
           setEnded(true);
           setCountdown("Contest has ended");
           return;
         }
-
-        let startTime;
-        let endTime;
-
+  
         // Check if the contest has not started yet
         if (moment().isBefore(contestObj.start_time)) {
-          startTime = moment(contestObj.start_time);
-        } else {
-          // Contest has started, countdown to end time
-          startTime = moment();
-          endTime = moment(contestObj.end_time);
-          setStarted(true);
-        }
-
-        const intervalId = setInterval(() => {
-          const now = moment();
-          let duration;
-
-          if (started) {
-            // Contest has started, use end time for countdown
-            duration = moment.duration(endTime.diff(now));
-          } else {
-            // Contest has not started yet, use start time for countdown
-            duration = moment.duration(startTime.diff(now));
-          }
-
-          if (duration.asSeconds() <= 0) {
-            clearInterval(intervalId);
-            setStarted(false);
-          } else {
+          const startTime = moment(contestObj.start_time);
+          const intervalId = setInterval(() => {
+            const now = moment();
+            const duration = moment.duration(startTime.diff(now));
             const hours = duration.hours();
             const minutes = duration.minutes();
             const seconds = duration.seconds();
             setCountdown(`${hours}:${minutes}:${seconds}`);
-          }
-        }, 1000);
-
-        // Clear interval on component unmount
-        return () => clearInterval(intervalId);
+          }, 1000);
+          return () => clearInterval(intervalId);
+        } else {
+          // Contest has started
+          const startTime = moment(contestObj.start_time);
+          const intervalId = setInterval(() => {
+            const now = moment();
+            const duration = moment.duration(now.diff(startTime));
+            const hours = duration.hours();
+            const minutes = duration.minutes();
+            const seconds = duration.seconds();
+            setCountdown(`Duration since start: ${hours}:${minutes}:${seconds}`);
+          }, 1000);
+          return () => clearInterval(intervalId);
+        }
       } catch (error) {
         setError(error.message);
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchData();
   }, [params.contestSlug, currentUser]);
+  
 
   if (loading || contestOverview == null) {
     return <>Loading</>;

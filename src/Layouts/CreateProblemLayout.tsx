@@ -47,7 +47,7 @@ const AdminCreateProblem = () => {
     useEffect(() => {
       const pathArray = window.location.pathname.split("/");
       const idFromUrl = pathArray[pathArray.length - 1];
-  
+      console.log(idFromUrl);
       setEditingProblemsId(idFromUrl);
     }, []);
   
@@ -204,6 +204,7 @@ const AdminCreateProblem = () => {
             },
             body: JSON.stringify({
                 ...editedProblemsData,
+                category: selectedCategories,
             }),
           });
       
@@ -257,6 +258,7 @@ const AdminCreateProblem = () => {
             },
             body: JSON.stringify({
               ...editedProblemsData,
+              category: selectedCategories,
             }),
           }
         );
