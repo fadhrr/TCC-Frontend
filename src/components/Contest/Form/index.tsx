@@ -49,7 +49,7 @@ export default function ContestForm() {
       const res = await response.json()
       setContestRes(res);
       // console.log(res.data.id);
-      router.push(`/admin/contests/edit/${res.data?.id}`);
+      router.push(`/admin/contests/${res.data?.id}/problem/create`);
 
     } catch (error) {
       setSubmitLoading(false);
