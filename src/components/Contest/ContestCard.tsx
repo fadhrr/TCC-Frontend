@@ -57,7 +57,7 @@ export default function ContesCard() {
               <div className="flex space-x-2">
                 <h4 className="opacity-70">
                   <a
-                    href={`/admin/contests/${article.id}/create`}
+                    href={`/admin/contests/${article.id}/problem/create`}
                     className="hover:underline hover:opacity-100"
                   >
                     Add problems
